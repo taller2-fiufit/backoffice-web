@@ -18,8 +18,6 @@
         class="ml-2 pointer"
         @click="redirect('Dashboard')"
       ></v-img>
-      <v-spacer></v-spacer>
-      <EthOrUsd></EthOrUsd>
     </v-app-bar>
 
     <v-navigation-drawer
@@ -43,8 +41,8 @@
           <v-list-item
           v-for="item in items"
           :key="item.title"
+          :to="item.route"
           link
-          @click="redirect(item.route)"
           >
             <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
@@ -68,17 +66,11 @@
     data: () => ({ 
       drawer: null,
       items: [
-        { title: 'Dashboard', icon: 'mdi-view-dashboard', route: 'Dashboard' },
-        { title: 'Usuarios', icon: 'mdi-account-group', route: 'Users' },
-        { title: 'Planes', icon: 'mdi-dumbbell', route: 'Plans' },
-        { title: 'Métricas', icon: 'mdi-poll', route: 'Metrics' }
+        { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/' },
+        { title: 'Usuarios', icon: 'mdi-account-group', route: '/users' },
+        { title: 'Planes', icon: 'mdi-dumbbell', route: '/plans' },
+        { title: 'Métricas', icon: 'mdi-poll', route: '/metrics' }
       ]
-    }),
-
-    methods: {
-      redirect (routeName) {
-        this.$router.push({ name: routeName })
-      }
-    }
+    })
   }
 </script>

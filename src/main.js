@@ -3,7 +3,7 @@ import App from './App.vue'
 import '@mdi/font/css/materialdesignicons.css'
 import router from './router'
 import store from './store'
-import './axios'
+// import './axios'
 // import store from './vuex'
 
 // import * as Vue from 'vue/dist/vue.common.js'

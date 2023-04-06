@@ -28,14 +28,14 @@ const routes = [
       requiresAuth: true
     }
   },
-  {
-    path: '/login',
-    name: 'Login',
-    component: Login,
-    meta: {
-      requiresAuth: false
-    }
-  },
+  // {
+  //   path: '/login',
+  //   name: 'Login',
+  //   component: Login,
+  //   meta: {
+  //     requiresAuth: false
+  //   }
+  // },
   {
     path: '/users',
     name: 'Users',

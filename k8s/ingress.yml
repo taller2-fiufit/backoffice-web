@@ -12,7 +12,7 @@ spec:
         paths:
           - path: /
             pathType: Prefix
-            backoffice:
+            backend:
               service:
                 name: backoffice-service
                 port:

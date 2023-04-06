@@ -18,4 +18,4 @@ jobs:
       - name: Destroy preview environment
         uses: okteto/destroy-preview@latest
         with:
-          name: backoffice-pr-${{ github.event.number }}-megaredhand
+          name: pr-${{ github.event.number }}-megaredhand

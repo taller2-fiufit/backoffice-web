@@ -22,5 +22,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: backoffice-pr-${{ github.event.number }}-megaredhand
+          name: pr-${{ github.event.number }}-megaredhand
           timeout: 15m

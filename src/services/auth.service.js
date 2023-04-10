@@ -1,4 +1,5 @@
 import axios from 'axios';
+import VueJwtDecode from 'vue-jwt-decode';
 
 const API_URL = 'https://svc-users-fedecolangelo.cloud.okteto.net/';
 
@@ -13,7 +14,9 @@ class AuthService {
       })
       .then(response => {
         if (response.data.access_token) {
-          localStorage.setItem('user', JSON.stringify(response.data));
+          let decoded = VueJwtDecode.decode(response.data.access_token);
+          console.log(decoded);
+          localStorage.setItem('user', JSON.stringify(decoded));
         }
 
         return response.data;

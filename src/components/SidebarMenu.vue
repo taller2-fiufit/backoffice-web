@@ -9,7 +9,7 @@
       <v-list-item
         prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
         title="Sandra Adams"
-        subtitle=currentUser.email
+        subtitle={{currentUser.email}}
       ></v-list-item>
     </v-list>
 
@@ -48,7 +48,9 @@
     }),
     computed: {
       currentUser() {
-        return this.$store.state.auth.user;
+        let user = this.$store.state.auth.user;
+        console.log(user);
+        return user;
       },
     },
   }

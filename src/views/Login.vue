@@ -95,11 +95,10 @@ export default {
   methods: {
     submitLogin() {
       this.v$.$validate() // checks all inputs
-      if (!this.v$.$error) {
-        // if ANY fail validation
-        alert('Form successfully submitted.')
+      if (!this.v$.$error) { // ARREGLAR -> LA VALIDACION ESTA ANDANDO MAL
+        //alert('Form successfully submitted.')
       } else {
-        alert('Form failed validation')
+        //alert('Form failed validation')
       }
     },
     handleLogin() {

@@ -19,15 +19,13 @@
       ></v-img>
 
       <template v-slot:append>
-        <router-link to="/login" class="nav-link" v-if="!user">Login</router-link>
-        <router-link to="/register" class="nav-link" v-if="!user">Sign up</router-link>
-        <a href="javascript:void(0)" @click="handleClick" class="nav-link" v-if="user">Logout</a>
+        <router-link to="/register" class="nav-link" v-if="currentUser">Sign up new admin</router-link>
+        <a href="javascript:void(0)" @click="logOut" class="nav-link" v-if="currentUser">Logout</a>
       </template>
     </v-app-bar>
 </template>
 
 <script>
-  import { mapGetters } from 'vuex';
 
   export default {
     name: 'Nav',
@@ -35,14 +33,15 @@
       redirect (routeName) {
         this.$router.push({ name: routeName })
       },
-      handleClick() {
-        localStorage.removeItem('token');
-        this.$store.dispatch('user', null);
+      logOut() {
+        this.$store.dispatch('auth/logout');
         this.$router.push('/login');
       }
     },
     computed: {
-      ...mapGetters(['user'])
-    }
+      currentUser() {
+        return this.$store.state.auth.user;
+      },
+    },
   }
 </script>

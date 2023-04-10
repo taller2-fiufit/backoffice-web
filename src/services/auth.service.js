@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://svc-users-taller2-fiufit-svc-users-pr-4.cloud.okteto.net/';
+const API_URL = 'https://svc-users-fedecolangelo.cloud.okteto.net/';
 
 class AuthService {
   login(user) {
@@ -12,7 +12,7 @@ class AuthService {
         password: user.password
       })
       .then(response => {
-        if (response.data.accessToken) {
+        if (response.data.access_token) {
           localStorage.setItem('user', JSON.stringify(response.data));
         }
 

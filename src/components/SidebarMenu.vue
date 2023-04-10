@@ -9,7 +9,7 @@
       <v-list-item
         prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
         title="Sandra Adams"
-        subtitle="sandra_a88@gmailcom"
+        subtitle=currentUser.email
       ></v-list-item>
     </v-list>
 
@@ -45,6 +45,11 @@
         { title: 'Planes', icon: 'mdi-dumbbell', route: '/plans' },
         { title: 'Métricas', icon: 'mdi-poll', route: '/metrics' }
       ]
-    })
+    }),
+    computed: {
+      currentUser() {
+        return this.$store.state.auth.user;
+      },
+    },
   }
 </script>

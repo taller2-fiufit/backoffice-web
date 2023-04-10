@@ -25,17 +25,17 @@ const routes = [
     name: 'Register',
     component: Register,
     meta: {
-      requiresAuth: true
+      requiresAuth: false
     }
   },
-  // {
-  //   path: '/login',
-  //   name: 'Login',
-  //   component: Login,
-  //   meta: {
-  //     requiresAuth: false
-  //   }
-  // },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+    meta: {
+      requiresAuth: false
+    }
+  },
   {
     path: '/users',
     name: 'Users',

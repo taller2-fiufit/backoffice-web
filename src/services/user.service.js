@@ -5,20 +5,6 @@ import VueJwtDecode from 'vue-jwt-decode';
 const API_URL = 'https://svc-users-fedecolangelo.cloud.okteto.net/';
 
 class UserService {
-  /*
-  getPublicContent() {
-    return axios.get(API_URL + 'all');
-  }
-
-  getModeratorBoard() {
-    return axios.get(API_URL + 'mod', { headers: authHeader() });
-  }
-
-  getAdminBoard() {
-    return axios.get(API_URL + 'admin', { headers: authHeader() });
-  }
-  */
-
   registerNewAdmin(user) {
     return axios.post(API_URL + 'admin/', {
       fullname: user.fullname,

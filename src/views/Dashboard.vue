@@ -9,16 +9,24 @@
       <v-app-bar-title>Dashboard</v-app-bar-title>
   </v-app-bar>
   <div>
-    <h3>Hi {{ currentUser.fullname }}</h3>
+    <h3>Hi {{ currentUserFullname }}</h3>
   </div>
 </template>
 
 <script>
   export default {
     computed: {
-      currentUser() {
-        return this.$store.state.auth.user;
-      },
-    },
+      async currentUserFullname() {
+        let user = this.$store.state.auth.user;
+        let userId = user.sub;
+        // console.log("hola");
+        // console.log(user);
+        // console.log(userId);
+        let currentUserFullname = await this.$store.dispatch("userModule/getUserFullname", userId);
+        // console.log(currentUserFullname);
+        console.log(currentUserFullname);
+        return currentUserFullname
+      }
+    }
   }
 </script>

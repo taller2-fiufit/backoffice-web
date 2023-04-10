@@ -8,8 +8,8 @@
     <v-list>
       <v-list-item
         prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
-        title="Sandra Adams"
-        subtitle={{currentUser.email}}
+        title=userFullname
+        subtitle=userEmail
       ></v-list-item>
     </v-list>
 
@@ -44,13 +44,17 @@
         { title: 'Usuarios', icon: 'mdi-account-group', route: '/users' },
         { title: 'Planes', icon: 'mdi-dumbbell', route: '/plans' },
         { title: 'Métricas', icon: 'mdi-poll', route: '/metrics' }
-      ]
+      ],
+      userFullname: null,
+      userEmail: null
     }),
     computed: {
-      currentUser() {
+      async currentUser() {
         let user = this.$store.state.auth.user;
-        console.log(user);
-        return user;
+        let userId = user.sub;
+        let currentUserFullname = await this.$store.dispatch("userModule/getUserFullname", userId);
+        this.userEmail = user.email;
+        this.userFullname = currentUserFullname;
       },
     },
   }

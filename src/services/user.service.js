@@ -1,10 +1,11 @@
-/*import axios from 'axios';
+import axios from 'axios';
 import authHeader from './auth-header';
 
-const API_URL = 'https://svc-users-taller2-fiufit-svc-users-pr-3.cloud.okteto.net/';
+const API_URL = 'https://svc-users-fedecolangelo.cloud.okteto.net';
 ;
 
 class UserService {
+  /*
   getPublicContent() {
     return axios.get(API_URL + 'all');
   }
@@ -20,6 +21,10 @@ class UserService {
   getAdminBoard() {
     return axios.get(API_URL + 'admin', { headers: authHeader() });
   }
+  */
+  getUserFullname(userId) {
+    return axios.get(API_URL + '/users/' + userId);
+ }
 }
 
-export default new UserService();*/
+export default new UserService();

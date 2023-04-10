@@ -22,7 +22,7 @@
         </div>
   
         <v-text-field
-          v-model="email"
+          v-model="user.email"
           name="email"
           label="Email"
           type="email"
@@ -31,7 +31,7 @@
         ></v-text-field>
         
         <v-text-field
-          v-model="password"
+          v-model="user.password"
           name="password"
           label="Password"
           type="password"
@@ -66,25 +66,19 @@
 </template>
 
 <script>
-
 // import axios from 'axios'
+import User from '../models/user';
 import useValidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
-
 // import Error from '../components/Error.vue'
-
 export default {
   name: "Login",
-  // components: {
-  //   Error
-  // },
   data() {
     return {
       v$: useValidate(),
       loading: false,
       message: "",
-      email: '',
-      password: '',
+      user: new User('', ''),
       error: ''
     };
   },
@@ -108,9 +102,9 @@ export default {
         alert('Form failed validation')
       }
     },
-    handleLogin(user) {
+    handleLogin() {
       this.loading = true;
-      this.$store.dispatch("auth/login", user).then(
+      this.$store.dispatch("auth/login", this.user).then(
         () => {
           this.$router.push("/dashboard");
         },
@@ -124,22 +118,8 @@ export default {
             error.toString();
         }
       );
+      console.log(this.user)
     }
-    // async handleLogin() {
-    //   try {
-    //     const user = {
-    //     email: this.email,
-    //     password: this.password
-    //     }
-    //     const response = await axios.post('login', user);
-    //     localStorage.setItem('token', response.data.token);
-    //     this.$store.dispatch('user', response.data.user);
-    //     this.$router.push('/');
-    //     this.error = '';
-    //   } catch (error) {
-    //     this.error = error;
-    //   }
-    // }
   },
   validations() {
     return {

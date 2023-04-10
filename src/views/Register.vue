@@ -1,4 +1,10 @@
 <template>
+  <v-app-bar color="green" class="flex-grow-0" app dark>
+      <v-app-bar-title>Registro</v-app-bar-title>
+  </v-app-bar>
+</template>
+
+<!-----<template>
   <div class="d-flex align-center justify-center" style="height: 100vh">
       <v-sheet width="400" class="mx-auto">
         <v-img
@@ -45,7 +51,7 @@
               required
             ></v-text-field>
 
-            <!--
+            
             <v-text-field
               v-model="confirmPassword"
               name="confirmPassword"
@@ -54,7 +60,6 @@
               placeholder="confirm password"
               required
             ></v-text-field>
-            --->
 
             <v-btn type="submit" color="#9ACD32" block class="mt-2" :disabled="loading">
               <span
@@ -64,11 +69,10 @@
               <span>Sign Up</span>
             </v-btn> 
           </div>
-          <!--
+          
           <div>
             <Error v-if="error" :error="error" />
           </div>
-          -->
 
         </v-form>
 
@@ -158,4 +162,4 @@
       }
     }
   }
-</script>
+</script>--->

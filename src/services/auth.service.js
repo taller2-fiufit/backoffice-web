@@ -1,5 +1,6 @@
 import axios from 'axios';
 import VueJwtDecode from 'vue-jwt-decode';
+import authHeader from './auth-header';
 
 const API_URL = 'https://svc-users-fedecolangelo.cloud.okteto.net/';
 
@@ -28,11 +29,13 @@ class AuthService {
   }
 
   register(user) {
-    return axios.post(API_URL + 'signup', {
+    return axios.post(API_URL + 'admin', {
       username: user.username,
       email: user.email,
       password: user.password
-    });
+    },
+    { headers: authHeader() }
+    );
   }
 }
 

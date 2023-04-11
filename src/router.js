@@ -25,7 +25,7 @@ const routes = [
     name: 'Register',
     component: Register,
     meta: {
-      requiresAuth: false
+      requiresAuth: true
     }
   },
   {

@@ -11,7 +11,7 @@
 
 <script>
   export default {
-    name: 'Error',
+    name: 'ErrorAlert',
     props: ['error']
   }
 </script>

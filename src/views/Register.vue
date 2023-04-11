@@ -1,10 +1,12 @@
+<!--
 <template>
   <v-app-bar color="green" class="flex-grow-0" app dark>
       <v-app-bar-title>Registro</v-app-bar-title>
   </v-app-bar>
 </template>
+-->
 
-<!-----<template>
+<template>
   <div class="d-flex align-center justify-center" style="height: 100vh">
       <v-sheet width="400" class="mx-auto">
         <v-img
@@ -23,6 +25,14 @@
 
         <v-form fast-fail @submit.prevent="handleRegister">
           
+          <div>
+            <ErrorAlert v-if="error" :error="error" />
+          </div>
+
+          <div>
+            <SucessAlert v-if="message" :message="message" />
+          </div>
+
           <div v-if="!successful">
             <v-text-field
               v-model="fullname"
@@ -51,7 +61,6 @@
               required
             ></v-text-field>
 
-            
             <v-text-field
               v-model="confirmPassword"
               name="confirmPassword"
@@ -69,20 +78,7 @@
               <span>Sign Up</span>
             </v-btn> 
           </div>
-          
-          <div>
-            <Error v-if="error" :error="error" />
-          </div>
-
         </v-form>
-
-        <div
-        v-if="message"
-        class="alert"
-        :class="successful ? 'alert-success' : 'alert-danger'"
-        >
-        {{ message }}
-      </div>
       </v-sheet>
   </div>
 </template>
@@ -90,13 +86,15 @@
 <script>
   // import axios from 'axios'
 
-  // import Error from '../components/Error.vue'
+  import ErrorAlert from '../components/ErrorAlert.vue'
+  import SuccessAlert from '../components/SuccessAlert.vue'
 
   export default {
     name: "Register",
-    // components: {
-    //   Error
-    // },
+    components: {
+      ErrorAlert,
+      SuccessAlert
+    },
     data() {
       return {
         successful: false,
@@ -139,9 +137,12 @@
       //   }
       // }
       handleRegister(user) {
+        // CHEQUEAR SI PASSWORD Y CONFIRM PASSWORD SON IGUALES
         this.message = "";
+        this.error = "";
         this.successful = false;
         this.loading = true;
+        console.log(user);
         this.$store.dispatch("auth/register", user).then(
           (data) => {
             this.message = data.message;
@@ -157,9 +158,10 @@
               error.toString();
             this.successful = false;
             this.loading = false;
+            this.error = error.response.data.message;
           }
         );
       }
     }
   }
-</script>--->
+</script>

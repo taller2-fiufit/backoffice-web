@@ -18,7 +18,7 @@
       <v-form fast-fail @submit.prevent="handleLogin">
 
         <div>
-          <Error v-if="error" :error="error" />
+          <ErrorAlert v-if="error" :error="error" />
         </div>
   
         <v-text-field
@@ -64,12 +64,12 @@
 import User from '../models/user';
 import useValidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
-import Error from '../components/Error.vue'
+import ErrorAlert from '../components/ErrorAlert.vue'
 
 export default {
   name: "Login",
   components: {
-    Error
+    ErrorAlert
   },
   data() {
     return {

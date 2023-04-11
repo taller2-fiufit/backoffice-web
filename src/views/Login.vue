@@ -50,12 +50,6 @@
           ></span>
           <span>Login</span>
         </v-btn>
-        
-        <div class="form-group">
-          <div v-if="message" class="alert alert-danger" role="alert">
-            {{ message }}
-          </div>
-        </div>
       </v-form>
 
       <div class="mt-2">
@@ -70,9 +64,13 @@
 import User from '../models/user';
 import useValidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
-// import Error from '../components/Error.vue'
+import Error from '../components/Error.vue'
+
 export default {
   name: "Login",
+  components: {
+    Error
+  },
   data() {
     return {
       v$: useValidate(),
@@ -102,12 +100,14 @@ export default {
       }
     },
     handleLogin() {
+      this.error = ''
       this.loading = true;
       this.$store.dispatch("auth/login", this.user).then(
         () => {
           this.$router.push("/dashboard");
         },
         (error) => {
+          console.log(error);
           this.loading = false;
           this.message =
             (error.response &&
@@ -115,6 +115,7 @@ export default {
               error.response.data.message) ||
             error.message ||
             error.toString();
+          this.error = error.response.data.message;
         }
       );
       console.log(this.user)

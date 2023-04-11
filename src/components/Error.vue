@@ -1,7 +1,12 @@
 <template>
-  <div class="alert alert-danger" role="alert">
-    {{ error }}
-  </div>
+  <v-alert
+    color="error"
+    icon="$error"
+    title="ERROR!"
+    closable
+  >
+    {{error}}
+  </v-alert>
 </template>
 
 <script>

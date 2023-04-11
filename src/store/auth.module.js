@@ -51,11 +51,11 @@ export const auth = {
       state.status.loggedIn = false;
       state.user = null;
     },
-    registerSuccess(state) {
-      state.status.loggedIn = false;
-    },
-    registerFailure(state) {
-      state.status.loggedIn = false;
-    }
+    //registerSuccess(state) {
+    //  state.status.loggedIn = false;
+    //},
+    //registerFailure(state) {
+    //  state.status.loggedIn = false;
+    //}
   }
 };

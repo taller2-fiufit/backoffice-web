@@ -16,13 +16,14 @@
 <script>
   export default {
     computed: {
-      async currentUserFullname() {
+      currentUserFullname() {
         let user = this.$store.state.auth.user;
         let userId = user.sub;
         // console.log("hola");
         // console.log(user);
         // console.log(userId);
-        let currentUserFullname = await this.$store.dispatch("userModule/getUserFullname", userId);
+        let currentUserFullname = 'holis'
+        //let currentUserFullname = await this.$store.dispatch("userModule/getUserFullname", userId);
         // console.log(currentUserFullname);
         console.log(currentUserFullname);
         return currentUserFullname

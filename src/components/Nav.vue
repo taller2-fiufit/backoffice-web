@@ -19,7 +19,6 @@
       ></v-img>
 
       <template v-slot:append>
-        <router-link to="/register" class="nav-link" v-if="currentUser">Sign up new admin</router-link>
         <a href="javascript:void(0)" @click="logOut" class="nav-link" v-if="currentUser">Logout</a>
       </template>
     </v-app-bar>

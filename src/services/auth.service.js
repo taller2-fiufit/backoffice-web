@@ -15,9 +15,9 @@ class AuthService {
       })
       .then(response => {
         if (response.data.access_token) {
-          let decoded = VueJwtDecode.decode(response.data.access_token);
-          console.log(decoded);
-          localStorage.setItem('user', JSON.stringify(decoded));
+          //let decoded = VueJwtDecode.decode(response.data.access_token);
+          //console.log(decoded);
+          localStorage.setItem('user', JSON.stringify(response.data));
         }
 
         return response.data;
@@ -29,6 +29,7 @@ class AuthService {
   }
 
   register(user) {
+    console.log(authHeader());
     return axios.post(API_URL + 'admin', {
       username: user.username,
       email: user.email,

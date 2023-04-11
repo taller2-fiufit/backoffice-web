@@ -43,19 +43,20 @@
         { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/' },
         { title: 'Usuarios', icon: 'mdi-account-group', route: '/users' },
         { title: 'Planes', icon: 'mdi-dumbbell', route: '/plans' },
-        { title: 'Métricas', icon: 'mdi-poll', route: '/metrics' }
+        { title: 'Métricas', icon: 'mdi-poll', route: '/metrics' },
+        { title: 'Registro de nuevos admins', icon: 'mdi-account-tie', route: '/register'}
       ],
-      userFullname: null,
-      userEmail: null
+      //userFullname: null,
+      //userEmail: null
     }),
-    computed: {
-      async currentUser() {
-        let user = this.$store.state.auth.user;
-        let userId = user.sub;
-        let currentUserFullname = await this.$store.dispatch("userModule/getUserFullname", userId);
-        this.userEmail = user.email;
-        this.userFullname = currentUserFullname;
-      },
-    },
+    //computed: {
+    //  async currentUser() {
+    //    let user = this.$store.state.auth.user;
+    //    let userId = user.sub;
+    //    let currentUserFullname = await this.$store.dispatch("userModule/getUserFullname", userId);
+    //    this.userEmail = user.email;
+    //    this.userFullname = currentUserFullname;
+    //  },
+    //},
   }
 </script>

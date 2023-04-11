@@ -83,6 +83,7 @@
   </div>
 </template>
 
+
 <script>
   // import axios from 'axios'
 
@@ -108,34 +109,7 @@
         // error: ''
       }
     },
-    computed: {
-      loggedIn() {
-        return this.$store.state.auth.status.loggedIn;
-      },
-    },
-    mounted() {
-      if (this.loggedIn) {
-        this.$router.push("/dashboard");
-      }
-    },
     methods: {
-      // async handleRegister() {
-      //   try {
-      //     const newUser = {
-      //     fullname: this.fullname,
-      //     email: this.email,
-      //     password: this.password,
-      //     confirmPassword: this.confirmPassword
-      //     };
-// 
-      //     await axios.post('register', newUser);
-      //     // if response is successfull user is redirected to login route
-      //     this.$router.push('/login');
-      //     this.error = '';
-      //   } catch(error) {
-      //     this.error = error;
-      //   }
-      // }
       handleRegister(user) {
         // CHEQUEAR SI PASSWORD Y CONFIRM PASSWORD SON IGUALES
         this.message = "";

@@ -30,10 +30,10 @@
           </div>
 
           <div>
-            <SucessAlert v-if="message" :message="message" />
+            <SuccessAlert v-if="successful" :message="message" />
           </div>
 
-          <div v-if="!successful">
+          <div>
             <v-text-field
               v-model="user.fullname"
               name="fullname"
@@ -70,9 +70,8 @@
               required
             ></v-text-field>
 
-            <v-btn type="submit" color="#9ACD32" block class="mt-2" :disabled="loading">
+            <v-btn type="submit" color="#9ACD32" block class="mt-2">
               <span
-                v-show="loading"
                 class="spinner-border spinner-border-sm"
               ></span>
               <span>Sign Up</span>
@@ -89,7 +88,7 @@
   import User from '../models/user';
   import ErrorAlert from '../components/ErrorAlert.vue'
   import SuccessAlert from '../components/SuccessAlert.vue'
-
+  import UserService from '../services/user.service';
   export default {
     name: "Register",
     components: {
@@ -99,39 +98,38 @@
     data() {
       return {
         successful: false,
-        loading: false,
-        message: "",
-        // v-model
-        user: new User('', '')
-        // confirmPassword: '',
-        // error: ''
+        message: "User registered successfully",
+        user: new User('', ''),
+        error: "",
+        confirmPassword: '',
       }
     },
     methods: {
       handleRegister() {
         // CHEQUEAR SI PASSWORD Y CONFIRM PASSWORD SON IGUALES
-        this.message = "";
-        this.error = "";
-        this.successful = false;
-        this.loading = true;
-        this.$store.dispatch("auth/register", this.user).then(
-          (data) => {
-            this.message = data.message;
-            this.successful = true;
-            this.loading = false;
-          },
-          (error) => {
-            this.message =
-              (error.response &&
-                error.response.data &&
-                error.response.data.message) ||
-              error.message ||
-              error.toString();
-            this.successful = false;
-            this.loading = false;
-            this.error = error.response.data.message;
-          }
-        );
+        if (this.confirmPassword == this.user.password) {
+          UserService.registerNewAdmin(this.user).then(
+            (data) => {
+              this.successful = true;
+              console.log(this.successful);
+            },
+            (error) => {
+              this.message =
+                (error.response &&
+                  error.response.data &&
+                  error.response.data.message) ||
+                error.message ||
+                error.toString();
+              this.successful = false;
+              this.loading = false;
+              this.error = error.response.data.message;
+              console.log(this.error);
+            }
+          );
+        } else {
+          this.successful = false;
+          this.error = 'Las contraseñas no coinciden'
+        }
       }
     }
   }

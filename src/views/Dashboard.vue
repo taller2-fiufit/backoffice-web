@@ -14,7 +14,6 @@
 </template>
 
 <script>
-  import VueJwtDecode from 'vue-jwt-decode';
   import UserService from '../services/user.service';
 
   export default {
@@ -26,10 +25,7 @@
     },
 
     mounted() {
-      let user = this.$store.state.auth.user;
-      let userId = VueJwtDecode.decode(user.access_token).sub;
-      console.log(userId);
-      UserService.getUserFullname(userId).then(
+      UserService.getUserInfo().then(
         response => {
           this.fullname = response.data.fullname;
         },

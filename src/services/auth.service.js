@@ -6,8 +6,6 @@ const API_URL = 'https://svc-users-fedecolangelo.cloud.okteto.net/';
 
 class AuthService {
   login(user) {
-    console.log(user.email);
-    console.log(user.password);
     return axios
       .post(API_URL + 'tokens', {
         email: user.email,
@@ -24,18 +22,6 @@ class AuthService {
 
   logout() {
     localStorage.removeItem('user');
-  }
-
-  register(user) {
-    console.log(authHeader());
-    console.log(user);
-    return axios.post(API_URL + 'admin', {
-      fullname: user.fullname,
-      email: user.email,
-      password: user.password
-    },
-    { headers: authHeader() }
-    );
   }
 }
 

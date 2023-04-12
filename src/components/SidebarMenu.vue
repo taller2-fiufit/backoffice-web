@@ -39,7 +39,6 @@
 </template>
 
 <script>
-  import VueJwtDecode from 'vue-jwt-decode';
   import UserService from '../services/user.service';
   export default {
     name: 'SidebarMenu',
@@ -63,10 +62,7 @@
       email: ''
     }),
     mounted() {
-      let user = this.$store.state.auth.user;
-      let userId = VueJwtDecode.decode(user.access_token).sub;
-      console.log(userId);
-      UserService.getUserFullname(userId).then(
+      UserService.getUserInfo().then(
         response => {
           this.user_info[0].title = response.data.fullname;
           this.user_info[0].subtitle = response.data.email;

@@ -1,6 +1,6 @@
 <template>
   <v-app-bar app clipped-left color="white" class="elevation-1" height="70">
-      <v-app-bar-nav-icon @click="toggleMenu"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click="toggleSideBar"></v-app-bar-nav-icon>
 
       <v-img
         max-width="33"
@@ -35,6 +35,9 @@
       logOut() {
         this.$store.dispatch('auth/logout');
         this.$router.push('/login');
+      },
+      toggleSideBar() {
+        this.$store.dispatch('sidebar/togglesidebar')
       }
     },
     computed: {

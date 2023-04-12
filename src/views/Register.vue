@@ -35,7 +35,7 @@
 
           <div v-if="!successful">
             <v-text-field
-              v-model="fullname"
+              v-model="user.fullname"
               name="fullname"
               label="Full Name"
               type="text"
@@ -44,7 +44,7 @@
             ></v-text-field>
 
             <v-text-field
-              v-model="email"
+              v-model="user.email"
               name="email"
               label="Email"
               type="email"
@@ -53,7 +53,7 @@
             ></v-text-field>
           
             <v-text-field
-              v-model="password"
+              v-model="user.password"
               name="password"
               label="Password"
               type="password"
@@ -86,7 +86,7 @@
 
 <script>
   // import axios from 'axios'
-
+  import User from '../models/user';
   import ErrorAlert from '../components/ErrorAlert.vue'
   import SuccessAlert from '../components/SuccessAlert.vue'
 
@@ -102,22 +102,19 @@
         loading: false,
         message: "",
         // v-model
-        fullname: '',
-        email: '',
-        password: '',
+        user: new User('', '')
         // confirmPassword: '',
         // error: ''
       }
     },
     methods: {
-      handleRegister(user) {
+      handleRegister() {
         // CHEQUEAR SI PASSWORD Y CONFIRM PASSWORD SON IGUALES
         this.message = "";
         this.error = "";
         this.successful = false;
         this.loading = true;
-        console.log(user);
-        this.$store.dispatch("auth/register", user).then(
+        this.$store.dispatch("auth/register", this.user).then(
           (data) => {
             this.message = data.message;
             this.successful = true;

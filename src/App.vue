@@ -5,7 +5,7 @@
       <Nav />
     </div>
 
-    <div v-if="currentUser">
+    <div v-if="currentUser && showSideBar">
       <SideBarMenu />
     </div>
 
@@ -28,6 +28,9 @@
     computed: {
       currentUser() {
         return this.$store.state.auth.user;
+      },
+      showSideBar(){
+        return this.$store.state.sidebar.sideBarOpen;
       },
     },
   }

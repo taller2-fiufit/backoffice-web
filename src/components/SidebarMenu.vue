@@ -6,11 +6,15 @@
     color="#9ACD32"
   >
     <v-list>
-      <v-list-item
-        prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
-        title=userFullname
-        subtitle=userEmail
-      ></v-list-item>
+      <v-list
+        :items="user_info"
+        item-props
+        lines="three"
+      >
+        <template v-slot:subtitle="{ subtitle }">
+          <div v-html="subtitle"></div>
+        </template>
+      </v-list>
     </v-list>
 
     <v-divider></v-divider>
@@ -35,10 +39,19 @@
 </template>
 
 <script>
+  import VueJwtDecode from 'vue-jwt-decode';
+  import UserService from '../services/user.service';
   export default {
     name: 'SidebarMenu',
     data: () => ({ 
       drawer: null,
+      user_info: [
+        {
+          prependAvatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+          title: '',
+          subtitle: '',
+        },
+      ],
       items: [
         { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/' },
         { title: 'Usuarios', icon: 'mdi-account-group', route: '/users' },
@@ -46,17 +59,22 @@
         { title: 'Métricas', icon: 'mdi-poll', route: '/metrics' },
         { title: 'Registro de nuevos admins', icon: 'mdi-account-tie', route: '/register'}
       ],
-      //userFullname: null,
-      //userEmail: null
+      fullname: '',
+      email: ''
     }),
-    //computed: {
-    //  async currentUser() {
-    //    let user = this.$store.state.auth.user;
-    //    let userId = user.sub;
-    //    let currentUserFullname = await this.$store.dispatch("userModule/getUserFullname", userId);
-    //    this.userEmail = user.email;
-    //    this.userFullname = currentUserFullname;
-    //  },
-    //},
+    mounted() {
+      let user = this.$store.state.auth.user;
+      let userId = VueJwtDecode.decode(user.access_token).sub;
+      console.log(userId);
+      UserService.getUserFullname(userId).then(
+        response => {
+          this.user_info[0].title = response.data.fullname;
+          this.user_info[0].subtitle = response.data.email;
+        },
+        error => {
+
+        },
+      )
+    }
   }
 </script>

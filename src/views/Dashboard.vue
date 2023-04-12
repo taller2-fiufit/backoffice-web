@@ -9,25 +9,34 @@
       <v-app-bar-title>Dashboard</v-app-bar-title>
   </v-app-bar>
   <div>
-    <h3>Hi {{ currentUserFullname }}</h3>
+    <h3>Hi {{ fullname }}</h3>
   </div>
 </template>
 
 <script>
+  import VueJwtDecode from 'vue-jwt-decode';
+  import UserService from '../services/user.service';
+
   export default {
-    computed: {
-      currentUserFullname() {
-        let user = this.$store.state.auth.user;
-        let userId = user.sub;
-        // console.log("hola");
-        // console.log(user);
-        // console.log(userId);
-        let currentUserFullname = 'holis'
-        //let currentUserFullname = await this.$store.dispatch("userModule/getUserFullname", userId);
-        // console.log(currentUserFullname);
-        console.log(currentUserFullname);
-        return currentUserFullname
-      }
+    name: 'User',
+    data() {
+      return {
+        fullname: ''
+      };
+    },
+
+    mounted() {
+      let user = this.$store.state.auth.user;
+      let userId = VueJwtDecode.decode(user.access_token).sub;
+      console.log(userId);
+      UserService.getUserFullname(userId).then(
+        response => {
+          this.fullname = response.data.fullname;
+        },
+        error => {
+
+        },
+      )
     }
   }
 </script>

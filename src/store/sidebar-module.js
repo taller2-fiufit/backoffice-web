@@ -1,7 +1,7 @@
 export const sidebar = {
     namespaced: true,
     state: {
-        sideBarOpen: false
+        sideBarOpen: true
     },
     mutations: {
         togglesidebar(state) {

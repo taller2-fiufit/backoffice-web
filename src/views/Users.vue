@@ -1,42 +1,30 @@
 <template>
-  <h1> Lista de usuarios </h1>
-  <v-table
-    fixed-header
-    height="300px"
-    hover
-  >
-    <thead>
-      <tr>
-        <th class="text-left"> ID </th>
-        <th class="text-left"> Fullname </th>
-        <th class="text-left"> Email </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        v-for="user in users"
-        :key="user.id"
-      >
-        <td>{{ user.id }}</td>
-        <td>{{ user.fullname }}</td>
-        <td>{{ user.email }}</td>
-      </tr>
-    </tbody>
-  </v-table>
+  <v-app-bar color=#C2C2C2 class="flex-grow-0" app dark>
+      <v-app-bar-title>Listado de Usuarios</v-app-bar-title>
+  </v-app-bar>
+
+  <br>
+
+  <div id="table-div" class="pl-15">
+    <Table v-if="users" :headers="headers" :users="users" />
+  </div>
 </template>
 
 
 <script>
   import UserService from '../services/user.service';
+  import Table from '../components/Table.vue'
   export default {
     name: 'UsersList',
+    components: {
+      Table
+    },
     data() {
       return {
         headers: [  
-          { name: "ID", value: "id", align: "start", sortable: true},
-          { name: "Fullname", value: "fullname", sortable: false},
-          { name: "Email", value: "email", sortable: false},
-          { name: "Created At", value: "created_at", sortable: true}
+          { text: "ID", value: "id", sortable: true},
+          { text: "FULLNAME", value: "fullname", sortable: true},
+          { text: "EMAIL", value: "email", sortable: true},
         ],
         users: null
       }
@@ -51,14 +39,12 @@
         }
       );
     },
-    methods: {
-      format (date) {
-        date = new Date(date)
-        const day = `${date.getUTCDate()}`.padStart(2, '0')
-        const month = `${date.getUTCMonth() + 1}`.padStart(2, '0')
-        const year = date.getFullYear()
-        return `${month}/${day}/${year}`
-      }
-    },
   }
 </script>
+
+<style>
+#table-div {
+  padding-top: 20px;
+  max-width: 1200px;
+}
+</style>

@@ -3,7 +3,7 @@
     v-model="drawer"
     app
     clipped
-    color="#9ACD32"
+    color="#E2E2E2"
   >
     <v-list>
       <v-list
@@ -19,7 +19,7 @@
 
     <v-divider></v-divider>
 
-    <v-list dense nav>
+    <v-list>
       <v-list-item
       v-for="item in items"
       :key="item.title"
@@ -27,7 +27,7 @@
       link
       >
         <v-list-item-icon>
-          <v-icon>{{ item.icon }}</v-icon>
+          <v-icon color="#9ACD32">{{ item.icon }}</v-icon>
         </v-list-item-icon>
 
         <v-list-item-content>

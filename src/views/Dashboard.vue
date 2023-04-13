@@ -3,7 +3,7 @@
     <v-app-bar-title>Dashboard</v-app-bar-title>
   </v-app-bar>
   <div>
-    <h3 id="dashboard-title">Hi {{ fullname }}</h3>
+    <h3 id="dashboard-title">¡Bienvenido, {{ fullname }}!</h3>
   </div>
 </template>
 

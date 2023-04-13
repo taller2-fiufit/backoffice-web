@@ -6,17 +6,10 @@
   <div class="d-flex align-center justify-center" style="height: 75vh">
       <v-sheet width="400" class="mx-auto">
         <v-img
-          max-height="200"
-          :src="require('@/assets/login-logo.png')"
+          max-height="150"
+          :src="require('@/assets/admin-logo.png')"
           alt="kinetix logo"
-          class="ml-2 pointer"
-        ></v-img>
-
-        <v-img
-          max-height="70"
-          :src="require('@/assets/login-name.png')"
-          alt="kinetix name"
-          class="ml-2 pointer"
+          class="mb-6 pointer"
         ></v-img>
 
         <br>
@@ -33,27 +26,27 @@
 
           <div>
             <v-text-field
-              v-model="user.fullname"
+              v-model="fullname"
               name="fullname"
-              label="Full Name"
+              label="Nombre completo"
               type="text"
               placeholder="fullname"
               required
             ></v-text-field>
 
             <v-text-field
-              v-model="user.email"
+              v-model="email"
               name="email"
-              label="Email"
+              label="Correo electrónico"
               type="email"
               placeholder="email"
               required
             ></v-text-field>
           
             <v-text-field
-              v-model="user.password"
+              v-model="password"
               name="password"
-              label="Password"
+              label="Contraseña"
               type="password"
               placeholder="password"
               required
@@ -62,7 +55,7 @@
             <v-text-field
               v-model="confirmPassword"
               name="confirmPassword"
-              label="Confirm Password"
+              label="Confirmar contraseña"
               type="password"
               placeholder="confirm password"
               required
@@ -74,7 +67,7 @@
               <span
                 class="spinner-border spinner-border-sm"
               ></span>
-              <span>Sign Up</span>
+              <span>Registrar administrador</span>
             </v-btn> 
           </div>
         </v-form>
@@ -84,11 +77,13 @@
 
 
 <script>
-  // import axios from 'axios'
   import User from '../models/user';
   import ErrorAlert from '../components/ErrorAlert.vue'
   import SuccessAlert from '../components/SuccessAlert.vue'
   import UserService from '../services/user.service';
+  import useVuelidate from '@vuelidate/core';
+  import { required } from "@vuelidate/validators";
+
   export default {
     name: "Register",
     components: {
@@ -97,38 +92,48 @@
     },
     data() {
       return {
+        v$: useVuelidate(),
         successful: null,
         message: "",
-        user: new User('', ''),
+        fullname: "",
+        password: "",
+        email: "",
         confirmPassword: '',
       }
     },
     methods: {
       handleRegister() {
-        if (this.confirmPassword == this.user.password) {
-          UserService.registerNewAdmin(this.user).then(
+        this.loading = true;
+        let user = new User(this.fullname, this.email, this.password);
+        this.v$.$validate()
+        if (this.v$.$error) {
+          this.successful = false;
+          this.message = 'Los datos ingresados no son válidos';
+        } else if (this.confirmPassword == user.password) {
+          UserService.registerNewAdmin(user).then(
             (_) => {
               this.successful = true;
-              this.message = "User registered successfully";
-      
+              this.message = "El admin ha sido registrado correctamente";
             },
             (error) => {
-              /*this.message =
-                (error.response &&
-                  error.response.data &&
-                  error.response.data.message) ||
-                error.message ||
-                error.toString();*/
               this.successful = false;
-              this.loading = false;
               this.message = error.response.data.message;
             }
           );
         } else {
           this.successful = false;
-          this.message = 'Passwords do not match'
+          this.message = 'Las contraseñas no coinciden'
         }
+        this.loading = false;
       }
-    }
+    },
+    validations() {
+      return {
+        fullname: { required },
+        email: { required },
+        password: { required },
+        confirmPassword: { required }
+      }
+  }
   }
 </script>

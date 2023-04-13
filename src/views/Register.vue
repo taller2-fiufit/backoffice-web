@@ -9,10 +9,8 @@
           max-height="150"
           :src="require('@/assets/admin-logo.png')"
           alt="kinetix logo"
-          class="mb-6 pointer"
+          class="my-10 pointer"
         ></v-img>
-
-        <br>
 
         <v-form fast-fail @submit.prevent="handleRegister">
           
@@ -125,7 +123,7 @@
           this.message = 'Las contraseñas no coinciden'
         }
         this.loading = false;
-      }
+      },
     },
     validations() {
       return {

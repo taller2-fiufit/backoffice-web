@@ -2,11 +2,11 @@
   <v-alert
     color="success"
     icon="$success"
-    title="Registro exitoso!"
-    closable
+    title="¡REGISTRO EXITOSO!"
   >
     {{message}}
   </v-alert>
+  <br />
 </template>
   
 <script>

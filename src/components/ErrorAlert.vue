@@ -2,13 +2,12 @@
   <v-alert
     color="error"
     icon="$error"
-    title="ERROR!"
-    closable
+    title="¡ERROR!"
   >
     {{error}}
   </v-alert>
+  <br />
 </template>
-
 <script>
   export default {
     name: 'ErrorAlert',

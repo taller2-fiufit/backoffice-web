@@ -38,9 +38,9 @@
           placeholder="password"
           required
         ></v-text-field>
-        
+        <!--
         <router-link to="forgot" class="text-body-2 font-weight-regular">¿Olvidaste tu contraseña?</router-link>  
-
+        -->
         <br />
 
         <v-btn type="submit" color="#9ACD32" block class="mt-2" :disabled="loading">

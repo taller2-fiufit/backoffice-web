@@ -18,7 +18,7 @@
 <script>
   import Nav from './components/Nav.vue'
   import SideBarMenu from './components/SidebarMenu.vue'
-
+  
   export default {
     name: 'App',
     components: {

@@ -24,7 +24,7 @@
         <v-form fast-fail @submit.prevent="handleRegister">
           
           <div>
-            <ErrorAlert v-if="error" :error="error" />
+            <ErrorAlert v-if="successful == false" :error="message" />
           </div>
 
           <div>
@@ -97,38 +97,36 @@
     },
     data() {
       return {
-        successful: false,
-        message: "User registered successfully",
+        successful: null,
+        message: "",
         user: new User('', ''),
-        error: "",
         confirmPassword: '',
       }
     },
     methods: {
       handleRegister() {
-        // CHEQUEAR SI PASSWORD Y CONFIRM PASSWORD SON IGUALES
         if (this.confirmPassword == this.user.password) {
           UserService.registerNewAdmin(this.user).then(
-            (data) => {
+            (_) => {
               this.successful = true;
-              console.log(this.successful);
+              this.message = "User registered successfully";
+      
             },
             (error) => {
-              this.message =
+              /*this.message =
                 (error.response &&
                   error.response.data &&
                   error.response.data.message) ||
                 error.message ||
-                error.toString();
+                error.toString();*/
               this.successful = false;
               this.loading = false;
-              this.error = error.response.data.message;
-              console.log(this.error);
+              this.message = error.response.data.message;
             }
           );
         } else {
           this.successful = false;
-          this.error = 'Las contraseñas no coinciden'
+          this.message = 'Passwords do not match'
         }
       }
     }

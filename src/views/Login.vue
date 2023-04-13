@@ -43,7 +43,7 @@
 
         <br />
 
-        <v-btn @click="submitLogin" type="submit" color="#9ACD32" block class="mt-2" :disabled="loading">
+        <v-btn type="submit" color="#9ACD32" block class="mt-2" :disabled="loading">
           <span
             v-show="loading"
             class="spinner-border spinner-border-sm"
@@ -80,6 +80,15 @@ export default {
       error: ''
     };
   },
+  validations() {
+    return {
+      user: {
+        fullname: '',
+        password: { required },
+        email: { required }
+      }
+    }
+  },
   computed: {
     loggedIn() {
       return this.$store.state.auth.status.loggedIn;
@@ -91,14 +100,6 @@ export default {
     }
   },
   methods: {
-    submitLogin() {
-      this.v$.$validate() // checks all inputs
-      if (!this.v$.$error) { // ARREGLAR -> LA VALIDACION ESTA ANDANDO MAL
-        //alert('Form successfully submitted.')
-      } else {
-        //alert('Form failed validation')
-      }
-    },
     handleLogin() {
       this.error = ''
       this.loading = true;
@@ -121,11 +122,5 @@ export default {
       console.log(this.user)
     }
   },
-  validations() {
-    return {
-      email: { required },
-      password: { required }
-    }
-  }
 }
 </script>

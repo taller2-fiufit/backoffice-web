@@ -3,19 +3,23 @@
     v-model="drawer"
     app
     clipped
-    color="#9ACD32"
+    color="#E2E2E2"
   >
     <v-list>
-      <v-list-item
-        prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
-        title="Sandra Adams"
-        subtitle="sandra_a88@gmailcom"
-      ></v-list-item>
+      <v-list
+        :items="user_info"
+        item-props
+        lines="three"
+      >
+        <template v-slot:subtitle="{ subtitle }">
+          <div v-html="subtitle"></div>
+        </template>
+      </v-list>
     </v-list>
 
     <v-divider></v-divider>
 
-    <v-list dense nav>
+    <v-list>
       <v-list-item
       v-for="item in items"
       :key="item.title"
@@ -23,7 +27,7 @@
       link
       >
         <v-list-item-icon>
-          <v-icon>{{ item.icon }}</v-icon>
+          <v-icon color="#9ACD32">{{ item.icon }}</v-icon>
         </v-list-item-icon>
 
         <v-list-item-content>
@@ -35,16 +39,38 @@
 </template>
 
 <script>
+  import UserService from '../services/user.service';
   export default {
     name: 'SidebarMenu',
     data: () => ({ 
       drawer: null,
+      user_info: [
+        {
+          prependAvatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+          title: '',
+          subtitle: '',
+        },
+      ],
       items: [
         { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/' },
         { title: 'Usuarios', icon: 'mdi-account-group', route: '/users' },
         { title: 'Planes', icon: 'mdi-dumbbell', route: '/plans' },
-        { title: 'Métricas', icon: 'mdi-poll', route: '/metrics' }
-      ]
-    })
+        { title: 'Métricas', icon: 'mdi-poll', route: '/metrics' },
+        { title: 'Registro de nuevos admins', icon: 'mdi-account-tie', route: '/register'}
+      ],
+      fullname: '',
+      email: ''
+    }),
+    mounted() {
+      UserService.getUserInfo().then(
+        response => {
+          this.user_info[0].title = response.data.fullname;
+          this.user_info[0].subtitle = response.data.email;
+        },
+        error => {
+
+        },
+      )
+    }
   }
 </script>

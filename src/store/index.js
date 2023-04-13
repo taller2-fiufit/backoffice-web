@@ -1,14 +1,12 @@
-import { createStore } from 'vuex'
+import { createStore } from 'vuex';
+import { auth } from './auth.module';
+import { sidebar } from './sidebar-module';
 
-export default createStore({
-  state: {
-  },
-  getters: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
+const store = createStore({
   modules: {
+    auth,
+    sidebar
   }
-})
+});
+
+export default store;

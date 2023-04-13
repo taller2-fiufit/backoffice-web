@@ -3,26 +3,23 @@ import App from './App.vue'
 import '@mdi/font/css/materialdesignicons.css'
 import router from './router'
 import store from './store'
-// import './axios'
-// import store from './vuex'
 
-// import * as Vue from 'vue/dist/vue.common.js'
-// 
-// var Vue = require('vue')
-// Vue.prototype.$store = store;
-
-// Vuetify
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
+import { VDataTable } from 'vuetify/labs/VDataTable'
+import Vue3EasyDataTable from 'vue3-easy-data-table';
+import 'vue3-easy-data-table/dist/style.css';
 
 const vuetify = createVuetify({
   components,
   directives,
+  VDataTable,
 })
 
 const app = createApp(App)
+app.component('Datatable', Vue3EasyDataTable);
 app.use(vuetify)
 app.use(router)
 app.use(store)

@@ -19,7 +19,7 @@
       ></v-img>
 
       <template v-slot:append>
-        <a href="javascript:void(0)" @click="logOut" class="nav-link" v-if="currentUser">Logout</a>
+        <a href="javascript:void(0)" @click="logOut" class="nav-link" v-if="currentUser">Cerrar sesión</a>
       </template>
     </v-app-bar>
 </template>

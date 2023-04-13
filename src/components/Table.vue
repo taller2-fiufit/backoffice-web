@@ -26,7 +26,7 @@
   --easy-table-header-font-size: 18px;
   --easy-table-header-height: 50px;
   --easy-table-header-font-color: #ffffff;
-  --easy-table-header-background-color: #8A8A8A;
+  --easy-table-header-background-color: #2a394c;
 
   --easy-table-body-item-padding: 0px 10px 0px 0px;
   --easy-table-body-row-font-size: 15px;

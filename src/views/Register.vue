@@ -1,13 +1,9 @@
-<!--
 <template>
-  <v-app-bar color="green" class="flex-grow-0" app dark>
-      <v-app-bar-title>Registro</v-app-bar-title>
+  <v-app-bar color="#9ACD32" class="flex-grow-0" app dark>
+    <v-app-bar-title>Registro</v-app-bar-title>
   </v-app-bar>
-</template>
--->
-
-<template>
-  <div class="d-flex align-center justify-center" style="height: 100vh">
+  
+  <div class="d-flex align-center justify-center" style="height: 75vh">
       <v-sheet width="400" class="mx-auto">
         <v-img
           max-height="200"
@@ -22,6 +18,8 @@
           alt="kinetix name"
           class="ml-2 pointer"
         ></v-img>
+
+        <br>
 
         <v-form fast-fail @submit.prevent="handleRegister">
           
@@ -69,6 +67,8 @@
               placeholder="confirm password"
               required
             ></v-text-field>
+
+            <br>
 
             <v-btn type="submit" color="#9ACD32" block class="mt-2">
               <span

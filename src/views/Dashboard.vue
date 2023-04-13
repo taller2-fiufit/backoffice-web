@@ -1,15 +1,9 @@
-<!--<template>
-  <v-app-bar color="green" class="flex-grow-0" app dark>
-      <v-app-bar-title>Dashboard</v-app-bar-title>
-  </v-app-bar>
-</template>-->
-
 <template>
-  <v-app-bar color="green" class="flex-grow-0" app dark>
-      <v-app-bar-title>Dashboard</v-app-bar-title>
+  <v-app-bar color="#9ACD32" class="flex-grow-0" app dark>
+    <v-app-bar-title>Dashboard</v-app-bar-title>
   </v-app-bar>
   <div>
-    <h3>Hi {{ fullname }}</h3>
+    <h3 id="dashboard-title">Hi {{ fullname }}</h3>
   </div>
 </template>
 
@@ -36,3 +30,10 @@
     }
   }
 </script>
+
+<style>
+#dashboard-title {
+  padding-left: 20px;
+  padding-top: 20px
+}
+</style>

@@ -32,7 +32,6 @@
     created() {
       UserService.getUserList().then(
         (response) => {
-          console.log(response.data);
           this.users = response.data;
         },
         (error) => {

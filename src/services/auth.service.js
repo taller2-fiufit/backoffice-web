@@ -1,9 +1,11 @@
 import axios from 'axios';
-const API_URL = 'https://svc-users-fedecolangelo.cloud.okteto.net/';
 import VueJwtDecode from 'vue-jwt-decode';
+
+const API_URL=process.env.VUE_APP_API_URL;
 
 class AuthService {
   login(user) {
+    console.log(API_URL);
     return axios
       .post(API_URL + 'tokens', {
         email: user.email,

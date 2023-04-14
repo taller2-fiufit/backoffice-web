@@ -4,10 +4,11 @@
     icon="$error"
     title="¡ERROR!"
   >
-    {{error}}
+    <span v-html="error"></span>
   </v-alert>
   <br />
 </template>
+
 <script>
   export default {
     name: 'ErrorAlert',

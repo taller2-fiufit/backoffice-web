@@ -96,7 +96,13 @@ export default {
       let user = new User('', this.email, this.password);
       this.v$.$validate()
       if (this.v$.$error) {
-        this.error = 'Los datos ingresados no son válidos';
+        this.error = 'Falta completar los siguientes campos:';
+        if (this.email == "") {
+          this.error += "<br>- correo electrónico"
+        }
+        if (this.password == "") {
+          this.error += "<br>- contraseña"
+        }
       } else {
         this.$store.dispatch("auth/login", user).then(
           () => {

@@ -3,7 +3,7 @@
     <v-app-bar-title>Registro</v-app-bar-title>
   </v-app-bar>
   
-  <div class="d-flex align-center justify-center" style="height: 75vh">
+  <div class="d-flex align-center justify-center" style="height: 80vh">
       <v-sheet width="400" class="mx-auto">
         <v-img
           max-height="150"
@@ -59,11 +59,9 @@
               required
             ></v-text-field>
 
-            <br>
-
             <v-btn type="submit" color="#9ACD32" block class="mt-2">
               <span
-                class="spinner-border spinner-border-sm"
+                class="my-14 spinner-border spinner-border-sm"
               ></span>
               <span>Registrar administrador</span>
             </v-btn> 
@@ -106,7 +104,20 @@
         this.v$.$validate()
         if (this.v$.$error) {
           this.successful = false;
-          this.message = 'Los datos ingresados no son válidos';
+          this.message = 'Falta completar los siguientes campos:';
+          if (this.fullname == "") {
+            this.message += "<br>- nombre completo"
+          }
+          if (this.email == "") {
+            this.message += "<br>- correo electrónico"
+          }
+          if (this.password == "") {
+            this.message += "<br>- contraseña"
+          }
+          if (this.confirmPassword == "") {
+            this.message += "<br>- confirmar contraseña"
+          }
+          console.log(this.error)
         } else if (this.confirmPassword == user.password) {
           UserService.registerNewAdmin(user).then(
             (_) => {

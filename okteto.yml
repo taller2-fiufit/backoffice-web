@@ -16,6 +16,7 @@ build:
 deploy:
   - okteto build -t okteto.dev/backoffice
   - kubectl apply -f k8s
+  - kubectl rollout restart deployment backoffice-deployment
 # The dependencies section defines other git repositories to be deployed as part of your development environment
 # More info: https://www.okteto.com/docs/reference/manifest/#dependencies
 # dependencies:

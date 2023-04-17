@@ -5,7 +5,7 @@ const API_URL=process.env.VUE_APP_TRAINING_API_URL;
 
 class TrainingPlanService {
   getTrainingPlanList() {
-    return axios.get(API_URL + 'trainings/', { headers: authHeader() });
+    return axios.get(API_URL + 'trainings', { headers: authHeader() });
   }
 
   getTrainingPlanInfoById(planId) {

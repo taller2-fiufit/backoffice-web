@@ -25,7 +25,7 @@
           { text: "ID", value: "id", sortable: true},
           { text: "TITLE", value: "title", sortable: true},
           { text: "TYPE", value: "type", sortable: true},
-          { text: "ACTIONS", value: "actions", fixed: true}
+          { text: "ACTIONS", value: "actions"}
         ],
         trainingPlans: null
       }

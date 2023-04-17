@@ -1,4 +1,33 @@
 <template>
+  <v-app-bar color="#9ACD32" class="flex-grow-0" app dark>
+    <v-card-actions>
+      <v-btn icon @click="$router.back()"><v-icon color="#2b3c4b">mdi-keyboard-backspace</v-icon></v-btn>
+    </v-card-actions>
+    <v-app-bar-title color="#2b3c4b">Usuarios / {{user.fullname}}</v-app-bar-title>
+  </v-app-bar>
+  <v-card
+    class="mx-5 my-5"
+    variant="outlined"
+    color="#9ACD32"
+  >
+    <v-card-item>
+      <div>
+        <div class="text-overline mb-1">
+          OVERLINE
+        </div>
+        <div class="text-h6 mb-1">
+          Headline
+        </div>
+        <div class="text-caption">Greyhound divisely hello coldly fonwderfully</div>
+      </div>
+    </v-card-item>
+
+    <v-card-actions>
+      <v-btn variant="outlined">
+        Button
+      </v-btn>
+    </v-card-actions>
+  </v-card>
   <ng-container>
   <div class="bg-white shadow overflow-hidden rounded-md">
       <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
@@ -16,7 +45,7 @@
             <dd
               class="mt-1 text-md leading-5 text-gray-900 sm:mt-0 sm:col-span-2"
             >
-              {{ this.plan[0].id }}
+              {{ this.user.id }}
             </dd>
           </div>
   
@@ -27,7 +56,7 @@
             <dd
               class="mt-1 text-md leading-5 text-gray-900 sm:mt-0 sm:col-span-2"
             >
-              {{ this.plan[0].title }}
+              {{ this.user.title }}
             </dd>
           </div>
   
@@ -38,7 +67,7 @@
             <dd
               class="mt-1 text-md leading-5 text-gray-900 sm:mt-0 sm:col-span-2"
             >
-              {{ this.plan[0].description }}
+              {{ this.user.description }}
             </dd>
           </div>
   
@@ -49,7 +78,7 @@
             <dd
               class="mt-1 text-md leading-5 text-gray-900 sm:mt-0 sm:col-span-2"
             >
-              {{ this.plan[0].type }}
+              {{ this.user.type }}
             </dd>
           </div>
   
@@ -60,7 +89,7 @@
             <dd
               class="mt-1 text-md leading-5 text-gray-900 sm:mt-0 sm:col-span-2"
             >
-              {{ this.plan[0].difficulty }}
+              {{ this.user.difficulty }}
             </dd>
           </div>
         </dl>
@@ -79,8 +108,7 @@
       }
     },
     created() {
-      const userId = (this.$route.params.id).split(' ')[2];
-      UserService.getUserInfoById(userId).then(
+      UserService.getUserInfoById(this.$route.params.id).then(
         (response) => {
           this.user = response.data;
         },

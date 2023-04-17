@@ -19,11 +19,15 @@ class UserService {
     return axios.get(API_URL + 'users/', { headers: authHeader() });
   }
 
-  getUserInfo() {
+  getCurrentUserInfo() {
     let user = JSON.parse(localStorage.getItem('user'));
     let userId = VueJwtDecode.decode(user.access_token).sub;
     return axios.get(API_URL + 'users/' + userId);
- }
+  }
+
+  getUserInfoById(userId) {
+    return axios.get(API_URL + 'users/' + userId);
+  }
 }
 
 export default new UserService();

@@ -2,19 +2,41 @@
   <div>
     <Datatable
     :headers="headers"
-    :items="users"
+    :items="items"
     border-cell
     table-class-name="customize-table"
     header-text-direction="center"
-    body-text-direction="center"
-    />
+    body-text-direction="center">
+      <template #item-actions="item">
+        <div class="operation-wrapper">
+          <v-btn
+            color="primary lighten-2"
+            icon
+            small
+            @click="goToUserDetails(item.id)"
+            class="mr-2"
+          >
+            <v-icon>
+              mdi-eye
+            </v-icon>
+          </v-btn>
+        </div>
+      </template>
+    </Datatable>
   </div>
 </template>
 
 <script>
   export default {
     name: 'Table',
-    props: ['headers', 'users']
+    props: ['headers', 'items'],
+    methods: {
+      // TO DO: poner que sea goToPlanDetails o goToUserDetails dependiendo en cuál estas
+      goToUserDetails(id) {
+        console.log(id);
+        this.$router.push(`/users/ + ${id}`);
+      }
+    }
   }
 </script>
 

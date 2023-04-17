@@ -19,7 +19,7 @@
     },
 
     mounted() {
-      UserService.getUserInfo().then(
+      UserService.getCurrentUserInfo().then(
         response => {
           this.fullname = response.data.fullname;
         },

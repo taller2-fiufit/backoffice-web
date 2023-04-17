@@ -6,7 +6,7 @@
   <br>
 
   <div id="table-div" class="pl-15">
-    <Table v-if="users" :headers="headers" :users="users" />
+    <Table v-if="users" :headers="headers" :items="users" />
   </div>
 </template>
 

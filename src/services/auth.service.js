@@ -1,7 +1,7 @@
 import axios from 'axios';
 import VueJwtDecode from 'vue-jwt-decode';
 
-const API_URL=process.env.VUE_APP_API_URL;
+const API_URL=process.env.VUE_APP_USERS_API_URL;
 
 class AuthService {
   login(user) {

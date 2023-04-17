@@ -53,6 +53,14 @@ const routes = [
     }
   },
   {
+    path: '/plans/:id',
+    name: 'PlansDetail',
+    component: () => import('./views/PlansDetail.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
     path: '/metrics',
     name: 'Metrics',
     component: () => import('./views/Metrics.vue'),

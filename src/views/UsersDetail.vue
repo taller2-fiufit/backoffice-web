@@ -1,101 +1,126 @@
 <template>
+  <div v-if="user">
   <v-app-bar color="#9ACD32" class="flex-grow-0" app dark>
     <v-card-actions>
       <v-btn icon @click="$router.back()"><v-icon color="#2b3c4b">mdi-keyboard-backspace</v-icon></v-btn>
     </v-card-actions>
-    <v-app-bar-title color="#2b3c4b">Usuarios / {{user.fullname}}</v-app-bar-title>
+    <v-breadcrumbs :items="['Usuarios', user.fullname]">
+      <template v-slot:divider>
+        <v-icon icon="mdi-chevron-right"></v-icon>
+      </template>
+    </v-breadcrumbs>
   </v-app-bar>
   <v-card
     class="mx-5 my-5"
     variant="outlined"
-    color="#9ACD32"
   >
     <v-card-item>
-      <div>
-        <div class="text-overline mb-1">
-          OVERLINE
-        </div>
-        <div class="text-h6 mb-1">
-          Headline
-        </div>
-        <div class="text-caption">Greyhound divisely hello coldly fonwderfully</div>
-      </div>
+      <v-row>
+        <v-col cols="3" class="mt-2 mb-4"> 
+          <div class="text-overline">
+            Foto de perfil
+          </div>
+          <v-row align="center">
+            <v-img
+              max-width="200"
+              src='https://cdn.vuetifyjs.com/images/lists/1.jpg'
+              class="rounded-circle mx-auto my-5"
+            ></v-img>
+          </v-row>
+          <v-row align="center">
+            <v-chip
+              class="my-1 mx-auto"
+              color="secondary"
+              variant="outlined"
+            >
+              Cuenta de usuario
+              <v-icon end icon="mdi-account-outline"></v-icon>
+            </v-chip>
+          </v-row>
+          <v-row align="center">
+            <v-chip
+              class="my-1 mx-auto"
+              color="primary"
+              variant="outlined"
+            >
+              Cuenta de entrenador
+              <v-icon end icon="mdi-account-star-outline"></v-icon>
+            </v-chip>
+          </v-row>
+        </v-col>
+        <v-divider vertical thickness="2"></v-divider>
+        <v-col cols="7" class="mt-2 mb-4">
+          <div class="text-overline mx-auto">
+            Información del usuario
+          </div>
+          <v-row class="mt-1">
+            <v-col cols="10" offset="2">
+              <v-text-field
+                class="ml-3"
+                :value="user.id"
+                label="ID"
+                prepend-icon="mdi-pound"
+                readonly
+                variant="underlined"
+                persistent-placeholder
+              ></v-text-field>
+              <v-text-field
+                class="ml-3"
+                :value="user.fullname"
+                label="Nombre completo"
+                prepend-icon="mdi-run"
+                readonly
+                variant="underlined"
+                persistent-placeholder
+              ></v-text-field>
+              <v-text-field
+                class="ml-3"
+                :value="user.email"
+                label="Correo electrónico"
+                prepend-icon="mdi-email-outline"
+                readonly
+                variant="underlined"
+                persistent-placeholder
+              ></v-text-field>
+              <v-text-field
+                class="ml-3"
+                :value="user.id"
+                label="Fecha de registro"
+                prepend-icon="mdi-calendar-account-outline"
+                readonly
+                variant="underlined"
+                persistent-placeholder
+              ></v-text-field>
+              <v-text-field
+                class="ml-3"
+                :value="user.id"
+                prefix="$"
+                label="Saldo"
+                prepend-icon="mdi-wallet-bifold-outline"
+                readonly
+                variant="underlined"
+                persistent-placeholder
+              ></v-text-field>
+            </v-col>
+          </v-row>
+        </v-col>
+        <v-col align="right">
+          <v-btn
+            color="#FF0000"
+            size="small"
+            @click=""
+            class="my-2"
+          >
+            <v-icon class="mr-2">
+              mdi-block-helper
+            </v-icon>
+            BLOQUEAR
+          </v-btn>
+        </v-col>
+      </v-row>
     </v-card-item>
-
-    <v-card-actions>
-      <v-btn variant="outlined">
-        Button
-      </v-btn>
-    </v-card-actions>
   </v-card>
-  <ng-container>
-  <div class="bg-white shadow overflow-hidden rounded-md">
-      <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
-        <div class="rich-text">
-          <h2>Detalle de Usuario</h2>
-        </div>
-      </div>
-      <div class="p-0">
-        <dl>
-          <!--ID-->
-          <div
-            class="mt-0 grid grid-cols-3 gap-4 border-t border-gray-200 px-6 py-5"
-          >
-            <dt class="text-md leading-5 font-medium text-gray-900">ID</dt>
-            <dd
-              class="mt-1 text-md leading-5 text-gray-900 sm:mt-0 sm:col-span-2"
-            >
-              {{ this.user.id }}
-            </dd>
-          </div>
-  
-          <div
-            class="mt-0 grid grid-cols-3 gap-4 border-t border-gray-200 px-6 py-5"
-          >
-            <dt class="text-md leading-5 font-medium text-gray-900">Títutlo</dt>
-            <dd
-              class="mt-1 text-md leading-5 text-gray-900 sm:mt-0 sm:col-span-2"
-            >
-              {{ this.user.title }}
-            </dd>
-          </div>
-  
-          <div
-            class="mt-0 grid grid-cols-3 gap-4 border-t border-gray-200 px-6 py-5"
-          >
-            <dt class="text-md leading-5 font-medium text-gray-900">Descripción</dt>
-            <dd
-              class="mt-1 text-md leading-5 text-gray-900 sm:mt-0 sm:col-span-2"
-            >
-              {{ this.user.description }}
-            </dd>
-          </div>
-  
-          <div
-            class="mt-0 grid grid-cols-3 gap-4 border-t border-gray-200 px-6 py-5"
-          >
-            <dt class="text-md leading-5 font-medium text-gray-900">Tipo</dt>
-            <dd
-              class="mt-1 text-md leading-5 text-gray-900 sm:mt-0 sm:col-span-2"
-            >
-              {{ this.user.type }}
-            </dd>
-          </div>
-  
-          <div
-            class="mt-0 grid grid-cols-3 gap-4 border-t border-gray-200 px-6 py-5"
-          >
-            <dt class="text-md leading-5 font-medium text-gray-900">Dificultad</dt>
-            <dd
-              class="mt-1 text-md leading-5 text-gray-900 sm:mt-0 sm:col-span-2"
-            >
-              {{ this.user.difficulty }}
-            </dd>
-          </div>
-        </dl>
-      </div>
-    </div>
-  </ng-container>
+  </div>
 </template>
   
 <script>
@@ -111,6 +136,7 @@
       UserService.getUserInfoById(this.$route.params.id).then(
         (response) => {
           this.user = response.data;
+          console.log(this.user)
         },
         (error) => {
         }

@@ -35,7 +35,7 @@
         (response) => {
           let data = response.data;
           for (var index in data) {
-            data[index].avator = "https://github.com/HC200ok/vue3-easy-data-table/blob/main/images/nba/Stephen.png?raw=true";
+            data[index].avator = 'https://cdn.vuetifyjs.com/images/lists/1.jpg';
           }
           this.users = data
         },

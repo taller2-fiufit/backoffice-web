@@ -1,72 +1,75 @@
 <template>
-  <ng-container>
-  <div class="bg-white shadow overflow-hidden rounded-md">
-      <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
-        <div class="rich-text">
-          <h2>Detalle de Plan de Entrenamiento</h2>
-        </div>
-      </div>
-      <div class="p-0">
-        <dl>
-          <!--ID-->
-          <div
-            class="mt-0 grid grid-cols-3 gap-4 border-t border-gray-200 px-6 py-5"
-          >
-            <dt class="text-md leading-5 font-medium text-gray-900">ID</dt>
-            <dd
-              class="mt-1 text-md leading-5 text-gray-900 sm:mt-0 sm:col-span-2"
-            >
-              {{ this.plan[0].id }}
-            </dd>
+  <div v-if="this.plan">
+    <v-app-bar color="#9ACD32" class="flex-grow-0" app dark>
+      <v-card-actions>
+        <v-btn icon @click="$router.back()"><v-icon color="#2b3c4b">mdi-keyboard-backspace</v-icon></v-btn>
+      </v-card-actions>
+      <v-breadcrumbs :items="['Planes', plan.title]">
+        <template v-slot:divider>
+          <v-icon icon="mdi-chevron-right"></v-icon>
+        </template>
+      </v-breadcrumbs>
+    </v-app-bar>
+    <v-card
+    class="mx-5 my-5"
+    variant="outlined"
+    >
+    <v-card-item>
+      <v-row>
+        <v-col cols="7" class="mt-2 mb-4"> 
+          <div class="text-overline">
+            Información del plan
           </div>
-  
-          <div
-            class="mt-0 grid grid-cols-3 gap-4 border-t border-gray-200 px-6 py-5"
-          >
-            <dt class="text-md leading-5 font-medium text-gray-900">Títutlo</dt>
-            <dd
-              class="mt-1 text-md leading-5 text-gray-900 sm:mt-0 sm:col-span-2"
-            >
-              {{ this.plan[0].title }}
-            </dd>
+          <v-row justify="center" class="mt-5">
+            <div class="text-h5">
+              <v-icon end icon="mdi-dumbbell"></v-icon>
+              {{ plan.title }}
+            </div>
+          </v-row>
+          <v-row justify="center" class="mt-4">
+            <v-chip color="#9ACD32" text-color="white">{{ plan.type }}</v-chip>
+          </v-row>
+          <v-row>
+            <v-col cols="8" offset="2" class="mt-4">
+              <v-row>
+                <v-text-field
+                  :value="plan.id"
+                  label="ID"
+                  prepend-icon="mdi-pound"
+                  readonly
+                  variant="underlined"
+                  persistent-placeholder
+                ></v-text-field>
+                <v-text-field
+                  class="ml-9"
+                  :value="plan.difficulty"
+                  label="Difficulty"
+                  prepend-icon="mdi-weight-lifter"
+                  readonly
+                  variant="underlined"
+                  persistent-placeholder
+                  suffix="pts"
+                ></v-text-field>
+              </v-row>
+              <div class="text-caption"> {{ plan.description }} </div>
+            </v-col>
+          </v-row>
+        </v-col>
+        <v-divider vertical thickness="2"></v-divider>
+        <v-col cols="4" class="mt-2 mb-4">
+          <div class="text-overline">
+            Contenido multimedia
           </div>
-  
-          <div
-            class="mt-0 grid grid-cols-3 gap-4 border-t border-gray-200 px-6 py-5"
-          >
-            <dt class="text-md leading-5 font-medium text-gray-900">Descripción</dt>
-            <dd
-              class="mt-1 text-md leading-5 text-gray-900 sm:mt-0 sm:col-span-2"
-            >
-              {{ this.plan[0].description }}
-            </dd>
-          </div>
-  
-          <div
-            class="mt-0 grid grid-cols-3 gap-4 border-t border-gray-200 px-6 py-5"
-          >
-            <dt class="text-md leading-5 font-medium text-gray-900">Tipo</dt>
-            <dd
-              class="mt-1 text-md leading-5 text-gray-900 sm:mt-0 sm:col-span-2"
-            >
-              {{ this.plan[0].type }}
-            </dd>
-          </div>
-          
-          <div
-            class="mt-0 grid grid-cols-3 gap-4 border-t border-gray-200 px-6 py-5"
-          >
-            <dt class="text-md leading-5 font-medium text-gray-900">Dificultad</dt>
-            <dd
-              class="mt-1 text-md leading-5 text-gray-900 sm:mt-0 sm:col-span-2"
-            >
-              {{ this.plan[0].difficulty }}
-            </dd>
-          </div>
-        </dl>
-      </div>
-    </div>
-  </ng-container>
+          <v-img
+            max-width="200"
+            src='https://cdn.vuetifyjs.com/images/lists/1.jpg'
+            class="rounded-circle mx-auto"
+          ></v-img>
+        </v-col>
+      </v-row>
+    </v-card-item>
+  </v-card>
+  </div>
 </template>
 
 <script>
@@ -80,8 +83,7 @@
       }
     },
     created() {
-      const planId = (this.$route.params.id).split(' ')[2];
-      TrainingPlanService.getTrainingPlanInfoById(planId).then(
+      TrainingPlanService.getTrainingPlanInfoById(this.$route.params.id).then(
         (response) => {
           this.plan = response.data;
         },

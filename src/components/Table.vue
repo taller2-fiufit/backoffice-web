@@ -10,11 +10,11 @@
       <template #item-actions="item">
         <div class="operation-wrapper">
           <v-btn
-            color="primary lighten-2"
+            color="#9ACD32"
             icon
-            small
+            size="small"
             @click="goToPlanDetails(item.id)"
-            class="mr-2"
+            class="my-2 ml-3"
           >
             <v-icon>
               mdi-eye
@@ -34,7 +34,7 @@
       // TO DO: poner que sea goToPlanDetails o goToUserDetails dependiendo en cuál estas
       goToPlanDetails(id) {
         console.log(id);
-        this.$router.push(`/plans/ + ${id}`);
+        this.$router.push(`/plans/${id}`);
       }
     }
   }

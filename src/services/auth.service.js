@@ -1,7 +1,7 @@
 import axios from 'axios';
 import VueJwtDecode from 'vue-jwt-decode';
 
-const API_URL=process.env.VUE_APP_API_URL;
+const API_URL=process.env.VUE_APP_USERS_API_URL;
 
 class AuthService {
   login(user) {
@@ -14,6 +14,7 @@ class AuthService {
         if (response.data.access_token) {
           localStorage.setItem('user', JSON.stringify(response.data));
           localStorage.setItem('user_data', JSON.stringify(user));
+          console.log(response.data.access_token)
         }
 
         return response.data;

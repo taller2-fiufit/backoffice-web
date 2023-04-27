@@ -50,7 +50,6 @@
     name: 'Table',
     props: ['headers', 'items'],
     methods: {
-      // TO DO: poner que sea goToPlanDetails o goToUserDetails dependiendo en cuál estas
       goToUserDetails(id) {
         this.$router.push(`/users/${id}`);
       }

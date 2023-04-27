@@ -6,18 +6,18 @@
   <br>
 
   <div id="table-div" class="mx-auto">
-    <Table v-if="users" :headers="headers" :items="users" />
+    <UsersTable v-if="users" :headers="headers" :items="users" />
   </div>
 </template>
 
 
 <script>
   import UserService from '../services/user.service';
-  import Table from '../components/Table.vue'
+  import UsersTable from '../components/UsersTable.vue'
   export default {
     name: 'UsersList',
     components: {
-      Table
+      UsersTable
     },
     data() {
       return {

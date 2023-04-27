@@ -4,6 +4,7 @@
       :headers="headers"
       :items="items"
       border-cell
+      empty-message="No hay planes registrados."
       table-class-name="customize-table"
       header-text-direction="center"
       body-text-direction="center">

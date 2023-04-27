@@ -5,8 +5,8 @@
 
   <br>
 
-  <div id="table-div" class="pl-15">
-    <PlansTable v-if="trainingPlans" :headers="headers" :items="trainingPlans" />
+  <div id="table-div" class="mx-auto">
+    <PlansTable :headers="headers" :items="trainingPlans" />
   </div>
 </template>
 
@@ -27,7 +27,7 @@
           { text: "TYPE", value: "type", sortable: true},
           { text: "ACTIONS", value: "actions"}
         ],
-        trainingPlans: null
+        trainingPlans: []
       }
     },
     created() {

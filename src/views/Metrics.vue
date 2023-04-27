@@ -99,7 +99,33 @@
     data() {
       return {
         tab: null,
+        usersMetrics: null,
+        trainingPlansMetrics: null,
+        transactionsMetrics: null,
       };
+    },
+    created() {
+      MetricsService.getUsersMetrics().then(
+        (response) => {
+          this.usersMetrics = response.data;
+        },
+        (error) => {
+        }
+      );
+      MetricsService.getTrainingPlansMetrics().then(
+        (response) => {
+          this.trainingPlansMetrics = response.data;
+        },
+        (error) => {
+        }
+      );
+      MetricsService.getTransactionsMetrics().then(
+        (response) => {
+          this.transactionMetrics = response.data;
+        },
+        (error) => {
+        }
+      );
     },
   }
 </script>

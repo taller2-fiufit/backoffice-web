@@ -13,7 +13,7 @@
 
 <script>
   import TrainingPlanService from '../services/training-plan.service';
-  import PlansTable from '../components/Table.vue'
+  import PlansTable from '../components/PlansTable.vue'
   export default {
     name: 'Plans',
     components: {

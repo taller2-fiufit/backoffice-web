@@ -28,17 +28,6 @@
               mdi-eye
             </v-icon>
           </v-btn>
-          <v-btn
-            color="#9ACD32"
-            icon
-            size="small"
-            @click=""
-            class="my-2 ml-5"
-          >
-            <v-icon>
-              mdi-trash-can
-            </v-icon>
-          </v-btn>
         </div>
       </template>
     </Datatable>

@@ -11,9 +11,9 @@
     </v-breadcrumbs>
   </v-app-bar>
   <v-card
-    class="mx-5 my-5"
-    variant="outlined"
+    class="mx-5 my-5 rounded-sm"
   >
+  <v-sheet :color="this.user.isBlocked ? '#FF0000' : '#9ACD32'" height="6"></v-sheet>
     <v-card-item>
       <v-row>
         <v-col cols="3" class="mt-2 mb-4"> 
@@ -30,8 +30,7 @@
           <v-row align="center">
             <v-chip
               class="my-1 mx-auto"
-              color="secondary"
-              variant="outlined"
+              color="#8AB82D"
             >
               Cuenta de usuario
               <v-icon end icon="mdi-account-outline"></v-icon>
@@ -40,8 +39,7 @@
           <v-row align="center">
             <v-chip
               class="my-1 mx-auto"
-              color="primary"
-              variant="outlined"
+              color="#8AB82D"
             >
               Cuenta de entrenador
               <v-icon end icon="mdi-account-star-outline"></v-icon>
@@ -56,7 +54,7 @@
           <v-row class="mt-1">
             <v-col cols="10" offset="2">
               <v-text-field
-                class="ml-3"
+                class="ml-4"
                 :value="user.id"
                 label="ID"
                 prepend-icon="mdi-pound"
@@ -65,7 +63,7 @@
                 persistent-placeholder
               ></v-text-field>
               <v-text-field
-                class="ml-3"
+                class="ml-4"
                 :value="user.fullname"
                 label="Nombre completo"
                 prepend-icon="mdi-run"
@@ -74,7 +72,7 @@
                 persistent-placeholder
               ></v-text-field>
               <v-text-field
-                class="ml-3"
+                class="ml-4"
                 :value="user.email"
                 label="Correo electrónico"
                 prepend-icon="mdi-email-outline"
@@ -83,16 +81,17 @@
                 persistent-placeholder
               ></v-text-field>
               <v-text-field
-                class="ml-3"
+                class="ml-4"
                 :value="user.id"
                 label="Fecha de registro"
                 prepend-icon="mdi-calendar-account-outline"
                 readonly
                 variant="underlined"
                 persistent-placeholder
-              ></v-text-field>
+              >
+              </v-text-field>
               <v-text-field
-                class="ml-3"
+                class="ml-4"
                 :value="user.id"
                 prefix="$"
                 label="Saldo"
@@ -108,13 +107,13 @@
           <v-btn
             color="#FF0000"
             size="small"
-            @click=""
+            v-on:click="()=>isBlocked?unblockUser():blockUser()"
             class="my-2"
           >
             <v-icon class="mr-2">
               mdi-block-helper
             </v-icon>
-            BLOQUEAR
+            {{ isBlocked ? 'DESBLOQUEAR' : 'BLOQUEAR' }}
           </v-btn>
         </v-col>
       </v-row>
@@ -136,11 +135,30 @@
       UserService.getUserInfoById(this.$route.params.id).then(
         (response) => {
           this.user = response.data;
-          console.log(this.user)
+          this.user.isBlocked = false;
         },
         (error) => {
         }
       );
+    },
+    computed: {
+      isBlocked() {
+        return this.user.isBlocked
+      }
+    },
+    methods: {
+      blockUser() {
+        this.user.isBlocked = true
+      },
+      unblockUser() {
+        this.user.isBlocked = false
+      }
     }
   }
 </script>
+
+<style>
+.ml-4 .v-icon {
+    color: #7CA528 !important;
+}
+</style>

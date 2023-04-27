@@ -19,10 +19,22 @@
       ></v-img>
 
       <template v-slot:append>
-        <a href="javascript:void(0)" @click="logOut" class="nav-link" v-if="currentUser" style="color:#ffffff;font-family:monospace">Cerrar sesión</a>
+        <v-btn
+          color="#9ACD32"
+          icon
+          size="x-large"
+          @click="logOut"
+          class="ml-12"
+        >
+          <v-icon>
+            mdi-logout
+          </v-icon>
+        </v-btn>
       </template>
     </v-app-bar>
 </template>
+
+
 
 <script>
 

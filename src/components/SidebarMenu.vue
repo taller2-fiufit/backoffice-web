@@ -62,7 +62,7 @@
       email: ''
     }),
     mounted() {
-      UserService.getUserInfo().then(
+      UserService.getCurrentUserInfo().then(
         response => {
           this.user_info[0].title = response.data.fullname;
           this.user_info[0].subtitle = response.data.email;

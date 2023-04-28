@@ -13,10 +13,10 @@
   <v-card
     class="mx-5 my-5 rounded-sm"
   >
-  <v-sheet :color="this.user.isBlocked ? '#FF0000' : '#9ACD32'" height="6"></v-sheet>
+    <v-sheet :color="this.user.isBlocked ? '#FF0000' : '#9ACD32'" height="6"></v-sheet>
     <v-card-item>
       <v-row>
-        <v-col cols="3" class="mt-2 mb-4"> 
+        <v-col cols="3" class="mt-2 mb-10"> 
           <div class="text-overline">
             Foto de perfil
           </div>
@@ -51,17 +51,27 @@
           <div class="text-overline mx-auto">
             Información del usuario
           </div>
-          <v-row class="mt-1">
+          <v-row class="mt-7">
             <v-col cols="10" offset="2">
-              <v-text-field
-                class="ml-4"
-                :value="user.id"
-                label="ID"
-                prepend-icon="mdi-pound"
-                readonly
-                variant="underlined"
-                persistent-placeholder
-              ></v-text-field>
+              <v-row class="ml-4 mb-1">
+                <v-text-field
+                  :value="user.id"
+                  label="ID"
+                  prepend-icon="mdi-pound"
+                  readonly
+                  variant="underlined"
+                  persistent-placeholder
+                ></v-text-field>
+                <v-text-field
+                  class="ml-4"
+                  :value="user.id"
+                  label="Fecha de registro"
+                  prepend-icon="mdi-calendar-account-outline"
+                  readonly
+                  variant="underlined"
+                  persistent-placeholder
+                ></v-text-field>
+              </v-row>
               <v-text-field
                 class="ml-4"
                 :value="user.fullname"
@@ -80,16 +90,6 @@
                 variant="underlined"
                 persistent-placeholder
               ></v-text-field>
-              <v-text-field
-                class="ml-4"
-                :value="user.id"
-                label="Fecha de registro"
-                prepend-icon="mdi-calendar-account-outline"
-                readonly
-                variant="underlined"
-                persistent-placeholder
-              >
-              </v-text-field>
               <v-text-field
                 class="ml-4"
                 :value="user.id"

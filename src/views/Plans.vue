@@ -36,6 +36,13 @@
           this.trainingPlans = response.data;
         },
         (error) => {
+          this.trainingPlans = [{
+            "id": 1,
+            "title": "Split",
+            "type": "walk",
+            "difficulty": 5,
+            "description": "El split, conocido también como apertura de piernas, spagat o grand écart, es una posición física en la cual las piernas están alineadas en lateral o frontalmente (son colineales) una con la otra y están extendidas en direcciones opuestas."
+          }]
         }
       );
     },

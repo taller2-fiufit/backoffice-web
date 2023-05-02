@@ -4,7 +4,7 @@
   </v-app-bar>
 
   <v-card class="mx-5 my-5 rounded-sm">
-    <v-tabs v-model="tab" align-tabs="center" color="primary lighten-3">
+    <v-tabs v-model="tab" align-tabs="center" color="#9ACD32">
       <v-tabs-slider></v-tabs-slider>
       <v-tab value="users">Usuarios</v-tab>
       <v-tab value="plans">Entrenamientos</v-tab>
@@ -125,6 +125,7 @@
       MetricsService.getUsersMetrics().then(
         (response) => {
           this.usersMetrics = response.data;
+          console.log(this.usersMetrics)
         },
         (error) => {
         }
@@ -132,6 +133,7 @@
       MetricsService.getTrainingPlansMetrics().then(
         (response) => {
           this.trainingPlansMetrics = response.data;
+          console.log(this.trainingPlansMetrics)
         },
         (error) => {
         }

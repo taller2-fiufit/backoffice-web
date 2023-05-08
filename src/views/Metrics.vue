@@ -18,7 +18,61 @@
         <v-window-item value="users">
           <v-card flat>
             <v-container>
+              <v-card-title class="text-center pb-10">Métricas Generales</v-card-title>
               <v-row>
+                <v-col cols="6">
+                  <v-row>
+                    <v-col cols="12" class="my-0 py-0">
+                      <v-card-title>Métricas de Registro</v-card-title>
+                      <v-space></v-space>
+                      <v-card-text v-if="this.usersMetrics">Usuarios registrados utilizando mail y contraseña: {{this.usersMetrics.signinsWithMail}}</v-card-text>
+                      <v-card-text v-if="this.usersMetrics">Usuarios registrados utilizando identidad federada: {{this.usersMetrics.signinsWithFederatedId}}</v-card-text>
+                    </v-col>
+                  </v-row>
+                </v-col>
+                <v-divider vertical class="my-2 vertical-divider"></v-divider>
+                <v-col cols="6">
+                  <v-row>
+                    <v-col cols="12" class="my-0 py-0">
+                      <v-card-title>Métricas de Login</v-card-title>
+                      <v-space></v-space>
+                      <v-card-text v-if="this.usersMetrics">Usuarios loggueados utilizando mail y contraseña: {{this.usersMetrics.loginsWithMail}}</v-card-text>
+                      <v-card-text v-if="this.usersMetrics">Usuarios loggueados utilizando identidad federada:{{this.usersMetrics.loginsWithFederatedId}}</v-card-text>
+                    </v-col>
+                  </v-row>
+                </v-col>
+                <v-divider horizontal class="my-4 horizontal-divider"></v-divider>
+                <v-col cols="6">
+                  <v-row>
+                    <v-col cols="12" class="my-0 py-0">
+                      <v-card-title>Métricas de Usuarios Bloqueados</v-card-title>
+                      <v-space></v-space>
+                      <v-card-text v-if="this.usersMetrics">Cantidad de Usuarios: {{this.usersMetrics.signinsWithMail + this.usersMetrics.signinsWithFederatedId}}</v-card-text>
+                      <v-card-text v-if="this.usersMetrics">Cantidad de Usuarios Bloqueados: {{this.usersMetrics.blockedUsers}}</v-card-text>
+                    </v-col>
+                  </v-row>
+                </v-col>
+                <v-divider horizontal class="my-4 horizontal-divider"></v-divider>
+                <v-card-title class="text-center py-5">Métricas Por Fecha</v-card-title>
+                <v-col cols="12">
+                  <v-form fast-fail @submit.prevent="handleUserSelectedDates">
+                    <span>Elegir Fecha de Inicio y Fin para generar los gráficos a lo largo del tiempo</span>
+                    <div>
+                      <ErrorAlert v-if="usersError" :error="usersError" />
+                    </div>
+
+                    <v-text-field v-model="usersStartDate" name="usersStartDate" type="date" label="Fecha de inicio" required></v-text-field>
+                    <v-text-field v-model="usersEndDate" name="usersEndDate" type="date" label="Fecha de fin" required></v-text-field>
+
+                    <v-btn type="submit" color="#9ACD32" block class="mt-2">
+                      <span
+                        class="my-14 spinner-border spinner-border-sm"
+                      ></span>
+                      <span>Generar gráficos</span>
+                    </v-btn> 
+                  </v-form>
+                </v-col>
+                <v-space></v-space>
                 <v-col cols="6">
                   <v-row>
                     <v-col cols="12" class="my-0 py-0">
@@ -52,7 +106,7 @@
                 <v-col cols="6">
                   <v-row>
                     <v-col cols="12" class="my-0 py-0">
-                      <v-card-title>Métricas de usuarios bloqueados</v-card-title>
+                      <v-card-title>Métricas de Usuarios Bloqueados</v-card-title>
                       <v-space></v-space>
                       <v-card-text>Usuarios bloqueados a lo largo del tiempo</v-card-text>
                       <v-card-text>Cantidad de Usuarios Bloqueados vs No Bloqueados</v-card-text>
@@ -70,13 +124,14 @@
         <v-window-item value="plans">
           <v-card flat>
             <v-container>
+              <v-card-title class="text-center pb-10">Métricas Generales</v-card-title>
               <v-row>
                 <v-col cols="6">
                   <v-row>
                     <v-col cols="12" class="my-0 py-0">
                       <v-card-title>Métricas de Nuevos Entrenamientos</v-card-title>
                       <v-space></v-space>
-                      <v-card-text></v-card-text>
+                      <v-card-text>Cantidad de Entrenamientos creados: {{this.trainingPlansMetrics.trainingsCreated}}</v-card-text>
                     </v-col>
                   </v-row>
                 </v-col>
@@ -84,7 +139,47 @@
                 <v-col cols="6">
                   <v-row>
                     <v-col cols="12" class="my-0 py-0">
-                      <v-card-title>Métricas de Entrenamientos</v-card-title>
+                      <v-card-title>Métricas de Entrenamientos por Tipo</v-card-title>
+                      <v-space></v-space>
+                      <v-card-text>Cantidad de Tipos de Entrenamientos: </v-card-text>
+                    </v-col>
+                  </v-row>
+                </v-col>
+                <v-divider horizontal class="my-4 horizontal-divider"></v-divider>
+                <v-card-title class="text-center py-5">Métricas Por Fecha</v-card-title>
+                <v-col cols="12">
+                  <v-form fast-fail @submit.prevent="handleTrainingSelectedDates">
+                    <span>Elegir Fecha de Inicio y Fin para generar los gráficos a lo largo del tiempo</span>
+                    <div>
+                      <ErrorAlert v-if="trainingsError" :error="trainingsError" />
+                    </div>
+
+                    <v-text-field v-model="trainingsStartDate" name="trainingsStartDate" type="date" label="Fecha de inicio" required></v-text-field>
+                    <v-text-field v-model="trainingsEndDate" name="trainingsEndDate" type="date" label="Fecha de fin" required></v-text-field>
+
+                    <v-btn type="submit" color="#9ACD32" block class="mt-2">
+                      <span
+                        class="my-14 spinner-border spinner-border-sm"
+                      ></span>
+                      <span>Generar gráficos</span>
+                    </v-btn> 
+                  </v-form>
+                </v-col>
+                <v-space></v-space>
+                <v-col cols="6">
+                  <v-row>
+                    <v-col cols="12" class="my-0 py-0">
+                      <v-card-title>Métricas de Nuevos Entrenamientos</v-card-title>
+                      <v-space></v-space>
+                      <v-card-text>Cantidad de Entrenamientos creados a lo largo del tiempo</v-card-text>
+                    </v-col>
+                  </v-row>
+                </v-col>
+                <v-divider vertical class="my-2 vertical-divider"></v-divider>
+                <v-col cols="6">
+                  <v-row>
+                    <v-col cols="12" class="my-0 py-0">
+                      <v-card-title>Métricas de Entrenamientos por Tipo</v-card-title>
                       <v-space></v-space>
                       <v-card-text></v-card-text>
                     </v-col>
@@ -120,6 +215,9 @@
 
 <script>
   import MetricsService from '../services/metrics.service';
+  import ErrorAlert from '../components/ErrorAlert.vue'
+  import useVuelidate from '@vuelidate/core';
+  import { required } from "@vuelidate/validators";
   import { BarChart, useBarChart } from 'vue-chart-3';
   import { Chart, registerables } from 'chart.js';
   import { computed, ref } from "vue";
@@ -129,28 +227,41 @@
   export default {
     name: 'Metrics',
     components: {
+      ErrorAlert,
       BarChart
     },
     data() {
       return {
         tab: null,
+        // Selected dates
+        v$: useVuelidate(),
+        loading: false,
+        usersStartDate: '',
+        usersEndDate: '',
+        usersError: '',
+        trainingsStartDate: '',
+        trainingsEndDate: '',
+        trainingsError: '',
         // Metrics
         usersMetrics: null,
+        usersMetricsByDate: null,
         trainingPlansMetrics: null,
+        trainingPlansMetricsByDate: null,
         transactionsMetrics: null,
         // User Charts
         userSigninsMailVsFederatedIdBarChartProps: null,
         userLoginsMailVsFederatedIdBarChartProps: null,
         userBlockedVsNotBlockedBarChartProps: null
+        // Training Charts
       };
     },
     created() {
       MetricsService.getUsersMetrics().then(
         (response) => {
           this.usersMetrics = response.data;
-          // console.log(this.usersMetrics); // borrar
+          console.log(this.usersMetrics); // borrar
 
-          this.createUserGraphMetrics()
+          this.createUserGraphsMetrics()
         },
         (error) => {
         }
@@ -158,21 +269,50 @@
       MetricsService.getTrainingPlansMetrics().then(
         (response) => {
           this.trainingPlansMetrics = response.data;
-          // console.log(this.trainingPlansMetrics) // borrar
+          console.log(this.trainingPlansMetrics) // borrar
+
+          this.createTrainingGraphsMetrics()
         },
         (error) => {
         }
       );
-      MetricsService.getTransactionsMetrics().then(
-        (response) => {
-          this.transactionMetrics = response.data;
-        },
-        (error) => {
-        }
-      );
+      // MetricsService.getTransactionsMetrics().then(
+      //   (response) => {
+      //     this.transactionMetrics = response.data;
+      //   },
+      //   (error) => {
+      //   }
+      // );
     },
     methods: {
-      createUserGraphMetrics() {
+      // User Selected Dates
+      handleUserSelectedDates() {
+        this.loading = true;
+        this.v$.$validate()
+        if (this.v$.$error) {
+          this.usersError = 'Falta completar los siguientes campos:';
+          if (this.usersStartDate == "") {
+            this.usersError += "<br>- Fecha de inicio"
+          }
+          if (this.usersEndDate == "") {
+            this.usersError += "<br>- Fecha de fin"
+          }
+        } else {
+          MetricsService.getUsersMetricsByDate(this.startDate, this.endDate).then(
+            (response) => {
+              this.usersMetricsByDate = response.data;
+              console.log(this.usersMetricsByDate); // borrar
+
+              this.createUserGraphMetricsByDate()
+            },
+            (error) => {
+            }
+          );
+        }
+        this.loading = false;
+      },
+      // User Graph
+      createUserGraphsMetrics() {
         // Number bar charts
         this.createUserSigninsMailVsFederatedIdChart(),
         this.createUserLoginsMailVsFederatedIdChart(),
@@ -220,8 +360,8 @@
       },
       createUserBlockedVsNotBlockedBarChart() {
         const userMetrics = Object.values(this.usersMetrics);
-        //               signinsWithMail + signinsWithFederatedId, blockedUsers
-        const data = ref([userMetrics[0] + userMetrics[1], userMetrics[4]]);
+        //               signinsWithMail + signinsWithFederatedId,          blockedUsers
+        const data = ref([userMetrics[0] + userMetrics[1] - userMetrics[4], userMetrics[4]]);
 
         const chartData = computed(() => ({
           labels: ["Usuarios no bloqueados", "Usuarios bloqueados"],
@@ -236,6 +376,40 @@
         const { barChartProps, barChartRef } = useBarChart({ chartData });
 
         this.userBlockedVsNotBlockedBarChartProps = barChartProps;
+      },
+      // Training Selected Dates
+      handleTrainingSelectedDates() {
+        this.loading = true;
+        this.v$.$validate()
+        if (this.v$.$error) {
+          this.trainingError = 'Falta completar los siguientes campos:';
+          if (this.trainingStartDate == "") {
+            this.trainingError += "<br>- Fecha de inicio"
+          }
+          if (this.trainingEndDate == "") {
+            this.trainingError += "<br>- Fecha de fin"
+          }
+        } else {
+          MetricsService.getTrainingPlansMetricsByDate(this.startDate, this.endDate).then(
+            (response) => {
+              this.trainingPlansMetricsByDate = response.data;
+              console.log(this.trainingPlansMetricsByDate); // borrar
+
+              this.createUserGraphMetricsByDate()
+            },
+            (error) => {
+            }
+          );
+        }
+        this.loading = false;
+      },
+      createTrainingGraphsMetrics() {
+      }
+    },
+    validations() {
+      return {
+        startDate: { required },
+        endDate: { required },
       }
     }
   }

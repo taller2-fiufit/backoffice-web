@@ -32,11 +32,11 @@
                   </v-col>
                   <v-col cols="10" class="mb-0 pb-0 text-center">
                     <v-card-text v-if="this.trainingPlansMetrics" class="pt-0">
-                      <div class="overline grey--text" style="font-size: 15px !important;">
+                      <div class="overline grey--text" style="font-size: 30x !important;">
                         Entrenamientos creados
                       </div>
                       <div class="headline font-weight-medium grey--text text-center">
-                        {{this.trainingPlansMetrics.trainingsCreated}}
+                        {{this.trainingPlansMetrics.length}}
                       </div>
                     </v-card-text>
                   </v-col>
@@ -45,7 +45,12 @@
             </v-col>
           </v-row>
         </v-col>
-        <v-divider vertical class="my-2 vertical-divider"></v-divider>
+      </v-row>
+    </v-container>
+  </v-card>
+  <v-card flat>
+    <v-container>
+      <v-row>
         <v-col cols="6">
           <v-row>
             <v-col cols="12" class="my-0 py-0">
@@ -76,10 +81,59 @@
                   <v-col cols="10" class="mb-0 pb-0 text-center">
                     <v-card-text v-if="this.trainingPlansMetrics" class="pt-0">
                       <div class="overline grey--text" style="font-size: 15px !important;">
-                        Cantidad de Tipos de Entrenamientos
+                        Cantidad de Entrenamientos por Tipo
                       </div>
-                      <div class="headline font-weight-medium grey--text text-center">
-                        {{}}
+                      <div v-if="this.trainingPlansMetrics.length">
+                        <DoughnutChart class="doughnut-chart" v-bind="this.typeOfTrainingsDoughnutChartProps" />
+                      </div>
+                      <div v-if="!this.trainingPlansMetrics.length" class="headline font-weight-medium grey--text text-center">
+                        0
+                      </div>
+                    </v-card-text>
+                  </v-col>
+                </v-row>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-col>
+
+        <v-col cols="6">
+          <v-row>
+            <v-col cols="12" class="my-0 py-0">
+              <v-card-title class="pb-5">Métricas de Entrenamientos por Dificultad</v-card-title>
+              
+              <v-card class="mx-auto">
+                <v-row>
+                  <v-col class="text-center mb-0 pb-5" cols="2">
+                    <v-row justify="center">
+                      <v-col cols="2">
+                        <v-sheet
+                          height="80"
+                          width="80"
+                          rounded
+                          color="#9ACD32" 
+                        >
+                          <v-container fill-height fluid>
+                            <v-row>
+                              <v-col class="text-center">
+                                <v-icon size="45">mdi-podium</v-icon>
+                              </v-col>
+                            </v-row>
+                          </v-container>
+                        </v-sheet>
+                      </v-col>
+                    </v-row>
+                  </v-col>
+                  <v-col cols="10" class="mb-0 pb-0 text-center">
+                    <v-card-text v-if="this.trainingPlansMetrics" class="pt-0">
+                      <div class="overline grey--text" style="font-size: 15px !important;">
+                        Cantidad de Entrenamientos por Dificultad
+                      </div>
+                      <div>
+                        <DoughnutChart v-if="this.trainingPlansMetrics.length" class="doughnut-chart" v-bind="this.difficultyOfTrainingsDoughnutChartProps" />
+                      </div>
+                      <div v-if="!this.trainingPlansMetrics.length" class="headline font-weight-medium grey--text text-center">
+                        0
                       </div>
                     </v-card-text>
                   </v-col>
@@ -89,13 +143,13 @@
           </v-row>
         </v-col>
       </v-row>
+    </v-container>
+  </v-card>
 
+  <v-divider id="divider" horizontal class="my-4 horizontal-divider"></v-divider>
 
-      <v-row>
-        <v-divider id="divider" horizontal class="my-4 horizontal-divider"></v-divider>
-      </v-row>
-
-
+  <v-card flat>
+    <v-container>
       <v-card-title id="title" class="text-center py-5">Métricas Por Fecha</v-card-title>
       <v-form class="text-center" fast-fail @submit.prevent="handleTrainingSelectedDates">
         <span>Elegir Fecha de Inicio y Fin para generar los gráficos a lo largo del tiempo</span>
@@ -116,24 +170,149 @@
 
         <v-divider horizontal class="my-4 horizontal-divider"></v-divider>
       </v-form>
+    </v-container>
+  </v-card>
 
+  <v-card flat>
+    <v-container>
       <v-row>
         <v-col cols="6" v-if="this.trainingPlansMetricsByDate">
           <v-row>
             <v-col cols="12" class="my-0 py-0">
-              <v-card-title>Métricas de Nuevos Entrenamientos</v-card-title>
-              <v-space></v-space>
-              <v-card-text>Cantidad de Entrenamientos creados a lo largo del tiempo: {{this.trainingPlansMetricsByDate.trainingsCreated}}</v-card-text>
+              <v-card-title class="pb-5">Métricas de Nuevos Entrenamientos</v-card-title>
+
+              <v-card class="mx-auto">
+                <v-row>
+                  <v-col class="text-center mb-0 pb-5" cols="2">
+                    <v-row justify="center">
+                      <v-col cols="2">
+                        <v-sheet
+                          height="80"
+                          width="80"
+                          rounded
+                          color="#9ACD32" 
+                        >
+                          <v-container fill-height fluid>
+                            <v-row>
+                              <v-col class="text-center">
+                                <v-icon size="45">mdi-gymnastics</v-icon>
+                              </v-col>
+                            </v-row>
+                          </v-container>
+                        </v-sheet>
+                      </v-col>
+                    </v-row>
+                  </v-col>
+                  <v-col cols="10" class="mb-0 pb-0 text-center">
+                    <v-card-text v-if="this.trainingPlansMetricsByDate" class="pt-0">
+                      <div class="overline grey--text" style="font-size: 15px !important;">
+                        Entrenamientos creados
+                      </div>
+                      <div class="headline font-weight-medium grey--text text-center">
+                        {{this.trainingPlansMetricsByDate.length}}
+                      </div>
+                    </v-card-text>
+                  </v-col>
+                </v-row>
+              </v-card>
             </v-col>
           </v-row>
         </v-col>
-        <v-divider vertical class="my-2 vertical-divider"></v-divider>
+      </v-row>
+    </v-container>
+  </v-card>
+    
+  <v-card flat>
+    <v-container>
+      <v-row>  
         <v-col cols="6" v-if="this.trainingPlansMetricsByDate">
           <v-row>
             <v-col cols="12" class="my-0 py-0">
-              <v-card-title>Métricas de Entrenamientos por Tipo</v-card-title>
-              <v-space></v-space>
-              <v-card-text>Cantidad de Tipos de Entrenamientos a lo largo del tiempo: </v-card-text>
+              <v-card-title class="pb-5">Métricas de Entrenamientos por Tipo</v-card-title>
+              
+              <v-card class="mx-auto">
+                <v-row>
+                  <v-col class="text-center mb-0 pb-5" cols="2">
+                    <v-row justify="center">
+                      <v-col cols="2">
+                        <v-sheet
+                          height="80"
+                          width="80"
+                          rounded
+                          color="#9ACD32" 
+                        >
+                          <v-container fill-height fluid>
+                            <v-row>
+                              <v-col class="text-center">
+                                <v-icon size="45">mdi-format-list-bulleted-type</v-icon>
+                              </v-col>
+                            </v-row>
+                          </v-container>
+                        </v-sheet>
+                      </v-col>
+                    </v-row>
+                  </v-col>
+                  <v-col cols="10" class="mb-0 pb-0 text-center">
+                    <v-card-text v-if="this.trainingPlansMetricsByDate" class="pt-0">
+                      <div class="overline grey--text" style="font-size: 15px !important;">
+                        Cantidad de Entrenamientos por Tipo
+                      </div>
+                      <div v-if="this.trainingPlansMetricsByDate.length">
+                        <DoughnutChart class="doughnut-chart" v-bind="this.typeOfTrainingsDoughnutChartPropsByDate" />
+                      </div>
+                      <div v-if="!this.trainingPlansMetricsByDate.length" class="headline font-weight-medium grey--text text-center">
+                        0
+                      </div>
+                    </v-card-text>
+                  </v-col>
+                </v-row>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-col>
+
+        <v-col cols="6" v-if="this.trainingPlansMetricsByDate">
+          <v-row>
+            <v-col cols="12" class="my-0 py-0">
+              <v-card-title class="pb-5">Métricas de Entrenamientos por Dificultad</v-card-title>
+              
+              <v-card class="mx-auto">
+                <v-row>
+                  <v-col class="text-center mb-0 pb-5" cols="2">
+                    <v-row justify="center">
+                      <v-col cols="2">
+                        <v-sheet
+                          height="80"
+                          width="80"
+                          rounded
+                          color="#9ACD32" 
+                        >
+                          <v-container fill-height fluid>
+                            <v-row>
+                              <v-col class="text-center">
+                                <v-icon size="45">mdi-podium</v-icon>
+                              </v-col>
+                            </v-row>
+                          </v-container>
+                        </v-sheet>
+                      </v-col>
+                    </v-row>
+                  </v-col>
+                  <v-col cols="10" class="mb-0 pb-0 text-center">
+                    <v-card-text v-if="this.trainingPlansMetricsByDate" class="pt-0">
+                      <div class="overline grey--text" style="font-size: 15px !important;">
+                        Cantidad de Entrenamientos por Dificultad
+                      </div>
+                      <div>
+                        <DoughnutChart v-if="this.trainingPlansMetricsByDate.length" class="doughnut-chart" v-bind="this.difficultyOfTrainingsDoughnutChartPropsByDate" />
+                      </div>
+                      <div v-if="this.trainingPlansMetricsByDate.length == 0" class="headline font-weight-medium grey--text text-center">
+                        0
+                      </div>
+                    </v-card-text>
+                  </v-col>
+                </v-row>
+              </v-card>
             </v-col>
           </v-row>
         </v-col>
@@ -147,7 +326,7 @@
   import ErrorAlert from '../components/ErrorAlert.vue'
   import useVuelidate from '@vuelidate/core';
   import { required } from "@vuelidate/validators";
-  import { BarChart, useBarChart } from 'vue-chart-3';
+  import { DoughnutChart, useBarChart } from 'vue-chart-3';
   import { Chart, registerables } from 'chart.js';
   import { computed, ref } from "vue";
 
@@ -157,7 +336,7 @@
     name: 'Metrics',
     components: {
       ErrorAlert,
-      BarChart
+      DoughnutChart
     },
     data() {
       return {
@@ -172,13 +351,19 @@
         trainingPlansMetrics: null,
         trainingPlansMetricsByDate: null,
         // Training Charts
+        typeOfTrainingsDoughnutChartProps: null,
+        difficultyOfTrainingsDoughnutChartProps: null,
+        // Training Charts By Date
+        typeOfTrainingsDoughnutChartPropsByDate: null,
+        difficultyOfTrainingsDoughnutChartPropsByDate: null
       };
     },
     created() {
       MetricsService.getTrainingPlansMetrics().then(
         (response) => {
           this.trainingPlansMetrics = response.data;
-          console.log(this.trainingPlansMetrics) // borrar
+
+          this.createTrainingGraphsMetrics(false)
         },
         (error) => {
         }
@@ -190,21 +375,36 @@
         this.loading = true;
         this.v$.$validate()
         if (this.v$.$error) {
-          this.trainingError = 'Falta completar los siguientes campos:';
-          if (this.trainingStartDate == "") {
-            this.trainingError += "<br>- Fecha de inicio"
+          this.trainingsError = 'Falta completar los siguientes campos:';
+          if (this.trainingsStartDate == "") {
+            this.trainingsError += "<br>- Fecha de inicio"
           }
-          if (this.trainingEndDate == "") {
-            this.trainingError += "<br>- Fecha de fin"
+          if (this.trainingsEndDate == "") {
+            this.trainingsError += "<br>- Fecha de fin"
           }
+          this.loading = false;
+          return
+        } 
+        
+        const startDate = new Date(this.trainingsStartDate);
+        const endDate = new Date(this.trainingsEndDate);
+        if (startDate > endDate) {
+          this.trainingsError = 'La fecha de fin no puede ser luego de la fecha de inicio';
+          this.loading = false;
+          return
+        }
+
+        const actualDate = new Date();
+        const tomorrow = new Date(actualDate)
+        tomorrow.setDate(tomorrow.getDate() + 1)
+        if (startDate > actualDate || endDate > tomorrow) {
+          this.trainingsError = 'Las fechas seleccionadas no pueden ser mayores al día actual';
         } else {
-          MetricsService.getTrainingPlansMetricsByDate(this.startDate, this.endDate).then(
+          MetricsService.getTrainingPlansMetricsByDate(this.trainingsStartDate, this.trainingsEndDate).then(
             (response) => {
               this.trainingsError = null;
               this.trainingPlansMetricsByDate = response.data;
-              console.log(this.trainingPlansMetricsByDate); // borrar
-
-              this.createTrainingGraphsMetrics()
+              this.createTrainingGraphsMetrics(true)
             },
             (error) => {
             }
@@ -213,7 +413,89 @@
         this.loading = false;
       },
       // Training Graphs
-      createTrainingGraphsMetrics() {
+      createTrainingGraphsMetrics(byDate) {
+        this.createTypeOfTrainingsDoughnutChart(byDate);
+        this.createfTrainingsDifficultyChart(byDate);
+      },
+      createTypeOfTrainingsDoughnutChart(byDate) {
+        const trainingMetrics = byDate ? this.trainingPlansMetricsByDate : this.trainingPlansMetrics;
+
+        const trainingsType = new Map();
+        for (const training of trainingMetrics) {
+          const type = training.attrs.type;
+          if (trainingsType.has(type)) {
+            trainingsType.set(type, trainingsType.get(type) + 1);
+          } else {
+            trainingsType.set(type, 1)
+          }
+        }
+
+        let labels = [];
+        let amount = [];
+        trainingsType.forEach((value, key) => {
+          labels.push(key);
+          amount.push(value)
+        });
+
+        const data = ref(amount);
+
+        const chartData = computed(() => ({
+          labels: labels,
+          datasets: [
+            {
+              data: data.value,
+              backgroundColor: ["#9ACD32", "#2b3c4b", "#E2E2E2"]
+            },
+          ],
+        }));
+
+        const { barChartProps, barChartRef } = useBarChart({ chartData });
+
+        if (byDate) {
+          this.typeOfTrainingsDoughnutChartPropsByDate = barChartProps;
+        } else {
+          this.typeOfTrainingsDoughnutChartProps = barChartProps;
+        }
+      },
+      createfTrainingsDifficultyChart(byDate) {
+        const trainingMetrics = byDate ? this.trainingPlansMetricsByDate : this.trainingPlansMetrics;
+
+        const trainingsDifficulty = new Map();
+        for (const training of trainingMetrics) {
+          const difficulty = training.attrs.difficulty;
+          if (trainingsDifficulty.has(difficulty)) {
+            trainingsDifficulty.set(difficulty, trainingsDifficulty.get(difficulty) + 1);
+          } else {
+            trainingsDifficulty.set(difficulty, 1)
+          }
+        }
+
+        let labels = [];
+        let amount = [];
+        trainingsDifficulty.forEach((value, key) => {
+          labels.push(key);
+          amount.push(value)
+        });
+
+        const data = ref(amount);
+
+        const chartData = computed(() => ({
+          labels: labels,
+          datasets: [
+            {
+              data: data.value,
+              backgroundColor: ["#9ACD32", "#2b3c4b", "#E2E2E2"]
+            },
+          ],
+        }));
+
+        const { barChartProps, barChartRef } = useBarChart({ chartData });
+
+        if (byDate) {
+          this.difficultyOfTrainingsDoughnutChartPropsByDate = barChartProps;
+        } else {
+          this.difficultyOfTrainingsDoughnutChartProps = barChartProps;
+        }
       }
     },
     validations() {
@@ -228,6 +510,12 @@
 <style>
 #title {
   font-size: 25px;
+}
+
+.doughnut-chart {
+  height: 250px;
+  width: 600px;
+  align-self: center;
 }
 
 .dateInput1 {

@@ -156,13 +156,13 @@
           </v-row>
         </v-col>
       </v-row>
+    </v-container>
+  </v-card>
 
+  <v-divider id="divider" horizontal class="my-4 horizontal-divider"></v-divider>
 
-      <v-row>
-        <v-divider id="divider" horizontal class="my-4 horizontal-divider"></v-divider>
-      </v-row>
-
-
+  <v-card flat>
+    <v-container>
       <v-card-title id="title" class="text-center py-5">Métricas Por Fecha</v-card-title>
       <v-form class="text-center" fast-fail @submit.prevent="handleUserSelectedDates">
         <span>Elegir Fecha de Inicio y Fin para generar los gráficos a lo largo del tiempo</span>
@@ -183,19 +183,77 @@
 
         <v-divider horizontal class="my-4 horizontal-divider"></v-divider>
       </v-form>
+    </v-container>
+  </v-card>
 
+  <v-card flat>
+    <v-container>
       <v-row>
         <v-col cols="6" v-if="this.usersMetricsByDate">
           <v-row>
             <v-col cols="12" class="my-0 py-0">
               <v-card-title>Métricas de Registro</v-card-title>
-              <v-space></v-space>
-              <v-card-text>Usuarios utilizando mail y contraseña a lo largo del tiempo: {{this.usersMetricsByDate.signinsWithMail}}</v-card-text>
-              <v-card-text>Usuarios utilizando identidad federada a lo largo del tiempo: {{this.usersMetricsByDate.signinsWithFederatedId}}</v-card-text>
-              <v-card-text>Mail y Contraseña vs Identidad federada</v-card-text>
-              <div>
-                <BarChart class="bar-chart" v-bind="this.userSigninsMailVsFederatedIdBarChartProps" />
-              </div>
+              
+              <v-card class="mx-auto">
+                <v-row>
+                  <v-col class="text-center mb-0 pb-0" cols="2">
+                    <v-row justify="center">
+                      <v-col cols="2">
+                        <v-sheet
+                          height="80"
+                          width="80"
+                          rounded
+                          color="#9ACD32" 
+                        >
+                          <v-container fill-height fluid>
+                            <v-row>
+                              <v-col class="text-center">
+                                <v-icon size="45">mdi-account-plus</v-icon>
+                              </v-col>
+                            </v-row>
+                          </v-container>
+                        </v-sheet>
+                      </v-col>
+                    </v-row>
+                  </v-col>
+                  <v-col cols="10" class="mb-0 pb-0 text-center">
+                    <v-card-text v-if="this.usersMetricsByDate.length" class="pt-0">
+                      <div class="overline grey--text" style="font-size: 15px !important;">
+                        Utilizando mail y contraseña: {{this.usersMetricsByDate.signinsWithMail}}
+                      </div>
+                    </v-card-text>
+                    <v-card-text v-if="!this.usersMetricsByDate.length" class="pt-0">
+                      <div class="overline grey--text" style="font-size: 15px !important;">
+                        Utilizando mail y contraseña
+                      </div>
+                      <div class="headline font-weight-medium grey--text text-center">
+                        {{this.usersMetricsByDate.signinsWithMail}}
+                      </div>
+                    </v-card-text>
+                    <v-card-text v-if="this.usersMetricsByDate.length" class="pt-0">
+                      <div class="overline grey--text" style="font-size: 15px !important;">
+                        Utilizando identidad federada: {{this.usersMetricsByDate.signinsWithFederatedId}}
+                      </div>
+                    </v-card-text>
+                    <v-card-text v-if="!this.usersMetricsByDate.length" class="pt-0">
+                      <div class="overline grey--text" style="font-size: 15px !important;">
+                        Utilizando identidad federada
+                      </div>
+                      <div class="headline font-weight-medium grey--text text-center">
+                        {{this.usersMetricsByDate.signinsWithFederatedId}}
+                      </div>
+                    </v-card-text>
+                    <v-card-text v-if="this.usersMetricsByDate.length" class="pt-0">
+                      <div class="overline grey--text" style="font-size: 15px !important;">
+                        Mail y Contraseña vs Identidad federada
+                      </div>
+                      <div>
+                        <BarChart class="bar-chart" v-bind="this.userSigninsMailVsFederatedIdBarChartProps" />
+                      </div>
+                    </v-card-text>
+                  </v-col>
+                </v-row>
+              </v-card>
             </v-col>
           </v-row>
         </v-col>
@@ -204,13 +262,67 @@
           <v-row>
             <v-col cols="12" class="my-0 py-0">
               <v-card-title>Métricas de Login</v-card-title>
-              <v-space></v-space>
-              <v-card-text>Usuarios utilizando mail y contraseña a lo largo del tiempo: {{this.usersMetricsByDate.loginsWithMail}}</v-card-text>
-              <v-card-text>Usuarios utilizando identidad federada a lo largo del tiempo: {{this.usersMetricsByDate.loginsWithFederatedId}}</v-card-text>
-              <v-card-text>Mail y Contraseña vs Identidad federada</v-card-text>
-              <div>
-                <BarChart class="bar-chart" v-bind="this.userLoginsMailVsFederatedIdBarChartProps" />
-              </div>
+              
+              <v-card class="mx-auto">
+                <v-row>
+                  <v-col class="text-center mb-0 pb-0" cols="2">
+                    <v-row justify="center">
+                      <v-col cols="2">
+                        <v-sheet
+                          height="80"
+                          width="80"
+                          rounded
+                          color="#9ACD32" 
+                        >
+                          <v-container fill-height fluid>
+                            <v-row>
+                              <v-col class="text-center">
+                                <v-icon size="45">mdi-login</v-icon>
+                              </v-col>
+                            </v-row>
+                          </v-container>
+                        </v-sheet>
+                      </v-col>
+                    </v-row>
+                  </v-col>
+                  <v-col cols="10" class="mb-0 pb-0 text-center">
+                    <v-card-text v-if="this.usersMetricsByDate.length" class="pt-0">
+                      <div class="overline grey--text" style="font-size: 15px !important;">
+                        Utilizando mail y contraseña: {{this.usersMetricsByDate.loginsWithMail}}
+                      </div>
+                    </v-card-text>
+                    <v-card-text v-if="!this.usersMetricsByDate.length" class="pt-0">
+                      <div class="overline grey--text" style="font-size: 15px !important;">
+                        Utilizando mail y contraseña
+                      </div>
+                      <div class="headline font-weight-medium grey--text text-center">
+                        {{this.usersMetricsByDate.loginsWithMail}}
+                      </div>
+                    </v-card-text>
+                    <v-card-text v-if="this.usersMetricsByDate.length" class="pt-0">
+                      <div class="overline grey--text" style="font-size: 15px !important;">
+                        Utilizando identidad federada: {{this.usersMetricsByDate.loginsWithFederatedId}}
+                      </div>
+                    </v-card-text>
+                    <v-card-text v-if="!this.usersMetricsByDate.length" class="pt-0">
+                      <div class="overline grey--text" style="font-size: 15px !important;">
+                        Utilizando identidad federada
+                      </div>
+                      <div class="headline font-weight-medium grey--text text-center">
+                        {{this.usersMetricsByDate.loginsWithFederatedId}}
+                      </div>
+                    </v-card-text>
+                    <v-card-text v-if="this.usersMetricsByDate.length" class="pt-0">
+                      <div class="overline grey--text" style="font-size: 15px !important;">
+                        Mail y Contraseña vs Identidad federada
+                      </div>
+                      <div>
+                        <BarChart class="bar-chart" v-bind="this.userLoginsMailVsFederatedIdBarChartProps" />
+                      </div>
+                    </v-card-text>
+                  </v-col>
+                </v-row>
+              </v-card>
             </v-col>
           </v-row>
         </v-col>
@@ -219,19 +331,73 @@
           <v-row>
             <v-col cols="12" class="my-0 py-0">
               <v-card-title>Métricas de Usuarios Bloqueados</v-card-title>
-              <v-space></v-space>
-              <v-card-text>Usuarios a lo largo del tiempo: {{this.usersMetricsByDate.signinsWithMail + this.usersMetricsByDate.signinsWithFederatedId}}</v-card-text>
-              <v-card-text>Usuarios bloqueados a lo largo del tiempo: {{this.usersMetricsByDate.blockedUsers}}</v-card-text>
-              <v-card-text>Cantidad de Usuarios Bloqueados vs No Bloqueados: </v-card-text>
-              <div>
-                <BarChart class="bar-chart" v-bind="this.userBlockedVsNotBlockedBarChartProps" />
-              </div>
+              
+              <v-card class="mx-auto">
+                <v-row>
+                  <v-col class="text-center mb-0 pb-0" cols="2">
+                    <v-row justify="center">
+                      <v-col cols="2">
+                        <v-sheet
+                          height="80"
+                          width="80"
+                          rounded
+                          color="#9ACD32" 
+                        >
+                          <v-container fill-height fluid>
+                            <v-row>
+                              <v-col class="text-center">
+                                <v-icon size="45">mdi-block-helper</v-icon>
+                              </v-col>
+                            </v-row>
+                          </v-container>
+                        </v-sheet>
+                      </v-col>
+                    </v-row>
+                  </v-col>
+                  <v-col cols="10" class="mb-0 pb-0 text-center">
+                    <v-card-text v-if="this.usersMetricsByDate.length" class="pt-0">
+                      <div class="overline grey--text" style="font-size: 15px !important;">
+                        Cantidad de Usuarios: {{this.usersMetricsByDate.signinsWithMail + this.usersMetricsByDate.signinsWithFederatedId}}
+                      </div>
+                    </v-card-text>
+                    <v-card-text v-if="!this.usersMetricsByDate.length" class="pt-0">
+                      <div class="overline grey--text" style="font-size: 15px !important;">
+                        Cantidad de Usuarios
+                      </div>
+                      <div class="headline font-weight-medium grey--text text-center">
+                        {{this.usersMetricsByDate.signinsWithMail + this.usersMetricsByDate.signinsWithFederatedId}}
+                      </div>
+                    </v-card-text>
+                    <v-card-text v-if="this.usersMetricsByDate.length" class="pt-0">
+                      <div class="overline grey--text" style="font-size: 15px !important;">
+                        Cantidad de Usuarios Bloqueados: {{this.usersMetricsByDate.blockedUsers}}
+                      </div>
+                    </v-card-text>
+                    <v-card-text v-if="!this.usersMetricsByDate.length" class="pt-0">
+                      <div class="overline grey--text" style="font-size: 15px !important;">
+                        Cantidad de Usuarios Bloqueados
+                      </div>
+                      <div class="headline font-weight-medium grey--text text-center">
+                        {{this.usersMetricsByDate.blockedUsers}}
+                      </div>
+                    </v-card-text>
+                    <v-card-text v-if="this.usersMetricsByDate.length" class="pt-0">
+                      <div class="overline grey--text" style="font-size: 15px !important;">
+                        Cantidad de Usuarios Bloqueados vs No Bloqueados
+                      </div>
+                      <div>
+                        <BarChart class="bar-chart" v-bind="this.userBlockedVsNotBlockedBarChartProps" />
+                      </div>
+                    </v-card-text>
+                  </v-col>
+                </v-row>
+              </v-card>
             </v-col>
           </v-row>
         </v-col>
       </v-row>
     </v-container>
-</v-card>
+  </v-card>
 </template>
 
 <script>
@@ -273,7 +439,6 @@
       MetricsService.getUsersMetrics().then(
         (response) => {
           this.usersMetrics = response.data;
-          console.log(this.usersMetrics); // borrar
         },
         (error) => {
         }
@@ -292,12 +457,27 @@
           if (this.usersEndDate == "") {
             this.usersError += "<br>- Fecha de fin"
           }
+          this.loading = false;
+          return
+        }
+
+        const startDate = new Date(this.usersStartDate);
+        const endDate = new Date(this.usersEndDate);
+        if (startDate > endDate) {
+          this.usersError = 'La fecha de fin no puede ser luego de la fecha de inicio';
+          this.loading = false;
+          return
+        }
+        const actualDate = new Date();
+        const tomorrow = new Date(actualDate)
+        tomorrow.setDate(tomorrow.getDate() + 1)
+        if (startDate > actualDate || endDate > tomorrow) {
+          this.usersError = 'Las fechas seleccionadas no pueden ser mayores al día actual';
         } else {
-          MetricsService.getUsersMetricsByDate(this.startDate, this.endDate).then(
+          MetricsService.getUsersMetricsByDate(this.usersStartDate, this.usersEndDate).then(
             (response) => {
               this.usersError = null;
               this.usersMetricsByDate = response.data;
-              console.log(this.usersMetricsByDate); // borrar
 
               this.createUserGraphsMetrics()
             },

@@ -1,34 +1,26 @@
 import axios from 'axios';
 import authHeader from './auth-header';
 
-const API_URL=process.env.VUE_APP_METRICS_API_URL;
+const USERS_API_URL=process.env.VUE_APP_USER_METRICS_API_URL;
+const TRAININGS_API_URL=process.env.VUE_APP_TRAINING_METRICS_API_URL;
 
 class MetricsService {
   getUsersMetrics() {
-    return axios.get(API_URL + 'users', { headers: authHeader() });
+    return axios.get(USERS_API_URL + 'users', { headers: authHeader() });
   }
 
   getUsersMetricsByDate(startDate, endDate) {
     const queryParams = '?from=' + startDate + '&to=' + endDate;
-    return axios.get(API_URL + 'users' + queryParams, { headers: authHeader() });
+    return axios.get(USERS_API_URL + 'users' + queryParams, { headers: authHeader() });
   }
 
   getTrainingPlansMetrics() {
-    return axios.get(API_URL + 'trainings', { headers: authHeader() });
+    return axios.get(TRAININGS_API_URL, { headers: authHeader() });
   }
 
   getTrainingPlansMetricsByDate(startDate, endDate) {
     const queryParams = '?from=' + startDate + '&to=' + endDate;
-    return axios.get(API_URL + 'trainings' + queryParams, { headers: authHeader() });
-  }
-
-  getTransactionsMetrics() {
-    return axios.get(API_URL + 'transactions', { headers: authHeader() });
-  }
-
-  getTransactionsMetricsByDate(startDate, endDate) {
-    const queryParams = '?from=' + startDate + '&to=' + endDate;
-    return axios.get(API_URL + 'transactions' + queryParams, { headers: authHeader() });
+    return axios.get(TRAININGS_API_URL + queryParams, { headers: authHeader() });
   }
 }
 

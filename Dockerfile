@@ -8,7 +8,7 @@ RUN yarn install
 
 COPY . .
 
-RUN yarn serve
+RUN yarn build
 
 
 FROM nginx as production-stage

@@ -138,7 +138,7 @@
                         Cantidad de Usuarios
                       </div>
                       <div class="headline font-weight-medium grey--text text-center">
-                        {{this.usersMetrics.signinsWithMail + this.usersMetrics.signinsWithFederatedId}}
+                        {{parseInt(this.usersMetrics.signinsWithMail) + parseInt(this.usersMetrics.signinsWithFederatedId)}}
                       </div>
                     </v-card-text>
                     <v-card-text v-if="this.usersMetrics" class="pt-0">
@@ -217,12 +217,7 @@
                     </v-row>
                   </v-col>
                   <v-col cols="10" class="mb-0 pb-0 text-center">
-                    <v-card-text v-if="this.usersMetricsByDate.length" class="pt-0">
-                      <div class="overline grey--text" style="font-size: 15px !important;">
-                        Utilizando mail y contraseña: {{this.usersMetricsByDate.signinsWithMail}}
-                      </div>
-                    </v-card-text>
-                    <v-card-text v-if="!this.usersMetricsByDate.length" class="pt-0">
+                    <v-card-text class="pt-0">
                       <div class="overline grey--text" style="font-size: 15px !important;">
                         Utilizando mail y contraseña
                       </div>
@@ -230,12 +225,7 @@
                         {{this.usersMetricsByDate.signinsWithMail}}
                       </div>
                     </v-card-text>
-                    <v-card-text v-if="this.usersMetricsByDate.length" class="pt-0">
-                      <div class="overline grey--text" style="font-size: 15px !important;">
-                        Utilizando identidad federada: {{this.usersMetricsByDate.signinsWithFederatedId}}
-                      </div>
-                    </v-card-text>
-                    <v-card-text v-if="!this.usersMetricsByDate.length" class="pt-0">
+                    <v-card-text class="pt-0">
                       <div class="overline grey--text" style="font-size: 15px !important;">
                         Utilizando identidad federada
                       </div>
@@ -243,7 +233,7 @@
                         {{this.usersMetricsByDate.signinsWithFederatedId}}
                       </div>
                     </v-card-text>
-                    <v-card-text v-if="this.usersMetricsByDate.length" class="pt-0">
+                    <v-card-text v-if="this.usersMetricsByDate.signinsWithMail || this.usersMetricsByDate.signinsWithFederatedId" class="pt-0">
                       <div class="overline grey--text" style="font-size: 15px !important;">
                         Mail y Contraseña vs Identidad federada
                       </div>
@@ -286,12 +276,7 @@
                     </v-row>
                   </v-col>
                   <v-col cols="10" class="mb-0 pb-0 text-center">
-                    <v-card-text v-if="this.usersMetricsByDate.length" class="pt-0">
-                      <div class="overline grey--text" style="font-size: 15px !important;">
-                        Utilizando mail y contraseña: {{this.usersMetricsByDate.loginsWithMail}}
-                      </div>
-                    </v-card-text>
-                    <v-card-text v-if="!this.usersMetricsByDate.length" class="pt-0">
+                    <v-card-text class="pt-0">
                       <div class="overline grey--text" style="font-size: 15px !important;">
                         Utilizando mail y contraseña
                       </div>
@@ -299,12 +284,7 @@
                         {{this.usersMetricsByDate.loginsWithMail}}
                       </div>
                     </v-card-text>
-                    <v-card-text v-if="this.usersMetricsByDate.length" class="pt-0">
-                      <div class="overline grey--text" style="font-size: 15px !important;">
-                        Utilizando identidad federada: {{this.usersMetricsByDate.loginsWithFederatedId}}
-                      </div>
-                    </v-card-text>
-                    <v-card-text v-if="!this.usersMetricsByDate.length" class="pt-0">
+                    <v-card-text class="pt-0">
                       <div class="overline grey--text" style="font-size: 15px !important;">
                         Utilizando identidad federada
                       </div>
@@ -312,7 +292,7 @@
                         {{this.usersMetricsByDate.loginsWithFederatedId}}
                       </div>
                     </v-card-text>
-                    <v-card-text v-if="this.usersMetricsByDate.length" class="pt-0">
+                    <v-card-text v-if="this.usersMetricsByDate.loginsWithMail || this.usersMetricsByDate.loginsWithFederatedId" class="pt-0">
                       <div class="overline grey--text" style="font-size: 15px !important;">
                         Mail y Contraseña vs Identidad federada
                       </div>
@@ -355,25 +335,15 @@
                     </v-row>
                   </v-col>
                   <v-col cols="10" class="mb-0 pb-0 text-center">
-                    <v-card-text v-if="this.usersMetricsByDate.length" class="pt-0">
-                      <div class="overline grey--text" style="font-size: 15px !important;">
-                        Cantidad de Usuarios: {{this.usersMetricsByDate.signinsWithMail + this.usersMetricsByDate.signinsWithFederatedId}}
-                      </div>
-                    </v-card-text>
-                    <v-card-text v-if="!this.usersMetricsByDate.length" class="pt-0">
+                    <v-card-text class="pt-0">
                       <div class="overline grey--text" style="font-size: 15px !important;">
                         Cantidad de Usuarios
                       </div>
                       <div class="headline font-weight-medium grey--text text-center">
-                        {{this.usersMetricsByDate.signinsWithMail + this.usersMetricsByDate.signinsWithFederatedId}}
+                        {{parseInt(this.usersMetricsByDate.signinsWithMail) + parseInt(this.usersMetricsByDate.signinsWithFederatedId)}}
                       </div>
                     </v-card-text>
-                    <v-card-text v-if="this.usersMetricsByDate.length" class="pt-0">
-                      <div class="overline grey--text" style="font-size: 15px !important;">
-                        Cantidad de Usuarios Bloqueados: {{this.usersMetricsByDate.blockedUsers}}
-                      </div>
-                    </v-card-text>
-                    <v-card-text v-if="!this.usersMetricsByDate.length" class="pt-0">
+                    <v-card-text class="pt-0">
                       <div class="overline grey--text" style="font-size: 15px !important;">
                         Cantidad de Usuarios Bloqueados
                       </div>
@@ -381,7 +351,7 @@
                         {{this.usersMetricsByDate.blockedUsers}}
                       </div>
                     </v-card-text>
-                    <v-card-text v-if="this.usersMetricsByDate.length" class="pt-0">
+                    <v-card-text v-if="this.usersMetricsByDate.signinsWithMail || this.usersMetricsByDate.signinsWithFederatedId || this.usersMetricsByDate.blockedUsers" class="pt-0">
                       <div class="overline grey--text" style="font-size: 15px !important;">
                         Cantidad de Usuarios Bloqueados vs No Bloqueados
                       </div>
@@ -501,9 +471,10 @@
         const data = ref([userRegisterMetrics[0], userRegisterMetrics[1]]);
 
         const chartData = computed(() => ({
-          labels: ["Mail y Contraseña", "Identidad federada"],
+          labels: ['Mail y Contraseña', 'Identidad federada'],
           datasets: [
             {
+              label: ['Mail y Contraseña'],
               data: data.value,
               backgroundColor: ["#9ACD32", "#2b3c4b"]
             },
@@ -521,9 +492,10 @@
         const data = ref([userLoginMetrics[2], userLoginMetrics[3]]);
 
         const chartData = computed(() => ({
-          labels: ["Mail y Contraseña", "Identidad federada"],
+          labels: ['Mail y Contraseña', 'Identidad federada'],
           datasets: [
             {
+              label: ['Mail y Contraseña'],
               data: data.value,
               backgroundColor: ["#9ACD32", "#2b3c4b"]
             },
@@ -537,12 +509,13 @@
       createUserBlockedVsNotBlockedBarChart() {
         const userBlockedMetrics = Object.values(this.usersMetricsByDate);
         //                 signinsWithMail      +  signinsWithFederatedId,                       blockedUsers
-        const data = ref([userBlockedMetrics[0] + userBlockedMetrics[1] - userBlockedMetrics[4], userBlockedMetrics[4]]);
+        const data = ref([parseInt(userBlockedMetrics[0]) + parseInt(userBlockedMetrics[1]) - parseInt(userBlockedMetrics[4]), userBlockedMetrics[4]]);
 
         const chartData = computed(() => ({
-          labels: ["Usuarios no bloqueados", "Usuarios bloqueados"],
+          labels: ['Usuarios no bloqueados', 'Usuarios bloqueados'],
           datasets: [
             {
+              label: ['Usuarios no bloqueados'],
               data: data.value,
               backgroundColor: ["#9ACD32", "#2b3c4b"]
             },
@@ -569,8 +542,8 @@
 }
 
 .bar-chart {
-  height: 300px;
-  width: 600px;
+  height: 250px;
+  width: 550px;
   align-self: center;
 }
 

@@ -6,7 +6,7 @@
   <br>
 
   <div id="table-div" class="mx-auto">
-    <UsersTable v-if="users" :headers="headers" :items="users" />
+    <UsersTable :headers="headers" :items="users" />
   </div>
 </template>
 
@@ -27,7 +27,7 @@
           { text: "EMAIL", value: "email", sortable: true},
           { text: "OPERATION", value: "operation" }
         ],
-        users: null
+        users: []
       }
     },
     created() {

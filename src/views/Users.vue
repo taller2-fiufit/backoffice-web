@@ -3,11 +3,11 @@
     <v-app-bar-title>Usuarios</v-app-bar-title>
   </v-app-bar>
 
-  <br>
-
-  <div id="table-div" class="mx-auto">
-    <UsersTable :headers="headers" :items="users" />
-  </div>
+  <v-card class="mx-5 my-5 rounded-sm">
+    <div id="table-div" class="mx-auto">
+      <UsersTable v-if="users" :headers="headers" :items="users" />
+    </div>
+</v-card>
 </template>
 
 
@@ -25,7 +25,7 @@
           { text: "#", value: "id", sortable: true},
           { text: "USER", value: "user", sortable: true},
           { text: "EMAIL", value: "email", sortable: true},
-          { text: "OPERATION", value: "operation" }
+          { text: "DETAIL", value: "operation" }
         ],
         users: []
       }
@@ -48,7 +48,13 @@
 
 <style>
 #table-div {
-  padding-top: 20px;
-  max-width: 1200px;
+  padding-top: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 50px;
+}
+
+.rounded-sm {
+  background: #F7F7F7;
 }
 </style>

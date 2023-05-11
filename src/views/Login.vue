@@ -109,6 +109,7 @@ export default {
             this.$router.push("/dashboard");
           },
           (error) => {
+            console.log(error.response.data.message);
             this.error = error.response.data.message;
           }
         );

@@ -3,11 +3,11 @@
     <v-app-bar-title>Planes de Entrenamiento</v-app-bar-title>
   </v-app-bar>
 
-  <br>
-
-  <div id="table-div" class="mx-auto">
-    <PlansTable :headers="headers" :items="trainingPlans" />
-  </div>
+  <v-card class="mx-5 my-5 rounded-sm">
+    <div id="table-div" class="pl-15">
+      <PlansTable v-if="trainingPlans" :headers="headers" :items="trainingPlans" />
+    </div>
+  </v-card>
 </template>
 
 
@@ -36,13 +36,6 @@
           this.trainingPlans = response.data;
         },
         (error) => {
-          this.trainingPlans = [{
-            "id": 1,
-            "title": "Split",
-            "type": "walk",
-            "difficulty": 5,
-            "description": "El split, conocido también como apertura de piernas, spagat o grand écart, es una posición física en la cual las piernas están alineadas en lateral o frontalmente (son colineales) una con la otra y están extendidas en direcciones opuestas."
-          }]
         }
       );
     },
@@ -51,7 +44,13 @@
 
 <style>
 #table-div {
-  padding-top: 20px;
-  max-width: 1200px;
+  padding-top: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 50px;
+}
+
+.rounded-sm {
+  background: #F7F7F7;
 }
 </style>

@@ -28,6 +28,14 @@ class UserService {
   getUserInfoById(userId) {
     return axios.get(API_URL + 'users/' + userId);
   }
+
+  getFollowingListById(userId) {
+    return axios.get(API_URL + 'users/' + userId + '/following', { headers: authHeader() });
+  }
+
+  getFollowersListById(userId) {
+    return axios.get(API_URL + 'users/' + userId + '/followers', { headers: authHeader() });
+  }
 }
 
 export default new UserService();

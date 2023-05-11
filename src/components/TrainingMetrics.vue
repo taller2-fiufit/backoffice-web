@@ -32,7 +32,7 @@
                   </v-col>
                   <v-col cols="10" class="mb-0 pb-0 text-center">
                     <v-card-text v-if="this.trainingPlansMetrics" class="pt-0">
-                      <div class="overline grey--text" style="font-size: 30x !important;">
+                      <div class="overline grey--text pt-5" style="font-size: 15px !important;">
                         Entrenamientos creados
                       </div>
                       <div class="headline font-weight-medium grey--text text-center">
@@ -80,14 +80,21 @@
                   </v-col>
                   <v-col cols="10" class="mb-0 pb-0 text-center">
                     <v-card-text v-if="this.trainingPlansMetrics" class="pt-0">
-                      <div class="overline grey--text" style="font-size: 15px !important;">
-                        Cantidad de Entrenamientos por Tipo
-                      </div>
                       <div v-if="this.trainingPlansMetrics.length">
-                        <DoughnutChart class="doughnut-chart" v-bind="this.typeOfTrainingsDoughnutChartProps" />
+                        <div class="overline grey--text" style="font-size: 15px !important;">
+                          Cantidad de Entrenamientos por Tipo
+                        </div>
+                        <div>
+                          <DoughnutChart class="doughnut-chart" v-bind="this.typeOfTrainingsDoughnutChartProps" />
+                        </div>
                       </div>
-                      <div v-if="!this.trainingPlansMetrics.length" class="headline font-weight-medium grey--text text-center">
-                        0
+                      <div v-if="!this.trainingPlansMetrics.length">
+                        <div class="overline grey--text pt-5" style="font-size: 15px !important;">
+                          Cantidad de Entrenamientos por Tipo
+                        </div>
+                        <div class="headline font-weight-medium grey--text text-center">
+                          0
+                        </div>
                       </div>
                     </v-card-text>
                   </v-col>
@@ -126,14 +133,69 @@
                   </v-col>
                   <v-col cols="10" class="mb-0 pb-0 text-center">
                     <v-card-text v-if="this.trainingPlansMetrics" class="pt-0">
-                      <div class="overline grey--text" style="font-size: 15px !important;">
-                        Cantidad de Entrenamientos por Dificultad
+                      <div v-if="this.trainingPlansMetrics.length">
+                        <div class="overline grey--text" style="font-size: 15px !important;">
+                          Cantidad de Entrenamientos por Dificultad
+                        </div>
+                        <div>
+                          <DoughnutChart class="doughnut-chart" v-bind="this.difficultyOfTrainingsDoughnutChartProps" />
+                        </div>
                       </div>
-                      <div>
-                        <DoughnutChart v-if="this.trainingPlansMetrics.length" class="doughnut-chart" v-bind="this.difficultyOfTrainingsDoughnutChartProps" />
+                      <div v-if="!this.trainingPlansMetrics.length">
+                        <div class="overline grey--text pt-5" style="font-size: 15px !important;">
+                          Cantidad de Entrenamientos por Dificultad
+                        </div>
+                        <div v-if="!this.trainingPlansMetrics.length" class="headline font-weight-medium grey--text text-center">
+                          0
+                        </div>
                       </div>
-                      <div v-if="!this.trainingPlansMetrics.length" class="headline font-weight-medium grey--text text-center">
-                        0
+                    </v-card-text>
+                  </v-col>
+                </v-row>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-card>
+  <v-card flat>
+    <v-container>
+      <v-row>
+        <v-col cols="12">
+          <v-row>
+            <v-col cols="12" class="my-0 py-0">
+              <v-card-title class="pb-5">Métricas de Entrenamientos por Usuario</v-card-title>
+
+              <v-card class="mx-auto">
+                <v-row>
+                  <v-col class="text-center mb-0 pb-5" cols="2">
+                    <v-row justify="center">
+                      <v-col cols="2">
+                        <v-sheet
+                          height="80"
+                          width="80"
+                          rounded
+                          color="#9ACD32" 
+                        >
+                          <v-container fill-height fluid>
+                            <v-row>
+                              <v-col class="text-center">
+                                <v-icon size="45">mdi-account</v-icon>
+                              </v-col>
+                            </v-row>
+                          </v-container>
+                        </v-sheet>
+                      </v-col>
+                    </v-row>
+                  </v-col>
+                  <v-col cols="10" class="mb-0 pb-0 text-center">
+                    <v-card-text v-if="this.trainingPlansMetrics" class="pt-0">
+                      <div class="overline grey--text pb-5" style="font-size: 30x !important;">
+                        Cantidad de Entrenamientos creados por Usuario
+                      </div>
+                      <div class="pb-5">
+                        <TrainingMetricsUsersTable :headers="headers" :items="trainingMetricsUsersTableData" />
                       </div>
                     </v-card-text>
                   </v-col>
@@ -205,7 +267,7 @@
                   </v-col>
                   <v-col cols="10" class="mb-0 pb-0 text-center">
                     <v-card-text v-if="this.trainingPlansMetricsByDate" class="pt-0">
-                      <div class="overline grey--text" style="font-size: 15px !important;">
+                      <div class="overline grey--text pt-5" style="font-size: 15px !important;">
                         Entrenamientos creados
                       </div>
                       <div class="headline font-weight-medium grey--text text-center">
@@ -254,14 +316,21 @@
                   </v-col>
                   <v-col cols="10" class="mb-0 pb-0 text-center">
                     <v-card-text v-if="this.trainingPlansMetricsByDate" class="pt-0">
-                      <div class="overline grey--text" style="font-size: 15px !important;">
-                        Cantidad de Entrenamientos por Tipo
-                      </div>
                       <div v-if="this.trainingPlansMetricsByDate.length">
-                        <DoughnutChart class="doughnut-chart" v-bind="this.typeOfTrainingsDoughnutChartPropsByDate" />
+                        <div class="overline grey--text" style="font-size: 15px !important;">
+                          Cantidad de Entrenamientos por Tipo
+                        </div>
+                        <div>
+                          <DoughnutChart class="doughnut-chart" v-bind="this.typeOfTrainingsDoughnutChartPropsByDate" />
+                        </div>
                       </div>
-                      <div v-if="!this.trainingPlansMetricsByDate.length" class="headline font-weight-medium grey--text text-center">
-                        0
+                      <div v-if="!this.trainingPlansMetricsByDate.length">
+                        <div class="overline grey--text pt-5" style="font-size: 15px !important;">
+                          Cantidad de Entrenamientos por Tipo
+                        </div>
+                        <div class="headline font-weight-medium grey--text text-center">
+                          0
+                        </div>
                       </div>
                     </v-card-text>
                   </v-col>
@@ -300,14 +369,69 @@
                   </v-col>
                   <v-col cols="10" class="mb-0 pb-0 text-center">
                     <v-card-text v-if="this.trainingPlansMetricsByDate" class="pt-0">
-                      <div class="overline grey--text" style="font-size: 15px !important;">
-                        Cantidad de Entrenamientos por Dificultad
+                      <div v-if="this.trainingPlansMetricsByDate.length">
+                        <div class="overline grey--text" style="font-size: 15px !important;">
+                          Cantidad de Entrenamientos por Dificultad
+                        </div>
+                        <div>
+                          <DoughnutChart class="doughnut-chart" v-bind="this.difficultyOfTrainingsDoughnutChartPropsByDate" />
+                        </div>
                       </div>
-                      <div>
-                        <DoughnutChart v-if="this.trainingPlansMetricsByDate.length" class="doughnut-chart" v-bind="this.difficultyOfTrainingsDoughnutChartPropsByDate" />
+                      <div v-if="!this.trainingPlansMetricsByDate.length">
+                        <div class="overline grey--text pt-5" style="font-size: 15px !important;">
+                          Cantidad de Entrenamientos por Dificultad
+                        </div>
+                        <div class="headline font-weight-medium grey--text text-center">
+                          0
+                        </div>
                       </div>
-                      <div v-if="this.trainingPlansMetricsByDate.length == 0" class="headline font-weight-medium grey--text text-center">
-                        0
+                    </v-card-text>
+                  </v-col>
+                </v-row>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-card>
+  <v-card flat>
+    <v-container>
+      <v-row>
+        <v-col cols="12" v-if="this.trainingPlansMetricsByDate">
+          <v-row>
+            <v-col cols="12" class="my-0 py-0">
+              <v-card-title class="pb-5">Métricas de Entrenamientos por Usuario</v-card-title>
+
+              <v-card class="mx-auto">
+                <v-row>
+                  <v-col class="text-center mb-0 pb-5" cols="2">
+                    <v-row justify="center">
+                      <v-col cols="2">
+                        <v-sheet
+                          height="80"
+                          width="80"
+                          rounded
+                          color="#9ACD32" 
+                        >
+                          <v-container fill-height fluid>
+                            <v-row>
+                              <v-col class="text-center">
+                                <v-icon size="45">mdi-account</v-icon>
+                              </v-col>
+                            </v-row>
+                          </v-container>
+                        </v-sheet>
+                      </v-col>
+                    </v-row>
+                  </v-col>
+                  <v-col cols="10" class="mb-0 pb-0 text-center">
+                    <v-card-text v-if="this.trainingPlansMetricsByDate" class="pt-0">
+                      <div class="overline grey--text pb-5" style="font-size: 30x !important;">
+                        Cantidad de Entrenamientos creados por Usuario
+                      </div>
+                      <div class="pb-5">
+                        <TrainingMetricsUsersTable :headers="headers" :items="trainingMetricsUsersTableDataByDate" />
                       </div>
                     </v-card-text>
                   </v-col>
@@ -323,7 +447,9 @@
 
 <script>
   import MetricsService from '../services/metrics.service';
+  import UserService from '../services/user.service';
   import ErrorAlert from '../components/ErrorAlert.vue'
+  import TrainingMetricsUsersTable from '../components/TrainingMetricsUsersTable.vue'
   import useVuelidate from '@vuelidate/core';
   import { required } from "@vuelidate/validators";
   import { DoughnutChart, useBarChart } from 'vue-chart-3';
@@ -336,7 +462,8 @@
     name: 'Metrics',
     components: {
       ErrorAlert,
-      DoughnutChart
+      DoughnutChart,
+      TrainingMetricsUsersTable
     },
     data() {
       return {
@@ -355,7 +482,16 @@
         difficultyOfTrainingsDoughnutChartProps: null,
         // Training Charts By Date
         typeOfTrainingsDoughnutChartPropsByDate: null,
-        difficultyOfTrainingsDoughnutChartPropsByDate: null
+        difficultyOfTrainingsDoughnutChartPropsByDate: null,
+        // Training Plans Created by Users Table
+        headers: [  
+          { text: "ID DE USUARIO", value: "id", sortable: true},
+          { text: "CANTIDAD", value: "trainings", sortable: true},
+          { text: "DIFICULTAD PROMEDIO", value: "averageDifficulty", sortable: true},
+          { text: "TIPOS", value: "types", sortable: false}
+        ],
+        trainingMetricsUsersTableData: [],
+        trainingMetricsUsersTableDataByDate: []
       };
     },
     created() {
@@ -416,6 +552,7 @@
       createTrainingGraphsMetrics(byDate) {
         this.createTypeOfTrainingsDoughnutChart(byDate);
         this.createfTrainingsDifficultyChart(byDate);
+        this.createTrainingMetricsUsersTable(byDate);
       },
       createTypeOfTrainingsDoughnutChart(byDate) {
         const trainingMetrics = byDate ? this.trainingPlansMetricsByDate : this.trainingPlansMetrics;
@@ -495,6 +632,55 @@
           this.difficultyOfTrainingsDoughnutChartPropsByDate = barChartProps;
         } else {
           this.difficultyOfTrainingsDoughnutChartProps = barChartProps;
+        }
+      },
+      createTrainingMetricsUsersTable(byDate) {
+        const trainingMetrics = byDate ? this.trainingPlansMetricsByDate : this.trainingPlansMetrics;
+
+        const usersTrainingGroupById = new Map();
+        for (const training of trainingMetrics) {
+          const userId = training.attrs.author;
+          const difficulty = training.attrs.difficulty;
+          const type = training.attrs.type;
+
+          if (usersTrainingGroupById.has(userId)) {
+            const userTrainingsQuantity = usersTrainingGroupById.get(userId)["quantity"];
+            const difficulties = usersTrainingGroupById.get(userId)["difficulties"];
+            const types = usersTrainingGroupById.get(userId)["types"];
+            types.add(type);
+            usersTrainingGroupById.set(userId, {
+              quantity: userTrainingsQuantity + 1,
+              difficulties: difficulties + difficulty,
+              types: types
+            });
+          } else {
+            const types = new Set()
+            types.add(type);
+            usersTrainingGroupById.set(userId, {
+              quantity: 1,
+              difficulties: difficulty,
+              types: types
+            })
+          }
+        }
+
+        const usersData = [];
+        usersTrainingGroupById.forEach((value, key) => {
+          const typesSet = value["types"];
+          const typesArray = Array.from(typesSet);
+          const typesString = typesArray.join(', ')
+          usersData.push({
+            id: key,
+            trainings: value["quantity"],
+            averageDifficulty: value["difficulties"] / value["quantity"],
+            types: typesString
+          })
+        });
+
+        if (byDate) {
+          this.trainingMetricsUsersTableDataByDate = usersData;
+        } else {
+          this.trainingMetricsUsersTableData = usersData;
         }
       }
     },

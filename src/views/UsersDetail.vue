@@ -19,11 +19,10 @@
               Foto de perfil
             </div>
             <v-row align="center" class="mt-2">
-              <v-img
-                max-width="200"
+              <img
                 :src=profile_pic
                 class="rounded-circle mx-auto my-5"
-              ></v-img>
+              />
             </v-row>
             <p class="text-caption text-center mx-5 mt-3"> {{ user.description }} </p>
             <v-row justify="center" class="mt-5">
@@ -183,8 +182,7 @@
 <script>
   import UserService from '../services/user.service';
   import UsersTable from '../components/UsersTable.vue';
-  import { storage } from '../services/firebase';
-  import { ref, getDownloadURL } from 'firebase/storage'
+  import generateImageURL  from '../services/firebase';
   export default {
     name: 'UsersDetail',
     components: {
@@ -211,7 +209,7 @@
         tab: null,
       }
     },
-    created() {
+    async mounted() {
       UserService.getUserInfoById(this.$route.params.id).then(
         (response) => {
           this.user = response.data;
@@ -219,14 +217,14 @@
           this.user.balance = 0;
           this.markers[0].position.lat = parseFloat(this.user.latitude);
           this.markers[0].position.lng = parseFloat(this.user.longitude);
-          getDownloadURL(ref(storage, 'users/' + this.user.id + '.jpeg')).then(
-            (download_url) => {
-              this.profile_pic = download_url
+          generateImageURL('users/' + this.user.id + '/profile').then(
+            (url) => {
+              this.profile_pic = url;
             },
-            (error) => {
-              console.log(error)
+            (_) => {
+
             }
-      )
+          )
         },
         (error) => {
         }
@@ -238,7 +236,6 @@
             data[index].avator = 'https://cdn.vuetifyjs.com/images/lists/1.jpg';
           }
           this.following = data;
-          console.log(response.data);
         },
         (error) => {
 
@@ -282,5 +279,10 @@
 }
 .rounded-sm {
   background: #F7F7F7;
+}
+
+.rounded-circle {
+  width: 180px;
+  height: 180px;
 }
 </style>

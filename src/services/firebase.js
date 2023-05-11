@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getStorage } from "firebase/storage";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCkSIkm_ogPBFq4lBNOEwlIFZdnW5LEFng",
@@ -14,4 +14,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
 
-export { storage }
+export default function generateImageURL(path) {
+  return getDownloadURL(ref(storage, path + '.jpg'));
+}

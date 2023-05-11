@@ -4,11 +4,11 @@ WORKDIR /app
 
 COPY package.json yarn.lock ./
 
-RUN npm install
+RUN yarn install
 
 COPY . .
 
-RUN npm run build
+RUN yarn serve
 
 
 FROM nginx as production-stage

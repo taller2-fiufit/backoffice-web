@@ -3,11 +3,20 @@
       <Datatable
       :headers="headers"
       :items="items"
+      :loading="loading"
       border-cell
       empty-message="No hay planes registrados."
       table-class-name="customize-table"
       header-text-direction="center"
       body-text-direction="center">
+
+        <template #loading>
+          <img
+            :src="require('@/assets/loading-icon.gif')"
+            style="width: 60px; height: 60px"
+          />
+        </template>
+
         <template #item-actions="item">
           <div class="operation-wrapper">
             <v-btn
@@ -30,7 +39,7 @@
   <script>
     export default {
       name: 'Table',
-      props: ['headers', 'items'],
+      props: ['headers', 'items', 'loading'],
       methods: {
         goToPlanDetails(id) {
           console.log(id);

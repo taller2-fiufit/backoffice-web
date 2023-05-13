@@ -5,7 +5,7 @@
 
   <v-card class="mx-5 my-5 rounded-sm">
     <div id="table-div" class="pl-15">
-      <PlansTable v-if="trainingPlans" :headers="headers" :items="trainingPlans" />
+      <PlansTable v-if="trainingPlans" :headers="headers" :items="trainingPlans" :loading="loading"/>
     </div>
   </v-card>
 </template>
@@ -22,23 +22,20 @@
     data() {
       return {
         headers: [  
-          { text: "ID", value: "id", sortable: true},
-          { text: "TITLE", value: "title", sortable: true},
-          { text: "TYPE", value: "type", sortable: true},
-          { text: "ACTIONS", value: "actions"}
+          { text: "#", value: "id", sortable: true},
+          { text: "TÍTULO", value: "title", sortable: true},
+          { text: "TIPO", value: "type", sortable: true},
+          { text: "DETALLE", value: "actions"}
         ],
-        trainingPlans: []
+        trainingPlans: [],
+        loading: true
       }
     },
-    created() {
-      TrainingPlanService.getTrainingPlanList().then(
-        (response) => {
-          this.trainingPlans = response.data;
-        },
-        (error) => {
-        }
-      );
-    },
+    async mounted() {
+      let response = await TrainingPlanService.getTrainingPlanList()
+      this.trainingPlans = response.data;
+      this.loading = false;
+    }
   }
 </script>
 

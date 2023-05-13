@@ -3,11 +3,19 @@
     <Datatable
     :headers="headers"
     :items="items"
+    :loading="loading"
     border-cell
     empty-message="No hay usuarios registrados."
     table-class-name="customize-table"
     header-text-direction="center"
     body-text-direction="center">
+
+      <template #loading>
+        <img
+          :src="require('@/assets/loading-icon.gif')"
+          style="width: 60px; height: 60px"
+        />
+      </template>
     
       <template #item-user="{ fullname, avator }">
         <div class="user-wrapper">
@@ -38,7 +46,7 @@
 <script>
   export default {
     name: 'Table',
-    props: ['headers', 'items'],
+    props: ['headers', 'items', 'loading'],
     methods: {
       goToUserDetails(id) {
         this.$router

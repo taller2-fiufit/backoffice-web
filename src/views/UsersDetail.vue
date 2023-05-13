@@ -19,18 +19,23 @@
               Foto de perfil
             </div>
             <v-row align="center" class="mt-2">
-              <v-img
-                max-width="200"
+              <img
                 :src=profile_pic
                 class="rounded-circle mx-auto my-5"
-              ></v-img>
+              />
             </v-row>
             <p class="text-caption text-center mx-5 mt-3"> {{ user.description }} </p>
-            <v-row justify="center" class="mt-5">
-              <v-icon end icon="mdi-map-marker-outline" color="#8AB82D"></v-icon>
+            <v-row justify="center" class="mt-5" v-if="user.city || user.country">
+              <v-icon end icon="mdi-map-marker-outline" color="#8AB82D" class="mr-2"></v-icon>
             </v-row>
-            <v-row justify="center">
-              <div class="font-weight-bold">
+            <v-row justify="center" v-if="user.city || user.country">
+              <div class="font-weight-bold" v-if="user.city && !user.country">
+                {{ user.city }}
+              </div>
+              <div class="font-weight-bold" v-if="!user.city && user.country">
+                {{ user.country }}
+              </div>
+              <div class="font-weight-bold" v-if="user.city && user.country">
                 {{ user.city }}, {{ user.country }}
               </div>
             </v-row>
@@ -163,13 +168,13 @@
             <v-window v-model="tab" class="mt-4 mb-7 mx-15">
               <v-window-item value="followees">
                 <div id="table-div" class="mx-auto">
-                  <UsersTable v-if="following" :headers="headers" :items="following" />
+                  <UsersTable v-if="following" :headers="headers" :items="following" :loading="loading"/>
                 </div>
               </v-window-item>
 
               <v-window-item value="followers">
                 <div id="table-div" class="mx-auto">
-                  <UsersTable v-if="followers" :headers="headers" :items="followers" />
+                  <UsersTable v-if="followers" :headers="headers" :items="followers" :loading="loading"/>
                 </div>
               </v-window-item>
             </v-window>
@@ -183,8 +188,7 @@
 <script>
   import UserService from '../services/user.service';
   import UsersTable from '../components/UsersTable.vue';
-  import { storage } from '../services/firebase';
-  import { ref, getDownloadURL } from 'firebase/storage'
+  import generateMediaURL  from '../services/firebase';
   export default {
     name: 'UsersDetail',
     components: {
@@ -193,7 +197,8 @@
     data() {
       return {
         user: null,
-        profile_pic: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+        loading: true,
+        profile_pic: require('../assets/profile-pic.jpg'),
         following: null,
         followers: null,
         headers: [  
@@ -211,51 +216,40 @@
         tab: null,
       }
     },
-    created() {
-      UserService.getUserInfoById(this.$route.params.id).then(
-        (response) => {
-          this.user = response.data;
-          this.user.isBlocked = false;
-          this.user.balance = 0;
-          this.markers[0].position.lat = parseFloat(this.user.latitude);
-          this.markers[0].position.lng = parseFloat(this.user.longitude);
-          getDownloadURL(ref(storage, 'users/' + this.user.id + '.jpeg')).then(
-            (download_url) => {
-              this.profile_pic = download_url
-            },
-            (error) => {
-              console.log(error)
-            }
-      )
-        },
-        (error) => {
-        }
-      );
-      UserService.getFollowingListById(this.$route.params.id).then(
-        (response) => {
-          let data = response.data;
-          for (var index in data) {
-            data[index].avator = 'https://cdn.vuetifyjs.com/images/lists/1.jpg';
-          }
-          this.following = data;
-          console.log(response.data);
-        },
-        (error) => {
+    async mounted() {
+      let user_response = await UserService.getUserInfoById(this.$route.params.id);
+      this.user = user_response.data;
+      this.user.isBlocked = false;
+      this.user.balance = 0;
+      this.markers[0].position.lat = parseFloat(this.user.latitude);
+      this.markers[0].position.lng = parseFloat(this.user.longitude);
+      console.log(!(this.user.city || ""));
+      console.log(this.user);
+      if (this.user.profileimage != "") {
+        this.profile_pic = await generateMediaURL('users/' + this.user.id + '/' + this.user.profileimage);
+      };
 
+      let following_response = await UserService.getFollowingListById(this.$route.params.id);
+      this.following = following_response.data;
+      for (var index in this.following) {
+        if (this.following[index].profileimage != "") {
+          this.following[index].avator = await generateMediaURL('users/' + this.following[index].id + '/' + this.following[index].profileimage);
+        } else {
+          this.following[index].avator = require('../assets/profile-pic.jpg');
         }
-      );
-      UserService.getFollowersListById(this.$route.params.id).then(
-        (response) => {
-          let data = response.data;
-          for (var index in data) {
-            data[index].avator = 'https://cdn.vuetifyjs.com/images/lists/1.jpg';
-          }
-          this.followers = data;
-        },
-        (error) => {
+      };
 
+      let followers_response = await UserService.getFollowersListById(this.$route.params.id);
+      this.followers = followers_response.data;
+      for (var index in this.followers) {
+        if (this.followers[index].profileimage != "") {
+          this.followers[index].avator = await generateMediaURL('users/' + this.followers[index].id + '/' + this.followers[index].profileimage);
+        } else {
+          this.followers[index].avator = require('../assets/profile-pic.jpg');
         }
-      );
+      };
+
+      this.loading = false;
     },
     computed: {
       isBlocked() {
@@ -282,5 +276,10 @@
 }
 .rounded-sm {
   background: #F7F7F7;
+}
+
+.rounded-circle {
+  width: 180px;
+  height: 180px;
 }
 </style>

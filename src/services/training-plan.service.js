@@ -10,7 +10,19 @@ class TrainingPlanService {
 
   getTrainingPlanInfoById(planId) {
     return axios.get(API_URL + 'trainings/' + planId, { headers: authHeader() });
- }
+  }
+
+  blockPlan(planId) {
+    return axios.post(API_URL + 'trainings/' + planId + '/blocked', 
+    { blocked: true },
+    { headers: authHeader() });
+  }
+
+  unblockPlan(planId) {
+    return axios.post(API_URL + 'trainings/' + planId + '/blocked', 
+    { blocked: false },
+    { headers: authHeader() });
+  }  
 }
 
 export default new TrainingPlanService();

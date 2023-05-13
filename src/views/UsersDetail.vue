@@ -45,7 +45,7 @@
             <div class="text-overline mx-auto">
               Información del usuario
             </div>
-            <v-row class="mt-9">
+            <v-row class="ml-8 mt-9">
               <v-col cols="10" offset="2">
                 <v-row>
                   <v-col cols="5" class="ml-4">
@@ -114,6 +114,7 @@
               color="#FF0000"
               size="small"
               v-on:click="()=>isBlocked?unblockUser():blockUser()"
+              :disabled="block_loading"
               class="my-2"
             >
               <v-icon class="mr-2">
@@ -213,6 +214,7 @@
             },
           }
         ],
+        block_loading: false,
         tab: null,
       }
     },
@@ -258,10 +260,14 @@
     },
     methods: {
       blockUser() {
+        this.block_loading = true
         this.user.isBlocked = true
+        this.block_loading = false
       },
       unblockUser() {
+        this.block_loading = true
         this.user.isBlocked = false
+        this.block_loading = false
       },
       goToUsersList() {
         this.$router.push(`/users`);

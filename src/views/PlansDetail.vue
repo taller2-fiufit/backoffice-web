@@ -87,9 +87,26 @@
         </v-col>
         <v-divider vertical thickness="2"></v-divider>
         <v-col class="mt-2 mb-4">
-          <div class="text-overline">
-            Contenido multimedia
-          </div>
+          <v-row>
+            <v-col>
+            <div class="text-overline">
+              Contenido multimedia
+            </div>
+            </v-col>
+            <v-btn
+              color="#FF0000"
+              size="small"
+              v-on:click="()=>isBlocked?unblockPlan():blockPlan()"
+              :disabled="block_loading"
+              class="my-4 mr-4"
+            >
+              <v-icon class="mr-2">
+                mdi-block-helper
+              </v-icon>
+              {{ isBlocked ? 'DESBLOQUEAR' : 'BLOQUEAR' }}
+            </v-btn>
+            
+          </v-row>
           <v-carousel
             v-if="!loading" 
             class="rounded-sm mt-5 mb-5"
@@ -114,7 +131,7 @@
                 </div>
               </v-sheet>
             </v-carousel-item>
-        </v-carousel>
+          </v-carousel>
         </v-col>
       </v-row>
     </v-card-item>
@@ -152,6 +169,7 @@
         plan: null,
         media: [],
         loading: true,
+        block_loading: false,
       }
     },
     async mounted() {
@@ -164,6 +182,37 @@
       };
 
       this.loading = false;
+    },
+    computed: {
+      isBlocked() {
+        return this.plan.blocked
+      }
+    },
+    methods: {
+      blockPlan() {
+        this.block_loading = true;
+        TrainingPlanService.blockPlan(this.plan.id).then(
+          (response) => {
+            this.plan.blocked = response.data.blocked;
+            this.block_loading = false
+          },
+          (_) => [
+            this.block_loading = false
+          ]
+        )
+      },
+      unblockPlan() {
+        this.block_loading = true;
+        TrainingPlanService.unblockPlan(this.plan.id).then(
+          (response) => {
+            this.plan.blocked = response.data.blocked;
+            this.block_loading = false
+          },
+          (_) => [
+            this.block_loading = false
+          ]
+        )
+      },
     }
   }
 </script>

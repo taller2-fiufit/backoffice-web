@@ -25,7 +25,7 @@ const routes = [
     name: 'Register',
     component: Register,
     meta: {
-      requiresAuth: false
+      requiresAuth: true
     }
   },
   {
@@ -81,6 +81,18 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes
+})
+
+router.beforeEach((to, _, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (localStorage.getItem("user") === null) {
+      next({ name: 'Login' })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
 })
 
 export default router

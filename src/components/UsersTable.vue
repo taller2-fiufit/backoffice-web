@@ -10,12 +10,12 @@
     header-text-direction="center"
     body-text-direction="center">
 
-    <template #loading>
-      <img
-        src="https://media.tenor.com/joLYNfFQGDgAAAAi/loading.gif"
-        style="width: 60px; height: 60px"
-      />
-    </template>
+      <template #loading>
+        <img
+          :src="require('@/assets/loading-icon.gif')"
+          style="width: 60px; height: 60px"
+        />
+      </template>
     
       <template #item-user="{ fullname, avator }">
         <div class="user-wrapper">

@@ -14,7 +14,7 @@
 <script>
   import UserService from '../services/user.service';
   import UsersTable from '../components/UsersTable.vue';
-  import generateImageURL  from '../services/firebase';
+  import generateMediaURL  from '../services/firebase';
   export default {
     name: 'UsersList',
     components: {
@@ -25,9 +25,9 @@
         loading: true,
         headers: [  
           { text: "#", value: "id", sortable: true},
-          { text: "USER", value: "user", sortable: true},
-          { text: "EMAIL", value: "email", sortable: true},
-          { text: "DETAIL", value: "operation" }
+          { text: "NOMBRE COMPLETO", value: "user", sortable: true},
+          { text: "CORREO ELECTRÓNICO", value: "email", sortable: true},
+          { text: "DETALLE", value: "operation" }
         ],
         users: []
       }
@@ -37,10 +37,10 @@
       this.users = response.data;
 
       for (var index in this.users) {
-        try {
-          this.users[index].avator = await generateImageURL('users/' + this.users[index].id + '/profile');
-        } catch {
-          this.users[index].avator = 'https://cdn.vuetifyjs.com/images/lists/1.jpg';
+        if (this.users[index].profileimage != "") {
+          this.users[index].avator = await generateMediaURL('users/' + this.users[index].id + '/' + this.users[index].profileimage);
+        } else {
+          this.users[index].avator = require('../assets/profile-pic.jpg');
         }
       };
 

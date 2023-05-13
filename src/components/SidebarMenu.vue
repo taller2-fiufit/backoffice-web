@@ -44,13 +44,11 @@
     name: 'SidebarMenu',
     data: () => ({ 
       drawer: null,
-      user_info: [
-        {
-          prependAvatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-          title: '',
-          subtitle: '',
-        },
-      ],
+      user_info: [{
+        prependAvatar: require('../assets/profile-pic.jpg'),
+        title: '',
+        subtitle: '',
+      }],
       items: [
         { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/' },
         { title: 'Usuarios', icon: 'mdi-account-group', route: '/users' },
@@ -61,16 +59,14 @@
       fullname: '',
       email: ''
     }),
-    mounted() {
-      UserService.getCurrentUserInfo().then(
-        response => {
-          this.user_info[0].title = response.data.fullname;
-          this.user_info[0].subtitle = response.data.email;
-        },
-        error => {
+    async mounted() {
+      let response = await UserService.getCurrentUserInfo()
+      this.user_info[0].title = response.data.fullname;
+      this.user_info[0].subtitle = response.data.email;
 
-        },
-      )
+      if (response.data.profileimage != "") {
+        this.user_info[0].prependAvatar = await generateMediaURL('users/' + response.data.id + '/' + response.data.profileimage);
+      };
     }
   }
 </script>

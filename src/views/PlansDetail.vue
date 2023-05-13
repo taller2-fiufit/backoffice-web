@@ -49,7 +49,7 @@
                 <v-col>
                   <v-text-field
                     class="ml-4"
-                    :value="plan.createdAt"
+                    :value="plan.createdAt.split('T')[0]"
                     label="Fecha de registro"
                     prepend-icon="mdi-calendar-outline"
                     readonly
@@ -90,23 +90,30 @@
           <div class="text-overline">
             Contenido multimedia
           </div>
-          <v-carousel 
+          <v-carousel
+            v-if="!loading" 
             class="rounded-sm mt-5 mb-5"
             height=450
             delimiter-icon="mdi-run"
           >
             <v-carousel-item
-              src="https://media.licdn.com/dms/image/C4E03AQHxy8w942ADVA/profile-displayphoto-shrink_800_800/0/1613255611299?e=2147483647&v=beta&t=yiZfUAYvUq15IiUW-Vg-HnTD9_qnbXVRyy2YQ_wbt-I"
+              v-for="(url, i) in media"
+              :key="i"
+              :src="url"
               cover
             ></v-carousel-item>
-          <v-carousel-item
-            src="https://cdn.vuetifyjs.com/images/cards/hotel.jpg"
-            cover
-          ></v-carousel-item>
-          <v-carousel-item
-            src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-            cover
-          ></v-carousel-item>
+
+            <v-carousel-item v-if="media.length === 0">
+              <v-sheet
+                color="#E2E2E2"
+                height="100%"
+                tile
+              >
+                <div class="d-flex fill-height justify-center align-center text-h4">
+                  No hay contenido multimedia disponible.
+                </div>
+              </v-sheet>
+            </v-carousel-item>
         </v-carousel>
         </v-col>
       </v-row>
@@ -142,18 +149,21 @@
     name: 'PlansDetail',
     data() {
       return {
-        plan: null
+        plan: null,
+        media: [],
+        loading: true,
       }
     },
-    created() {
-      TrainingPlanService.getTrainingPlanInfoById(this.$route.params.id).then(
-        (response) => {
-          this.plan = response.data;
-          console.log(this.plan)
-        },
-        (error) => {
-        }
-      );
+    async mounted() {
+      let response = await TrainingPlanService.getTrainingPlanInfoById(this.$route.params.id);
+      this.plan = response.data;
+      console.log(this.plan);
+
+      for (var index in this.plan.multimedia) {
+        media.push(await generateMediaURL('trainings/' + this.plan.id + '/' + this.plan.multimedia[index]));
+      };
+
+      this.loading = false;
     }
   }
 </script>

@@ -13,13 +13,13 @@ class TrainingPlanService {
   }
 
   blockPlan(planId) {
-    return axios.post(API_URL + 'trainings/' + planId + '/blocked', 
+    return axios.patch(API_URL + 'trainings/' + planId + '/status', 
     { blocked: true },
     { headers: authHeader() });
   }
 
   unblockPlan(planId) {
-    return axios.post(API_URL + 'trainings/' + planId + '/blocked', 
+    return axios.patch(API_URL + 'trainings/' + planId + '/status', 
     { blocked: false },
     { headers: authHeader() });
   }  

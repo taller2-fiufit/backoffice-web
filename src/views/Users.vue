@@ -38,7 +38,7 @@
 
       for (var index in this.users) {
         if (this.users[index].profileimage != "") {
-          this.users[index].avator = await generateMediaURL('users/' + this.users[index].id + '/' + this.users[index].profileimage);
+          this.users[index].avator = await generateMediaURL('users/' + this.users[index].profileimage);
         } else {
           this.users[index].avator = require('../assets/profile-pic.jpg');
         }

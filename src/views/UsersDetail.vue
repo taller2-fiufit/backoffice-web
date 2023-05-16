@@ -228,14 +228,15 @@
       console.log(!(this.user.city || ""));
       console.log(this.user);
       if (this.user.profileimage != "") {
-        this.profile_pic = await generateMediaURL('users/' + this.user.id + '/' + this.user.profileimage);
+        this.profile_pic = await generateMediaURL('users/' + this.user.profileimage);
       };
-
+      
       let following_response = await UserService.getFollowingListById(this.$route.params.id);
       this.following = following_response.data;
       for (var index in this.following) {
         if (this.following[index].profileimage != "") {
-          this.following[index].avator = await generateMediaURL('users/' + this.following[index].id + '/' + this.following[index].profileimage);
+          console.log(this.following[index].fullname);
+          this.following[index].avator = await generateMediaURL('users/' + this.following[index].profileimage);
         } else {
           this.following[index].avator = require('../assets/profile-pic.jpg');
         }
@@ -245,7 +246,7 @@
       this.followers = followers_response.data;
       for (var index in this.followers) {
         if (this.followers[index].profileimage != "") {
-          this.followers[index].avator = await generateMediaURL('users/' + this.followers[index].id + '/' + this.followers[index].profileimage);
+          this.followers[index].avator = await generateMediaURL('users/' + this.followers[index].profileimage);
         } else {
           this.followers[index].avator = require('../assets/profile-pic.jpg');
         }

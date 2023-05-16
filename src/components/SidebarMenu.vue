@@ -40,6 +40,7 @@
 
 <script>
   import UserService from '../services/user.service';
+  import generateMediaURL  from '../services/firebase';
   export default {
     name: 'SidebarMenu',
     data: () => ({ 
@@ -65,7 +66,7 @@
       this.user_info[0].subtitle = response.data.email;
 
       if (response.data.profileimage != "") {
-        this.user_info[0].prependAvatar = await generateMediaURL('users/' + response.data.id + '/' + response.data.profileimage);
+        this.user_info[0].prependAvatar = await generateMediaURL('users/' + response.data.profileimage);
       };
     }
   }

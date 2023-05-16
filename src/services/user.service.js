@@ -36,6 +36,20 @@ class UserService {
   getFollowersListById(userId) {
     return axios.get(API_URL + 'users/' + userId + '/followers', { headers: authHeader() });
   }
+
+  blockUser(userId) {
+    return axios.patch(API_URL + 'users/' + userId + '/status', 
+    { blocked: true },
+    { headers: authHeader() });
+  }
+
+  unblockUser(userId) {
+    return axios.patch(API_URL + 'users/' + userId + '/status', 
+    { blocked: false },
+    { headers: authHeader() });
+  }  
+}
+
 }
 
 export default new UserService();

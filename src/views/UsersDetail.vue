@@ -260,14 +260,28 @@
     },
     methods: {
       blockUser() {
-        this.block_loading = true
-        this.user.isBlocked = true
-        this.block_loading = false
+        this.block_loading = true;
+        UserService.blockUser(this.user.id).then(
+          (response) => {
+            this.user.blocked = response.data.blocked;
+            this.block_loading = false
+          },
+          (_) => [
+            this.block_loading = false
+          ]
+        )
       },
       unblockUser() {
-        this.block_loading = true
-        this.user.isBlocked = false
-        this.block_loading = false
+        this.block_loading = true;
+        UserService.unblockUser(this.user.id).then(
+          (response) => {
+            this.user.blocked = response.data.blocked;
+            this.block_loading = false
+          },
+          (_) => [
+            this.block_loading = false
+          ]
+        )
       },
       goToUsersList() {
         this.$router.push(`/users`);

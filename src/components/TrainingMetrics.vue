@@ -179,7 +179,7 @@
                           Cantidad de Entrenamientos por Dificultad
                         </div>
                         <div>
-                          <DoughnutChart class="doughnut-chart" v-bind="this.difficultyOfTrainingsDoughnutChartProps" />
+                          <BarChart class="bar-chart" v-bind="this.difficultyOfTrainingsBarChartProps" />
                         </div>
                       </div>
                       <div v-if="!this.trainingPlansMetrics.length">
@@ -252,12 +252,11 @@
 
 <script>
   import MetricsService from '../services/metrics.service';
-  import UserService from '../services/user.service';
   import ErrorAlert from '../components/ErrorAlert.vue'
   import TrainingMetricsUsersTable from '../components/TrainingMetricsUsersTable.vue'
   import useVuelidate from '@vuelidate/core';
   import { required } from "@vuelidate/validators";
-  import { DoughnutChart, useBarChart } from 'vue-chart-3';
+  import { BarChart, DoughnutChart, useBarChart } from 'vue-chart-3';
   import { Chart, registerables } from 'chart.js';
   import { computed, ref } from "vue";
 
@@ -267,6 +266,7 @@
     name: 'Metrics',
     components: {
       ErrorAlert,
+      BarChart,
       DoughnutChart,
       TrainingMetricsUsersTable
     },
@@ -284,7 +284,7 @@
         trainingPlansMetrics: null,
         // Training Charts
         typeOfTrainingsDoughnutChartProps: null,
-        difficultyOfTrainingsDoughnutChartProps: null,
+        difficultyOfTrainingsBarChartProps: null,
         // Training Plans Created by Users Table
         headers: [  
           { text: "ID DE USUARIO", value: "id", sortable: true},
@@ -379,7 +379,7 @@
       // Training Graphs
       createTrainingGraphsMetrics() {
         this.createTypeOfTrainingsDoughnutChart();
-        this.createfTrainingsDifficultyChart();
+        this.createTrainingsDifficultyBarChart();
         this.createTrainingMetricsUsersTable();
       },
       createTypeOfTrainingsDoughnutChart() {
@@ -416,39 +416,40 @@
 
         this.typeOfTrainingsDoughnutChartProps = barChartProps;
       },
-      createfTrainingsDifficultyChart() {
+      createTrainingsDifficultyBarChart() {
         const trainingsDifficulty = new Map();
         for (const training of this.trainingPlansMetrics) {
           const difficulty = training.attrs.difficulty;
           if (trainingsDifficulty.has(difficulty)) {
             trainingsDifficulty.set(difficulty, trainingsDifficulty.get(difficulty) + 1);
           } else {
-            trainingsDifficulty.set(difficulty, 1)
+            trainingsDifficulty.set(difficulty, 1);
           }
         }
 
-        let labels = [];
-        let amount = [];
+        let labels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+        let amount = [0,0,0,0,0,0,0,0,0,0];
         trainingsDifficulty.forEach((value, key) => {
-          labels.push(key);
-          amount.push(value)
+          amount[key-1] = value;
         });
 
         const data = ref(amount);
+
 
         const chartData = computed(() => ({
           labels: labels,
           datasets: [
             {
+              label: [""],
               data: data.value,
-              backgroundColor: ["#9ACD32", "#2b3c4b", "#E2E2E2"]
+              backgroundColor: ["#9ACD32"]
             },
           ],
         }));
 
         const { barChartProps, barChartRef } = useBarChart({ chartData });
 
-        this.difficultyOfTrainingsDoughnutChartProps = barChartProps;
+        this.difficultyOfTrainingsBarChartProps = barChartProps;
       },
       createTrainingMetricsUsersTable() {
         const usersTrainingGroupById = new Map();
@@ -509,6 +510,12 @@
 }
 #title {
   font-size: 25px;
+}
+
+.bar-chart {
+  height: 250px;
+  width: 550px;
+  align-self: center;
 }
 
 .doughnut-chart {

@@ -357,7 +357,7 @@
           labels: ['Mail y Contraseña', 'Identidad federada'],
           datasets: [
             {
-              label: ['Mail y Contraseña'],
+              label: [""],
               data: data.value,
               backgroundColor: ["#9ACD32", "#2b3c4b"]
             },
@@ -378,7 +378,7 @@
           labels: ['Mail y Contraseña', 'Identidad federada'],
           datasets: [
             {
-              label: ['Mail y Contraseña'],
+              label: [""],
               data: data.value,
               backgroundColor: ["#9ACD32", "#2b3c4b"]
             },
@@ -398,7 +398,7 @@
           labels: ['Usuarios no bloqueados', 'Usuarios bloqueados'],
           datasets: [
             {
-              label: ['Usuarios no bloqueados'],
+              label: [""],
               data: data.value,
               backgroundColor: ["#9ACD32", "#2b3c4b"]
             },

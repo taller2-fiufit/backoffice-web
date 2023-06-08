@@ -13,13 +13,28 @@
     <v-card
     class="mx-5 my-5 rounded-sm"
     >
-    <v-sheet :color="this.plan.blocked ? '#FF0000' : '#9ACD32'" height="6"></v-sheet>
+    <v-sheet :color="isBlocked ? '#FF0000' : '#9ACD32'" height="6"></v-sheet>
     <v-card-item>
       <v-row>
         <v-col cols="6" class="mt-2 mb-4">
-          <div class="text-overline">
-            Información del plan
-          </div>
+          <v-row>
+            <v-col cols="9">
+              <div class="text-overline">
+                Información del plan
+              </div>
+            </v-col>
+            <v-col>
+              <div class="text-center mt-1" align-self="end">
+                <v-rating
+                  color="#9ACD32"
+                  size="30"
+                  v-model="plan.score"
+                  readonly
+                ></v-rating>
+              </div>
+            </v-col>
+          </v-row>
+
           <v-row justify="center" class="mt-15">
             <div class="text-h5 font-weight-bold">
               <v-icon end icon="mdi-dumbbell"></v-icon>

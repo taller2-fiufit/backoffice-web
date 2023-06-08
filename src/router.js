@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Dashboard from './views/Dashboard.vue'
 import Register from './views/Register.vue'
 import Login from './views/Login.vue'
+import TrainerVerification from './views/TrainerVerification.vue'
 
 const routes = [
   {
@@ -24,6 +25,14 @@ const routes = [
     path: '/register',
     name: 'Register',
     component: Register,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/trainer-verification',
+    name: 'Trainer Verification',
+    component: TrainerVerification,
     meta: {
       requiresAuth: true
     }

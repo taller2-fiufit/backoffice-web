@@ -55,7 +55,8 @@
         { title: 'Usuarios', icon: 'mdi-account-group', route: '/users' },
         { title: 'Planes', icon: 'mdi-dumbbell', route: '/plans' },
         { title: 'Métricas', icon: 'mdi-poll', route: '/metrics' },
-        { title: 'Registro de nuevos admins', icon: 'mdi-account-tie', route: '/register'}
+        { title: 'Registro de nuevos admins', icon: 'mdi-account-tie', route: '/register'},
+        { title: 'Solicitudes de verificación', icon: 'mdi-check-decagram', route: '/trainer-verification'}
       ],
       fullname: '',
       email: ''

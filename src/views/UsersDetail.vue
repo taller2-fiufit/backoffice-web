@@ -11,7 +11,7 @@
       </v-breadcrumbs>
     </v-app-bar>
     <v-card class="mx-5 my-5 rounded-sm">
-      <v-sheet :color="this.user.isBlocked ? '#FF0000' : '#9ACD32'" height="6"></v-sheet>
+      <v-sheet :color="isBlocked ? '#FF0000' : '#9ACD32'" height="6"></v-sheet>
       <v-card-item>
         <v-row>
           <v-col cols="3" class="mt-2 mb-10"> 
@@ -21,7 +21,7 @@
             <v-row align="center" class="mt-2">
               <img
                 :src=profile_pic
-                class="rounded-circle mx-auto my-5"
+                class="rounded-circle mx-auto my-5 imagen_perfil"
               />
             </v-row>
             <p class="text-caption text-center mx-5 mt-3"> {{ user.description }} </p>
@@ -256,7 +256,7 @@
     },
     computed: {
       isBlocked() {
-        return this.user.isBlocked
+        return this.user.blocked
       }
     },
     methods: {
@@ -266,8 +266,10 @@
           (response) => {
             this.user.blocked = response.data.blocked;
             this.block_loading = false
+            console.log(response.data.blocked)
           },
           (_) => [
+            console.log('ayuda'),
             this.block_loading = false
           ]
         )
@@ -299,7 +301,7 @@
   background: #F7F7F7;
 }
 
-.rounded-circle {
+.imagen_perfil {
   width: 180px;
   height: 180px;
 }

@@ -69,6 +69,22 @@ const routes = [
     }
   },
   {
+    path: '/services',
+    name: 'Services',
+    component: () => import('./views/Services.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/services/:id',
+    name: 'ServicesDetail',
+    component: () => import('./views/ServicesDetail.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
     path: '/metrics',
     name: 'Metrics',
     component: () => import('./views/Metrics.vue'),

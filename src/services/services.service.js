@@ -4,6 +4,11 @@ import authHeader from './auth-header';
 const API_URL=process.env.VUE_APP_SERVICE_API_URL;
 
 class ServicesService {
+
+  registerNewService(service) {
+    return axios.post(API_URL + 'services', service, { headers: authHeader() });
+  }
+
   getServiceList() {
     return axios.get(API_URL + 'services', { headers: authHeader() });
   }

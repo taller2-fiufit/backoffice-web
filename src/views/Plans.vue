@@ -44,7 +44,7 @@
       async updateDiffFilter(val) {
         this.loading = true;
         this.difficulty_filtering = val;
-        let response = await TrainingPlanService.getTrainingPlanList() // agregar query params
+        let response = await TrainingPlanService.getTrainingPlanList(this.difficulty_filtering[0], this.difficulty_filtering[1] + 1, this.type_filtering) // agregar query params
         this.trainingPlans = response.data;
         this.loading = false;
       },
@@ -52,13 +52,13 @@
       async updateTypeFilter(val) {
         this.loading = true;
         this.type_filtering = val;
-        let response = await TrainingPlanService.getTrainingPlanList() // agregar query params
+        let response = await TrainingPlanService.getTrainingPlanList(this.difficulty_filtering[0], this.difficulty_filtering[1] + 1, this.type_filtering) // agregar query params
         this.trainingPlans = response.data;
         this.loading = false;
       }
     },
     async mounted() {
-      let response = await TrainingPlanService.getTrainingPlanList() // agregar query params
+      let response = await TrainingPlanService.getTrainingPlanList(this.difficulty_filtering[0], this.difficulty_filtering[1] + 1, this.type_filtering) // agregar query params
       this.trainingPlans = response.data;
       this.loading = false;
     },

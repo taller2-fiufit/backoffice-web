@@ -4,8 +4,9 @@ import authHeader from './auth-header';
 const API_URL=process.env.VUE_APP_TRAINING_API_URL;
 
 class TrainingPlanService {
-  getTrainingPlanList() {
-    return axios.get(API_URL + 'trainings', { headers: authHeader() });
+  getTrainingPlanList(mindiff, maxdiff, type) {
+    const queryParams = "?offset=0&mindiff=" + mindiff + "&maxdiff=" + maxdiff + "&type=" + type;
+    return axios.get(API_URL + 'trainings' + queryParams, { headers: authHeader() });
   }
 
   getTrainingPlanInfoById(planId) {

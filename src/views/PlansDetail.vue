@@ -68,6 +68,17 @@
                     variant="underlined"
                     persistent-placeholder
                   ></v-text-field>
+                  <v-btn
+                    color="#9ACD32"
+                    icon
+                    size="small"
+                    @click="goToUserDetails(plan.author)"
+                    class="my-2 ml-3"
+                  >
+                    <v-icon>
+                      mdi-eye
+                    </v-icon>
+                  </v-btn>
                 </v-col>
                 <v-col>
                   <v-text-field
@@ -189,6 +200,9 @@
       }
     },
     methods: {
+      goToUserDetails(id) {
+        this.$router.push(`/users/${id}`);
+      },
       blockPlan() {
         this.block_loading = true;
         TrainingPlanService.blockPlan(this.plan.id).then(

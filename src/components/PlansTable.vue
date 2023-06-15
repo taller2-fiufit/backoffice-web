@@ -17,6 +17,24 @@
           />
         </template>
 
+        <template #header-difficulty="header">
+          <div class="filter-column">
+            <img :src="require('../assets/filter.png')" class="filter-icon" @click.stop="showDifficultyFilter=!showDifficultyFilter">
+            {{ header.text }}
+            <div class="filter-menu filter-age-menu" v-if="showDifficultyFilter">
+              <v-range-slider
+                color="#9ACD32"
+                :max="10"
+                :min="0"
+                :step="1"
+                :modelValue="difficulty_filtering"
+                @update:modelValue="updateDifficultyFiltering()"
+                thumb-label="always"
+              ></v-range-slider>
+            </div>
+          </div>
+        </template>
+
         <template #item-actions="item">
           <div class="operation-wrapper">
             <v-btn
@@ -39,13 +57,21 @@
   <script>
     export default {
       name: 'Table',
-      props: ['headers', 'items', 'loading'],
+      data() {
+        return {
+          showDifficultyFilter: false,
+        }
+      },
+      props: ['headers', 'items', 'loading', 'difficulty_filtering'],
       methods: {
         goToPlanDetails(id) {
           console.log(id);
           this.$router.push(`/plans/${id}`);
+        },
+        updateDifficultyFiltering() {
+          this.$emit('updateDiffiCultyFiltering', difficulty_filtering)
         }
-      }
+      },
     }
   </script>
   
@@ -55,5 +81,26 @@
   --easy-table-header-height: 45px;
   --easy-table-body-item-padding: 0px 13px 0px 0px;
   --easy-table-body-row-font-size: 15px;
+}
+
+.filter-icon {
+  cursor: pointer;
+  display: inline-block;
+  width: 15px !important;
+  height: 15px !important;
+  margin-right: 4px;
+}
+
+.filter-menu {
+  padding: 40px 30px;
+  z-index: 1;
+  position: absolute;
+  top: 50px;
+  width: 300px;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+}
+.filter-age-menu {
+  height: 40px;
 }
 </style>

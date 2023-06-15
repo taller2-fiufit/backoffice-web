@@ -5,7 +5,7 @@
 
   <v-card class="mx-5 my-5 rounded-sm">
     <div id="table-div" class="pl-15">
-      <PlansTable v-if="trainingPlans" :headers="headers" :items="trainingPlans" :loading="loading"/>
+      <PlansTable v-if="trainingPlans" :headers="headers" :items="trainingPlans" :loading="loading" :difficulty_filtering.sync="difficulty_filtering"/>
     </div>
   </v-card>
 </template>
@@ -25,9 +25,11 @@
           { text: "#", value: "id", sortable: true},
           { text: "TÍTULO", value: "title", sortable: true},
           { text: "TIPO", value: "type", sortable: true},
+          { text: "DIFICULTAD", value: "difficulty", sortable: true},
           { text: "DETALLE", value: "actions"}
         ],
         trainingPlans: [],
+        difficulty_filtering: [0, 10],
         loading: true
       }
     },
@@ -35,6 +37,14 @@
       let response = await TrainingPlanService.getTrainingPlanList()
       this.trainingPlans = response.data;
       this.loading = false;
+    },
+    watch: {
+      difficulty_filtering: function(val) {
+        console.log(val);
+        if (val) {
+          console.log("KEKARAJO");
+        }
+      }
     }
   }
 </script>

@@ -123,8 +123,14 @@
       }
     },
     async mounted() {
-      let response = await ServicesService.getServiceList()
-      this.servicesList = response.data;
+      await ServicesService.getServiceList().then(
+        (response) => {
+          this.servicesList = response.data;
+        },
+        (error) => {
+          this.servicesList = [];
+        }
+      );
       this.loading = false;
     },
 

@@ -5,7 +5,13 @@
 
   <v-card class="mx-5 my-5 rounded-sm">
     <div id="table-div" class="pl-15">
-      <PlansTable v-if="trainingPlans" :headers="headers" :items="trainingPlans" :loading="loading" :difficulty_filtering.sync="difficulty_filtering"/>
+      <PlansTable v-if="trainingPlans" 
+        :headers="headers" 
+        :items="trainingPlans" 
+        :loading="loading"
+        @change_diff_filter="updateDiffFilter" 
+        @change_type_filter="updateTypeFilter"
+        />
     </div>
   </v-card>
 </template>
@@ -30,22 +36,32 @@
         ],
         trainingPlans: [],
         difficulty_filtering: [0, 10],
+        type_filtering: 'all',
         loading: true
       }
     },
+    methods: {
+      async updateDiffFilter(val) {
+        this.loading = true;
+        this.difficulty_filtering = val;
+        let response = await TrainingPlanService.getTrainingPlanList() // agregar query params
+        this.trainingPlans = response.data;
+        this.loading = false;
+      },
+
+      async updateTypeFilter(val) {
+        this.loading = true;
+        this.type_filtering = val;
+        let response = await TrainingPlanService.getTrainingPlanList() // agregar query params
+        this.trainingPlans = response.data;
+        this.loading = false;
+      }
+    },
     async mounted() {
-      let response = await TrainingPlanService.getTrainingPlanList()
+      let response = await TrainingPlanService.getTrainingPlanList() // agregar query params
       this.trainingPlans = response.data;
       this.loading = false;
     },
-    watch: {
-      difficulty_filtering: function(val) {
-        console.log(val);
-        if (val) {
-          console.log("KEKARAJO");
-        }
-      }
-    }
   }
 </script>
 

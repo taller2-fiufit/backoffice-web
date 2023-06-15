@@ -21,16 +21,30 @@
           <div class="filter-column">
             <img :src="require('../assets/filter.png')" class="filter-icon" @click.stop="showDifficultyFilter=!showDifficultyFilter">
             {{ header.text }}
-            <div class="filter-menu filter-age-menu" v-if="showDifficultyFilter">
-              <v-range-slider
-                color="#9ACD32"
+            <div class="filter-menu filter-difficulty-menu" v-if="showDifficultyFilter">
+              <Slider
                 :max="10"
                 :min="0"
                 :step="1"
-                :modelValue="difficulty_filtering"
-                @update:modelValue="updateDifficultyFiltering()"
-                thumb-label="always"
-              ></v-range-slider>
+                v-model="difficulty_filtering"
+                class="slider"
+              />
+            </div>
+          </div>
+        </template>
+
+        <template #header-type="header">
+          <div class="filter-column">
+            <img :src="require('../assets/filter.png')" class="filter-icon" @click.stop="showTypeFilter=!showTypeFilter">
+            {{ header.text }}
+            <div class="filter-menu-select" v-if="showTypeFilter">
+              <v-select
+                variant="outlined"
+                class="select"
+                v-model="type_filtering"
+                :items="['all', 'walk', 'running']"
+              >
+              </v-select>
             </div>
           </div>
         </template>
@@ -54,26 +68,44 @@
     </div>
 </template>
   
-  <script>
-    export default {
-      name: 'Table',
-      data() {
-        return {
-          showDifficultyFilter: false,
-        }
+<script>
+import Slider from '@vueform/slider'
+import { all } from 'axios';
+  export default {
+    name: 'Table',
+    components: {
+      Slider
+    },
+    data() {
+      return {
+        showDifficultyFilter: false,
+        showTypeFilter: false,
+        difficulty_filtering: [0, 10],
+        type_filtering: "all",
+      }
+    },
+    props: ['headers', 'items', 'loading'],
+    methods: {
+      goToPlanDetails(id) {
+        console.log(id);
+        this.$router.push(`/plans/${id}`);
       },
-      props: ['headers', 'items', 'loading', 'difficulty_filtering'],
-      methods: {
-        goToPlanDetails(id) {
-          console.log(id);
-          this.$router.push(`/plans/${id}`);
-        },
-        updateDifficultyFiltering() {
-          this.$emit('updateDiffiCultyFiltering', difficulty_filtering)
-        }
+      changeDifficultyFiltering() {
+        this.$emit('change_diff_filter', this.difficulty_filtering)
+      }
+    },
+    watch: {
+      difficulty_filtering: function(val) {
+        this.showDifficultyFilter = false; // para pensar
+        this.$emit('change_diff_filter', val)
       },
+      type_filtering: function(val) {
+        this.showTypeFilter = false; // para pensar
+        this.$emit('change_type_filter', val)
+      }
     }
-  </script>
+  }
+</script>
   
 <style>
 .customize-table {
@@ -95,12 +127,36 @@
   padding: 40px 30px;
   z-index: 1;
   position: absolute;
-  top: 50px;
+  top: 45px;
   width: 300px;
   background-color: #fff;
   border: 1px solid #e0e0e0;
 }
-.filter-age-menu {
-  height: 40px;
+.filter-difficulty-menu {
+  height: 35px;
+}
+
+.filter-menu-select {
+  padding: 20px 20px;
+  z-index: 1;
+  position: absolute;
+  top: 45px;
+  width: 200px;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+}
+
+.slider {
+  margin-top: 15px;
+}
+
+.slider {
+  --slider-tooltip-bg: #9ACD32;
+  --slider-connect-bg: #9ACD32;
+}
+
+.select {
+  margin: 0px 0px -22px 0px;
 }
 </style>
+<style src="@vueform/slider/themes/default.css"></style>

@@ -59,7 +59,7 @@
               required
             ></v-text-field>
 
-            <v-btn type="submit" color="#9ACD32" block class="mt-2">
+            <v-btn type="submit" color="#9ACD32" :disabled="loading" block class="mt-2">
               <span
                 class="my-14 spinner-border spinner-border-sm"
               ></span>
@@ -143,6 +143,6 @@
         password: { required },
         confirmPassword: { required }
       }
-  }
+    }
   }
 </script>

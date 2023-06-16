@@ -29,8 +29,8 @@
       return {
         headers: [  
           { text: "#", value: "id", sortable: true},
-          { text: "TÍTULO", value: "title", sortable: true},
-          { text: "TIPO", value: "type", sortable: true},
+          { text: "TÍTULO", value: "title"},
+          { text: "TIPO", value: "type"},
           { text: "DIFICULTAD", value: "difficulty", sortable: true},
           { text: "DETALLE", value: "actions"}
         ],
@@ -41,26 +41,26 @@
       }
     },
     methods: {
-      async updateDiffFilter(val) {
-        this.loading = true;
-        this.difficulty_filtering = val;
+      async updateList() {
         let response = await TrainingPlanService.getTrainingPlanList(this.difficulty_filtering[0], this.difficulty_filtering[1] + 1, this.type_filtering) // agregar query params
         this.trainingPlans = response.data;
         this.loading = false;
       },
 
+      async updateDiffFilter(val) {
+        this.loading = true;
+        this.difficulty_filtering = val;
+        this.updateList()
+      },
+
       async updateTypeFilter(val) {
         this.loading = true;
         this.type_filtering = val;
-        let response = await TrainingPlanService.getTrainingPlanList(this.difficulty_filtering[0], this.difficulty_filtering[1] + 1, this.type_filtering) // agregar query params
-        this.trainingPlans = response.data;
-        this.loading = false;
+        this.updateList()
       }
     },
     async mounted() {
-      let response = await TrainingPlanService.getTrainingPlanList(this.difficulty_filtering[0], this.difficulty_filtering[1] + 1, this.type_filtering) // agregar query params
-      this.trainingPlans = response.data;
-      this.loading = false;
+      this.updateList()
     },
   }
 </script>

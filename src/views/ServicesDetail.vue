@@ -16,25 +16,68 @@
     <v-sheet :color="this.service.blocked ? '#FF0000' : '#9ACD32'" height="6"></v-sheet>
     <v-card-item>
       <v-row>
-        <v-col cols="6" class="mt-2 mb-4">
-          <div class="text-overline">
-            Información del servicio
+        <div class="text-overline">
+          Información del servicio
+        </div>
+        <v-row justify="center" class="mt-15">
+          <div class="text-h5 font-weight-bold">
+            <v-icon end icon="mdi-wrench-cog"></v-icon>
+            {{ service.name }}
           </div>
-          <v-row justify="center" class="mt-15">
-            <div class="text-h5 font-weight-bold">
-              <v-icon end icon="mdi-dumbbell"></v-icon>
-              {{ service.name }}
-            </div>
-          </v-row>
-          <v-row justify="center" class="mt-4">
-            <v-chip color="#8AB82D" text-color="white">{{ service.url }}</v-chip>
-          </v-row>
-          <v-row v-if="this.service.blocked" justify="center" class="mt-4">
-            <v-chip color='#FF0000' text-color="white"> BLOCKED </v-chip>
-          </v-row>
-          <p class="text-caption text-center mx-5 mt-7"> {{ service.path }} </p>
-        </v-col>
+        </v-row>
+        <v-btn
+          color="#FF0000"
+          size="small"
+          v-on:click="()=>isBlocked?unblockService():blockService()"
+          :disabled="block_loading"
+          class="my-4 mr-4"
+        >
+          <v-icon class="mr-2">
+            mdi-block-helper
+          </v-icon>
+          {{ isBlocked ? 'DESBLOQUEAR' : 'BLOQUEAR' }}
+        </v-btn>
+        <v-row v-if="this.service.blocked" justify="center" class="mt-4">
+          <v-chip color='#FF0000' text-color="white"> BLOCKED </v-chip>
+        </v-row>
         <v-divider vertical thickness="2"></v-divider>
+        <v-col cols="8" offset="2" class="mt-10">
+          <v-row>
+            <v-col cols="4" class="ml-4">
+              <v-text-field
+                :value="service.id"
+                label="ID"
+                prepend-icon="mdi-pound"
+                readonly
+                variant="underlined"
+                persistent-placeholder
+              ></v-text-field>
+            </v-col>
+            <v-col>
+              <v-text-field
+                class="ml-4"
+                :value="service.url"
+                label="URL"
+                prepend-icon="mdi-calendar-outline"
+                readonly
+                variant="underlined"
+                persistent-placeholder
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="4" class="ml-4">
+              <v-text-field
+                :value="service.path"
+                label="PATH"
+                prepend-icon="mdi-run"
+                readonly
+                variant="underlined"
+                persistent-placeholder
+              ></v-text-field>
+            </v-col>
+          </v-row>
+        </v-col>
       </v-row>
     </v-card-item>
   </v-card>
@@ -54,7 +97,7 @@
       }
     },
     async mounted() {
-      let response = await ServiceService.getServiceInfoById(this.$route.params.id);
+      let response = await ServicesService.getServiceById(this.$route.params.id);
       this.service = response.data;
       this.loading = false;
     },

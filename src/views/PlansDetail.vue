@@ -68,17 +68,6 @@
                     variant="underlined"
                     persistent-placeholder
                   ></v-text-field>
-                  <v-btn
-                    color="#9ACD32"
-                    icon
-                    size="small"
-                    @click="goToUserDetails(plan.author)"
-                    class="my-2 ml-3"
-                  >
-                    <v-icon>
-                      mdi-eye
-                    </v-icon>
-                  </v-btn>
                 </v-col>
                 <v-col>
                   <v-text-field
@@ -93,6 +82,20 @@
                   ></v-text-field>
                 </v-col>
               </v-row>
+              <div>
+                Ver detalle de Usuario
+                <v-btn
+                color="#9ACD32"
+                icon
+                size="small"
+                @click="goToUserDetails(plan.author)"
+                class="my-2 ml-3"
+                >
+                  <v-icon>
+                    mdi-eye
+                  </v-icon>
+                </v-btn>
+              </div>
             </v-col>
           </v-row>
         </v-col>

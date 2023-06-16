@@ -83,7 +83,7 @@
                 </v-col>
               </v-row>
               <div>
-                Ver detalle de Usuario
+                Ver detalle de autor
                 <v-btn
                 color="#9ACD32"
                 icon

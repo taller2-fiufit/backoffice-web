@@ -12,10 +12,10 @@
         <DashboardCardNumber title="Usuarios" :quantity="this.totalUsersStats" icon="mdi-account-multiple" caption="Cantidad total" color="amber"></DashboardCardNumber>
       </v-col>
       <v-col cols="4">
-        <DashboardCardNumber title="Planes" :quantity="this.totalPlansStats" icon="mdi-tray-full" caption="Cantidad total" color="green"></DashboardCardNumber>
+        <DashboardCardNumber title="Planes" :quantity="this.totalPlansStats" icon="mdi-run" caption="Cantidad total" color="green"></DashboardCardNumber>
       </v-col>
       <v-col cols="4">
-        <DashboardCardNumber title="Servicios" :quantity="this.totalServicesStats" icon="mdi-charity" caption="Cantidad total" color="secondary"></DashboardCardNumber>
+        <DashboardCardNumber title="Servicios" :quantity="this.totalServicesStats" icon="mdi-tray-full" caption="Cantidad total" color="secondary"></DashboardCardNumber>
       </v-col>
     </v-row>
   </v-container>

@@ -1,20 +1,4 @@
 <template>
-  <div class="text-center">
-    <v-dialog
-      v-model="dialog"
-      width="auto"
-      class="dialog"
-    >
-      <v-card>
-        <v-card-text>
-          ACLARACIÓN: por default las Métricas generadas son de la última semana
-        </v-card-text>
-        <v-card-actions>
-          <v-btn color="primary" block @click="dialog = false">Cerrar</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </div>
   <v-card flat>
     <v-container>
       <v-card-title id="title" class="text-center pb-10">Métricas Generales</v-card-title>
@@ -248,8 +232,8 @@
         // Selected dates
         v$: useVuelidate(),
         loading: false,
-        usersStartDate: '',
-        usersEndDate: '',
+        usersStartDate: new Date(new Date() - 7 * 86400000).toISOString().slice(0, 10),
+        usersEndDate: new Date().toISOString().slice(0, 10),
         usersError: '',
         // Metrics
         usersMetrics: null,

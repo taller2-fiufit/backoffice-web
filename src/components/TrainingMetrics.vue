@@ -1,20 +1,4 @@
 <template>
-  <div class="text-center">
-    <v-dialog
-      v-model="dialog"
-      width="auto"
-      class="dialog"
-    >
-      <v-card>
-        <v-card-text>
-          ACLARACIÓN: por default las Métricas generadas son de la última semana
-        </v-card-text>
-        <v-card-actions>
-          <v-btn color="primary" block @click="dialog = false">Cerrar</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </div>
   <v-card flat>
     <v-container>
       <v-card-title id="title" class="text-center py-5">Métricas Por Fecha</v-card-title>
@@ -277,8 +261,8 @@
         // Selected dates
         v$: useVuelidate(),
         loading: false,
-        trainingsStartDate: '',
-        trainingsEndDate: '',
+        trainingsStartDate: new Date(new Date() - 7 * 86400000).toISOString().slice(0, 10),
+        trainingsEndDate: new Date().toISOString().slice(0, 10),
         trainingsError: '',
         // Metrics
         trainingPlansMetrics: null,

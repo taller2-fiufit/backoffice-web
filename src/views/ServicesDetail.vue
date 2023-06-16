@@ -62,7 +62,7 @@
                 class="ml-4"
                 :value="service.url"
                 label="URL"
-                prepend-icon="mdi-calendar-outline"
+                prepend-icon="mdi-alphabetical-variant"
                 readonly
                 variant="underlined"
                 persistent-placeholder
@@ -74,7 +74,7 @@
               <v-text-field
                 :value="service.path"
                 label="PATH"
-                prepend-icon="mdi-run"
+                prepend-icon="mdi-map-marker-path"
                 readonly
                 variant="underlined"
                 persistent-placeholder

@@ -16,30 +16,34 @@
     <v-sheet :color="this.service.blocked ? '#FF0000' : '#9ACD32'" height="6"></v-sheet>
     <v-card-item>
       <v-row>
-        <div class="text-overline">
+        <v-col cols="6" class="mt-2 mb-4">
+          <div class="text-overline">
           Información del servicio
-        </div>
-        <v-row justify="center" class="mt-15">
-          <div class="text-h5 font-weight-bold">
-            <v-icon end icon="mdi-wrench-cog"></v-icon>
-            {{ service.name }}
           </div>
-        </v-row>
-        <v-btn
+          <v-row justify="center" class="mt-15">
+            <div class="text-h5 font-weight-bold">
+              <v-icon end icon="mdi-wrench-cog"></v-icon>
+              {{ service.name }}
+            </div>
+          </v-row>
+          <v-row v-if="this.service.blocked" justify="center" class="mt-4">
+            <v-chip color='#FF0000' text-color="white"> BLOCKED </v-chip>
+          </v-row>
+        </v-col>
+        <v-col>
+          <v-btn
           color="#FF0000"
           size="small"
           v-on:click="()=>isBlocked?unblockService():blockService()"
           :disabled="block_loading"
           class="my-4 mr-4"
-        >
-          <v-icon class="mr-2">
-            mdi-block-helper
-          </v-icon>
-          {{ isBlocked ? 'DESBLOQUEAR' : 'BLOQUEAR' }}
-        </v-btn>
-        <v-row v-if="this.service.blocked" justify="center" class="mt-4">
-          <v-chip color='#FF0000' text-color="white"> BLOCKED </v-chip>
-        </v-row>
+          >
+            <v-icon class="mr-2">
+              mdi-block-helper
+            </v-icon>
+            {{ isBlocked ? 'DESBLOQUEAR' : 'BLOQUEAR' }}
+          </v-btn>
+        </v-col>
         <v-divider vertical thickness="2"></v-divider>
         <v-col cols="8" offset="2" class="mt-10">
           <v-row>

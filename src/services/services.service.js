@@ -17,6 +17,10 @@ class ServicesService {
     return axios.get(API_URL + 'services/' + serviceId, { headers: authHeader() });
   }
 
+  getServiceCount() {
+    return axios.get(API_URL + 'services/count')
+  }
+
   blockService(serviceId) {
     return axios.patch(API_URL + 'services/' + serviceId, 
     { blocked: true },

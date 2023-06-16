@@ -29,6 +29,10 @@ class UserService {
     return axios.get(API_URL + 'users/' + userId);
   }
 
+  getUserCount() {
+    return axios.get(API_URL + 'users/count')
+  }
+
   getFollowingListById(userId) {
     return axios.get(API_URL + 'users/' + userId + '/following', { headers: authHeader() });
   }

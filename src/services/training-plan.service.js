@@ -13,6 +13,10 @@ class TrainingPlanService {
     return axios.get(API_URL + 'trainings/' + planId, { headers: authHeader() });
   }
 
+  getTrainingPlanCount() {
+    return axios.get(API_URL + 'trainings/count')
+  }
+
   blockPlan(planId) {
     return axios.patch(API_URL + 'trainings/' + planId + '/status', 
     { blocked: true },

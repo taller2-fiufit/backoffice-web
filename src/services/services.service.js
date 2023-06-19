@@ -18,7 +18,7 @@ class ServicesService {
   }
 
   getServiceCount() {
-    return axios.get(API_URL + 'services/count')
+    return axios.get(API_URL + 'services/count', { headers: authHeader() })
   }
 
   blockService(serviceId) {

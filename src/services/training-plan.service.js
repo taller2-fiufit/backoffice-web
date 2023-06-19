@@ -14,7 +14,7 @@ class TrainingPlanService {
   }
 
   getTrainingPlanCount() {
-    return axios.get(API_URL + 'trainings/count')
+    return axios.get(API_URL + 'trainings/count', { headers: authHeader() })
   }
 
   blockPlan(planId) {

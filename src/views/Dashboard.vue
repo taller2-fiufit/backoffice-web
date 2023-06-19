@@ -52,7 +52,7 @@
       )
       UserService.getUserCount().then(
         response => {
-          this.totalUsersStats = response.data;
+          this.totalUsersStats = response.data.count;
         },
         error => {
           this.totalUsersStats = 0;
@@ -60,7 +60,7 @@
       )
       TrainingPlanService.getTrainingPlanCount().then(
         response => {
-          this.totalPlansStats = response.data;
+          this.totalPlansStats = response.data.count;
         },
         error => {
           this.totalPlansStats = 0;
@@ -68,7 +68,7 @@
       )
       ServicesService.getServiceCount().then(
         response => {
-          this.totalServicesStats = response.data;
+          this.totalServicesStats = response.data.count;
         },
         error => {
           this.totalServicesStats = 0;

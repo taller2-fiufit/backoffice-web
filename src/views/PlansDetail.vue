@@ -69,6 +69,19 @@
                     persistent-placeholder
                   ></v-text-field>
                 </v-col>
+                <v-col cols="2">
+                  <v-btn
+                  color="#9ACD32"
+                  icon
+                  size="small"
+                  class="mr-4 mt-2"
+                  @click="goToUserDetails(plan.author)"
+                  >
+                    <v-icon>
+                      mdi-account
+                    </v-icon>
+                  </v-btn>
+                </v-col>
                 <v-col>
                   <v-text-field
                     class="ml-4"
@@ -100,7 +113,7 @@
               :disabled="block_loading"
               class="my-4 mr-4"
             >
-              <v-icon class="mr-2">
+              <v-icon>
                 mdi-block-helper
               </v-icon>
               {{ isBlocked ? 'DESBLOQUEAR' : 'BLOQUEAR' }}
@@ -189,6 +202,9 @@
       }
     },
     methods: {
+      goToUserDetails(id) {
+        this.$router.push(`/users/${id}`);
+      },
       blockPlan() {
         this.block_loading = true;
         TrainingPlanService.blockPlan(this.plan.id).then(

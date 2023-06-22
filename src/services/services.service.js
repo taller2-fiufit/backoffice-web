@@ -9,8 +9,9 @@ class ServicesService {
     return axios.post(API_URL + 'services', service, { headers: authHeader() });
   }
 
-  getServiceList() {
-    return axios.get(API_URL + 'services', { headers: authHeader() });
+  getServiceList(blocked) {
+    const queryParams = blocked == '-' ? "" : "?blocked=" + blocked;
+    return axios.get(API_URL + 'services' + queryParams, { headers: authHeader() });
   }
 
   getServiceById(serviceId) {

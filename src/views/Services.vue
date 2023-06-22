@@ -84,7 +84,7 @@
     </v-row>
 
     <div id="table-div" class="pl-15">
-      <ServicesTable v-if="servicesList" :headers="headers" :items="servicesList" :loading="loading"/>
+      <ServicesTable v-if="servicesList" :headers="headers" :items="servicesList" :loading="loading" @change_block_filter="updateBlockFilter"/>
     </div>
   </v-card>
 </template>
@@ -106,7 +106,7 @@
       return {
         headers: [  
           { text: "#", value: "id", sortable: true},
-          { text: "NOMBRE", value: "name", sortable: true},
+          { text: "SERVICIO", value: "service", sortable: true},
           { text: "DETALLE", value: "actions"}
         ],
         servicesList: [],
@@ -119,22 +119,25 @@
         blocked: "",
         register_loading: false,
         message: "",
-        dialog: false
+        dialog: false,
+        blocked_filtering: '-'
       }
     },
     async mounted() {
-      await ServicesService.getServiceList().then(
-        (response) => {
-          this.servicesList = response.data;
-        },
-        (error) => {
-          this.servicesList = [];
-        }
-      );
+      let response = await ServicesService.getServiceList(this.blocked_filtering);
+      this.servicesList = response.data;
       this.loading = false;
     },
 
     methods: {
+      async updateBlockFilter(val) {
+        this.loading = true;
+        this.blocked_filtering = val;
+        let response = await ServicesService.getServiceList(this.blocked_filtering);
+        this.servicesList = response.data;
+        this.loading = false;
+      },
+
       handleRegister() {
         this.register_loading = true;
         this.v$.$validate()

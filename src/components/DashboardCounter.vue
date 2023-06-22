@@ -1,4 +1,5 @@
 <template>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
   <v-card class="mx-auto">
     <v-row>
       <v-col class="text-center mb-0 pb-0" cols="2">
@@ -8,7 +9,9 @@
               height="80"
               width="80"
               rounded
+              :elevation="8"
               :color="color"
+              class="mt-12"
             >
               <v-container fill-height fluid>
                 <v-row>
@@ -21,26 +24,26 @@
           </v-col>
         </v-row>
       </v-col>
-      <v-col cols="10" class="mb-0 pb-0 text-center">
-        <v-card-text class="pt-0 mt-6">
-          <div class="overline grey--text" style="font-size: 15px !important;">
+      <v-col cols="10" class="mt-13 text-center">
+        <v-card-text>
+          <div class="text-overline font-weight-medium" style="font-size: 15px !important">
             {{ title }}
           </div>
-          <div class="headline font-weight-medium grey--text text-center">
+          <div class="text-headline font-weight-bold" style="font-size: 15px !important">
             {{ quantity }}
           </div>
         </v-card-text>
       </v-col>
-      <v-col cols="12" class="mt-0 pt-0 my-5">
-        <v-card-text class="py-0">
-          <v-divider class="my-2"></v-divider>
+      <v-col cols="12">
+        <v-card-text>
+          <v-divider class="mb-3"></v-divider>
           <v-icon
             class="mr-2"
             small
           >
             mdi-clock
           </v-icon>
-          <span class="caption grey--text font-weight-light">{{ caption }}</span>
+          <span class="text-caption font-weight-light" style="font-size: 13px !important">Cantidad total</span>
         </v-card-text>
       </v-col>
     </v-row>
@@ -50,7 +53,7 @@
 <script>
 
 export default {
-  name: 'DashboardCardNumber',
+  name: 'DashboardCounter',
 
   props: {
     title: {
@@ -62,22 +65,9 @@ export default {
     icon: {
       type: String
     },
-    caption: {
-      type: String
-    },
     color: {
       type: String
     }
   }
 }
 </script>
-
-<style scoped>
-.v-sheet--offset {
-  top: -20px;
-  position: relative;
-}
-.title-color {
-  color: #7d7b7b;
-}
-</style>

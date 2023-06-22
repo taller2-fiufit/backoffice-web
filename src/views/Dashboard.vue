@@ -2,20 +2,20 @@
   <v-app-bar color="#9ACD32" class="flex-grow-0" app dark>
     <v-app-bar-title>Dashboard</v-app-bar-title>
   </v-app-bar>
-  <div>
-    <h3 id="dashboard-title" v-if="fullname">¡Bienvenido, {{ fullname }}!</h3>
-  </div>
   <v-container>
-    <v-card-title id="title" class="pb-2">Métricas Generales<v-divider class="ml-4"></v-divider></v-card-title>
-    <v-row class="my-3">
+    <v-row>
+      <v-card-title id="title">Métricas Generales</v-card-title>
+      <v-divider class="mx-4"></v-divider>
+    </v-row>
+    <v-row class="my-5">
       <v-col cols="4">
-        <DashboardCardNumber title="Usuarios" :quantity="this.totalUsersStats" icon="mdi-account-multiple" caption="Cantidad total" color="amber"></DashboardCardNumber>
+        <DashboardCounter title="Usuarios" :quantity="this.totalUsersStats" icon="mdi-account-multiple" color="amber"></DashboardCounter>
       </v-col>
       <v-col cols="4">
-        <DashboardCardNumber title="Planes" :quantity="this.totalPlansStats" icon="mdi-run" caption="Cantidad total" color="green"></DashboardCardNumber>
+        <DashboardCounter title="Planes" :quantity="this.totalPlansStats" icon="mdi-run" color="green"></DashboardCounter>
       </v-col>
       <v-col cols="4">
-        <DashboardCardNumber title="Servicios" :quantity="this.totalServicesStats" icon="mdi-tray-full" caption="Cantidad total" color="secondary"></DashboardCardNumber>
+        <DashboardCounter title="Servicios" :quantity="this.totalServicesStats" icon="mdi-tray-full" color="secondary"></DashboardCounter>
       </v-col>
     </v-row>
   </v-container>
@@ -25,12 +25,12 @@
   import UserService from '../services/user.service';
   import TrainingPlanService from '../services/training-plan.service';
   import ServicesService from '../services/services.service';
-  import DashboardCardNumber from '../components/DashboardCardNumber.vue'
+  import DashboardCounter from '../components/DashboardCounter.vue'
 
   export default {
     name: 'User',
     components: {
-      DashboardCardNumber,
+      DashboardCounter,
     },
     data () {
       return {
@@ -52,6 +52,7 @@
       )
       UserService.getUserCount().then(
         response => {
+          console.log(response);
           this.totalUsersStats = response.data.count;
         },
         error => {

@@ -69,6 +69,19 @@
                     persistent-placeholder
                   ></v-text-field>
                 </v-col>
+                <v-col cols="2">
+                  <v-btn
+                  color="#9ACD32"
+                  icon
+                  size="small"
+                  class="mr-4 mt-2"
+                  @click="goToUserDetails(plan.author)"
+                  >
+                    <v-icon>
+                      mdi-account
+                    </v-icon>
+                  </v-btn>
+                </v-col>
                 <v-col>
                   <v-text-field
                     class="ml-4"
@@ -82,20 +95,6 @@
                   ></v-text-field>
                 </v-col>
               </v-row>
-              <div>
-                Ver detalle de autor
-                <v-btn
-                color="#9ACD32"
-                icon
-                size="small"
-                @click="goToUserDetails(plan.author)"
-                class="my-2 ml-3"
-                >
-                  <v-icon>
-                    mdi-eye
-                  </v-icon>
-                </v-btn>
-              </div>
             </v-col>
           </v-row>
         </v-col>
@@ -114,7 +113,7 @@
               :disabled="block_loading"
               class="my-4 mr-4"
             >
-              <v-icon class="mr-2">
+              <v-icon>
                 mdi-block-helper
               </v-icon>
               {{ isBlocked ? 'DESBLOQUEAR' : 'BLOQUEAR' }}

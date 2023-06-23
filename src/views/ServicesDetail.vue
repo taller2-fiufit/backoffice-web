@@ -16,11 +16,29 @@
     <v-sheet :color="this.service.blocked ? '#FF0000' : '#9ACD32'" height="6"></v-sheet>
     <v-card-item>
       <v-row>
-        <v-col cols="6" class="mt-2 mb-4">
+        <v-col cols="10" class="mt-2 mb-4">
           <div class="text-overline">
           Información del servicio
           </div>
-          <v-row justify="center" class="mt-15">
+        </v-col>
+        <v-col>
+          <v-row justify="end">
+            <v-btn
+            color="#FF0000"
+            size="small"
+            v-on:click="()=>isBlocked?unblockService():blockService()"
+            :disabled="block_loading"
+            class="my-5 mr-3"
+            >
+              <v-icon class="mr-2">
+                mdi-block-helper
+              </v-icon>
+              {{ isBlocked ? 'DESBLOQUEAR' : 'BLOQUEAR' }}
+            </v-btn>
+          </v-row>
+        </v-col>
+        <v-col cols="6" offset="3" class="mb-6">
+          <v-row justify="center" class="my-5">
             <div class="text-h5 font-weight-bold">
               <v-icon end icon="mdi-wrench-cog"></v-icon>
               {{ service.name }}
@@ -29,25 +47,8 @@
           <v-row v-if="this.service.blocked" justify="center" class="mt-4">
             <v-chip color='#FF0000' text-color="white"> BLOCKED </v-chip>
           </v-row>
-        </v-col>
-        <v-col>
-          <v-btn
-          color="#FF0000"
-          size="small"
-          v-on:click="()=>isBlocked?unblockService():blockService()"
-          :disabled="block_loading"
-          class="my-4 mr-4"
-          >
-            <v-icon class="mr-2">
-              mdi-block-helper
-            </v-icon>
-            {{ isBlocked ? 'DESBLOQUEAR' : 'BLOQUEAR' }}
-          </v-btn>
-        </v-col>
-        <v-divider vertical thickness="2"></v-divider>
-        <v-col cols="8" offset="2" class="mt-10">
           <v-row>
-            <v-col cols="4" class="ml-4">
+            <v-col cols="2" class="ml-4">
               <v-text-field
                 :value="service.id"
                 label="ID"
@@ -60,9 +61,9 @@
             <v-col>
               <v-text-field
                 class="ml-4"
-                :value="service.url"
-                label="URL"
-                prepend-icon="mdi-alphabetical-variant"
+                :value="service.path"
+                label="PATH"
+                prepend-icon="mdi-map-marker-path"
                 readonly
                 variant="underlined"
                 persistent-placeholder
@@ -70,11 +71,11 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="4" class="ml-4">
+            <v-col class="ml-4">
               <v-text-field
-                :value="service.path"
-                label="PATH"
-                prepend-icon="mdi-map-marker-path"
+                :value="service.url"
+                label="URL"
+                prepend-icon="mdi-alphabetical-variant"
                 readonly
                 variant="underlined"
                 persistent-placeholder

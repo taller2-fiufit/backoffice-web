@@ -9,8 +9,9 @@ class ServicesService {
     return axios.post(API_URL + 'services', service, { headers: authHeader() });
   }
 
-  getServiceList() {
-    return axios.get(API_URL + 'services', { headers: authHeader() });
+  getServiceList(blocked) {
+    const queryParams = blocked == '-' ? "" : "?blocked=" + blocked;
+    return axios.get(API_URL + 'services' + queryParams, { headers: authHeader() });
   }
 
   getServiceById(serviceId) {
@@ -31,7 +32,11 @@ class ServicesService {
     return axios.patch(API_URL + 'services/' + serviceId, 
     { blocked: false },
     { headers: authHeader() });
-  }  
+  } 
+  
+  deleteService(serviceId) {
+    return axios.delete(API_URL + 'services/' + serviceId, { headers: authHeader() });
+  }
 }
 
 export default new ServicesService();

@@ -28,7 +28,11 @@ class ServicesService {
     return axios.patch(API_URL + 'services/' + serviceId, 
     { blocked: false },
     { headers: authHeader() });
-  }  
+  } 
+  
+  deleteService(serviceId) {
+    return axios.delete(API_URL + 'services/' + serviceId, { headers: authHeader() });
+  }
 }
 
 export default new ServicesService();

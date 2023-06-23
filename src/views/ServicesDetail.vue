@@ -37,7 +37,7 @@
             </v-btn>
           </v-row>
         </v-col>
-        <v-col cols="8" offset="2" class="mb-6">
+        <v-col cols="6" offset="3" class="mb-6">
           <v-row justify="center" class="my-5">
             <div class="text-h5 font-weight-bold">
               <v-icon end icon="mdi-wrench-cog"></v-icon>

@@ -38,7 +38,7 @@
                 variant="outlined"
                 class="select"
                 v-model="blocked_filtering"
-                :items="['-', 'true', 'false']"
+                :items="['-', 'Blocked', 'Unblocked']"
               >
               </v-select>
             </div>
@@ -58,6 +58,18 @@
                 mdi-eye
               </v-icon>
             </v-btn>
+
+            <v-btn
+              color="#9ACD32"
+              icon
+              size="small"
+              @click="deleteService(item.id)"
+              class="my-2 ml-3"
+            >
+              <v-icon>
+                mdi-trash-can
+              </v-icon>
+            </v-btn>
           </div>
         </template>
       </Datatable>
@@ -65,6 +77,7 @@
 </template>
   
   <script>
+    import ServicesService from '../services/services.service';
     export default {
       name: 'Table',
       props: ['headers', 'items', 'loading'],
@@ -78,12 +91,28 @@
       methods: {
         goToServiceDetails(id) {
           this.$router.push(`/services/${id}`);
+        },
+        deleteService(id) {
+          ServicesService.deleteService(id).then(
+            (response) => {
+              this.$emit('delete_service', id)
+            },
+            (error) => {
+              console.log(error)
+            }
+          )
         }
       },
       watch: {
         blocked_filtering: function(val) {
           this.showBlockedFilter = false;
-          this.$emit('change_block_filter', val)
+          if (val == "Blocked") {
+            this.$emit('change_block_filter', "true") 
+          } else if (val == "Unblocked") {
+            this.$emit('change_block_filter', "false")
+          } else {
+            this.$emit('change_block_filter', val)
+          }
         },
       }
     }

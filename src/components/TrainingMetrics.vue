@@ -5,7 +5,7 @@
       <v-card-title id="title" class="text-center pb-5">Métricas Generales</v-card-title>
       <v-form class="text-center" fast-fail @submit.prevent="handleTrainingSelectedDates">
         <div style="font-size: 20px !important;">Elegir fecha de inicio y fin para generar los gráficos a lo largo del tiempo.</div>
-        <div class="text-caption text-center mx-5"> Por default, las Métricas generadas son de la última semana. </div>
+        <div class="text-caption text-center mx-5"> Por default, las métricas generadas son de la última semana. </div>
         <div>
           <ErrorAlert v-if="trainingsError" :error="trainingsError" />
         </div>

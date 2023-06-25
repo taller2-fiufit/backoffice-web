@@ -11,7 +11,7 @@
       </v-breadcrumbs>
     </v-app-bar>
     <v-card class="mx-5 my-5 rounded-sm">
-      <v-sheet :color="this.user.isBlocked ? '#FF0000' : '#9ACD32'" height="6"></v-sheet>
+      <v-sheet :color="isBlocked ? '#FF0000' : '#9ACD32'" height="6"></v-sheet>
       <v-card-item>
         <v-row>
           <v-col cols="3" class="mt-2 mb-10"> 
@@ -256,7 +256,7 @@
     },
     computed: {
       isBlocked() {
-        return this.user.isBlocked
+        return this.user.blocked
       }
     },
     methods: {
@@ -264,6 +264,7 @@
         this.block_loading = true;
         UserService.blockUser(this.user.id).then(
           (response) => {
+            console.log(this.user.blocked)
             this.user.blocked = response.data.blocked;
             this.block_loading = false
           },

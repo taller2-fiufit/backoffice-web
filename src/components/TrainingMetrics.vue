@@ -1,25 +1,11 @@
 <template>
-  <div class="text-center">
-    <v-dialog
-      v-model="dialog"
-      width="auto"
-      class="dialog"
-    >
-      <v-card>
-        <v-card-text>
-          ACLARACIÓN: por default las Métricas generadas son de la última semana
-        </v-card-text>
-        <v-card-actions>
-          <v-btn color="primary" block @click="dialog = false">Cerrar</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </div>
-  <v-card flat>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+  <v-card class="rounded-sm" flat>
     <v-container>
-      <v-card-title id="title" class="text-center py-5">Métricas Por Fecha</v-card-title>
+      <v-card-title id="title" class="text-center pb-5">Métricas Generales</v-card-title>
       <v-form class="text-center" fast-fail @submit.prevent="handleTrainingSelectedDates">
-        <span>Elegir Fecha de Inicio y Fin para generar los gráficos a lo largo del tiempo</span>
+        <div style="font-size: 20px !important;">Elegir fecha de inicio y fin para generar los gráficos a lo largo del tiempo.</div>
+        <div class="text-caption text-center mx-5"> Por default, las Métricas generadas son de la última semana. </div>
         <div>
           <ErrorAlert v-if="trainingsError" :error="trainingsError" />
         </div>
@@ -27,7 +13,7 @@
         <v-text-field v-model="trainingsStartDate" name="trainingsStartDate" type="date" label="Fecha de inicio" required class="dateInput1"></v-text-field>
         <v-text-field v-model="trainingsEndDate" name="trainingsEndDate" type="date" label="Fecha de fin" required class="dateInput2"></v-text-field>
 
-        <v-btn type="submit" color="#9ACD32" class="mt-2 pb-20" :disabled="loading">
+        <v-btn type="submit" color="#9ACD32" class="mt-2 mb-7" :disabled="loading">
           <span
             v-show="loading"
             class="my-14 spinner-border spinner-border-sm"
@@ -40,25 +26,25 @@
     </v-container>
   </v-card>
 
-  <v-card flat>
+  <v-card class="rounded-sm" flat>
     <v-container>
-      <v-card-title id="title" class="text-center pb-10">Métricas Generales</v-card-title>
       <v-row>
-        <v-col cols="6">
+        <v-col cols="6" offset="3">
           <v-row>
             <v-col cols="12" class="my-0 py-0">
-              <v-card-title class="pb-5">Métricas de Nuevos Entrenamientos</v-card-title>
+              <v-card-title class="pb-3">Métricas de Nuevos Entrenamientos</v-card-title>
 
-              <v-card class="mx-auto">
-                <v-row>
-                  <v-col class="text-center mb-0 pb-5" cols="2">
+              <v-card class="mx-auto mb-10">
+                <v-row class="my-5">
+                  <v-col class="text-center mb-0 pb-0" cols="2">
                     <v-row justify="center">
                       <v-col cols="2">
                         <v-sheet
                           height="80"
                           width="80"
                           rounded
-                          color="#9ACD32" 
+                          color="#9ACD32"
+                          class="mb-3"
                         >
                           <v-container fill-height fluid>
                             <v-row>
@@ -72,11 +58,11 @@
                     </v-row>
                   </v-col>
                   <v-col cols="10" class="mb-0 pb-0 text-center">
-                    <v-card-text v-if="this.trainingPlansMetrics" class="pt-0">
-                      <div class="overline grey--text pt-5" style="font-size: 15px !important;">
+                    <v-card-text v-if="this.trainingPlansMetrics" class="pt-2">
+                      <div class="text-overline font-weight-medium" style="font-size: 12px !important;">
                         Entrenamientos creados
                       </div>
-                      <div class="headline font-weight-medium grey--text text-center">
+                      <div class="text-overline font-weight-bold" style="font-size: 15px !important;">
                         {{this.trainingPlansMetrics.length}}
                       </div>
                     </v-card-text>
@@ -89,7 +75,8 @@
       </v-row>
     </v-container>
   </v-card>
-  <v-card flat>
+  <v-divider horizontal class="my-4 mx-3 horizontal-divider"></v-divider>
+  <v-card class="rounded-sm mb-10" flat>
     <v-container>
       <v-row>
         <v-col cols="6">
@@ -98,7 +85,7 @@
               <v-card-title class="pb-5">Métricas de Entrenamientos por Tipo</v-card-title>
               
               <v-card class="mx-auto">
-                <v-row>
+                <v-row class="my-5">
                   <v-col class="text-center mb-0 pb-5" cols="2">
                     <v-row justify="center">
                       <v-col cols="2">
@@ -122,7 +109,7 @@
                   <v-col cols="10" class="mb-0 pb-0 text-center">
                     <v-card-text v-if="this.trainingPlansMetrics" class="pt-0">
                       <div v-if="this.trainingPlansMetrics.length">
-                        <div class="overline grey--text" style="font-size: 15px !important;">
+                        <div class="text-overline font-weight-medium" style="font-size: 12px !important;">
                           Cantidad de Entrenamientos por Tipo
                         </div>
                         <div>
@@ -130,7 +117,7 @@
                         </div>
                       </div>
                       <div v-if="!this.trainingPlansMetrics.length">
-                        <div class="overline grey--text pt-5" style="font-size: 15px !important;">
+                        <div class="text-overline font-weight-medium" style="font-size: 12px !important;">
                           Cantidad de Entrenamientos por Tipo
                         </div>
                         <div class="headline font-weight-medium grey--text text-center">
@@ -144,14 +131,14 @@
             </v-col>
           </v-row>
         </v-col>
-
+        <v-divider vertical class="my-2 vertical-divider mb-5"></v-divider>
         <v-col cols="6">
           <v-row>
             <v-col cols="12" class="my-0 py-0">
               <v-card-title class="pb-5">Métricas de Entrenamientos por Dificultad</v-card-title>
               
               <v-card class="mx-auto">
-                <v-row>
+                <v-row class="my-5">
                   <v-col class="text-center mb-0 pb-5" cols="2">
                     <v-row justify="center">
                       <v-col cols="2">
@@ -175,15 +162,15 @@
                   <v-col cols="10" class="mb-0 pb-0 text-center">
                     <v-card-text v-if="this.trainingPlansMetrics" class="pt-0">
                       <div v-if="this.trainingPlansMetrics.length">
-                        <div class="overline grey--text" style="font-size: 15px !important;">
+                        <div class="text-overline font-weight-medium" style="font-size: 12px !important;">
                           Cantidad de Entrenamientos por Dificultad
                         </div>
                         <div>
-                          <BarChart class="bar-chart" v-bind="this.difficultyOfTrainingsBarChartProps" />
+                          <BarChart class="mx-6 bar-chart" v-bind="this.difficultyOfTrainingsBarChartProps" />
                         </div>
                       </div>
                       <div v-if="!this.trainingPlansMetrics.length">
-                        <div class="overline grey--text pt-5" style="font-size: 15px !important;">
+                        <div class="text-overline font-weight-medium" style="font-size: 12px !important;">
                           Cantidad de Entrenamientos por Dificultad
                         </div>
                         <div v-if="!this.trainingPlansMetrics.length" class="headline font-weight-medium grey--text text-center">
@@ -200,24 +187,26 @@
       </v-row>
     </v-container>
   </v-card>
-  <v-card flat>
+  <v-divider horizontal class="my-4 mx-3 horizontal-divider"></v-divider>
+  <v-card class="rounded-sm" flat>
     <v-container>
       <v-row>
         <v-col cols="12">
           <v-row>
             <v-col cols="12" class="my-0 py-0">
-              <v-card-title class="pb-5">Métricas de Entrenamientos por Usuario</v-card-title>
+              <v-card-title class="pb-3">Métricas de Entrenamientos por Usuario</v-card-title>
 
-              <v-card class="mx-auto">
-                <v-row>
+              <v-card class="mx-auto mb-5">
+                <v-row class="my-5">
                   <v-col class="text-center mb-0 pb-5" cols="2">
-                    <v-row justify="center">
-                      <v-col cols="2">
+                    <v-row>
+                      <v-col cols="1">
                         <v-sheet
                           height="80"
                           width="80"
                           rounded
-                          color="#9ACD32" 
+                          color="#9ACD32"
+                          class="ml-14"
                         >
                           <v-container fill-height fluid>
                             <v-row>
@@ -230,9 +219,9 @@
                       </v-col>
                     </v-row>
                   </v-col>
-                  <v-col cols="10" class="mb-0 pb-0 text-center">
+                  <v-col cols="9" class="mb-0 pb-0 text-center">
                     <v-card-text v-if="this.trainingPlansMetrics" class="pt-0">
-                      <div class="overline grey--text pb-5" style="font-size: 30x !important;">
+                      <div class="text-overline font-weight-medium" style="font-size: 12px !important;">
                         Cantidad de Entrenamientos creados por Usuario
                       </div>
                       <div class="pb-5">
@@ -505,6 +494,10 @@
 </script>
 
 <style>
+.rounded-sm {
+  background: #F7F7F7;
+}
+
 .dialog {
   margin-left: 250px;
 }

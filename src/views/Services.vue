@@ -114,7 +114,7 @@
       return {
         headers: [  
           { text: "#", value: "id", sortable: true},
-          { text: "SERVICIO", value: "service", sortable: true},
+          { text: "SERVICIO", value: "service"},
           { text: "ACCIONES", value: "actions"}
         ],
         servicesList: [],

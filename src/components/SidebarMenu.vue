@@ -54,8 +54,8 @@
         { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/' },
         { title: 'Usuarios', icon: 'mdi-account-group', route: '/users' },
         { title: 'Planes', icon: 'mdi-dumbbell', route: '/plans' },
-        { title: 'Métricas', icon: 'mdi-poll', route: '/metrics' },
         { title: 'Servicios', icon: 'mdi-wrench-cog', route: '/services' },
+        { title: 'Métricas', icon: 'mdi-poll', route: '/metrics' },
         { title: 'Registro de nuevos admins', icon: 'mdi-account-tie', route: '/register'}
       ],
       fullname: '',
@@ -65,10 +65,7 @@
       let response = await UserService.getCurrentUserInfo()
       this.user_info[0].title = response.data.fullname;
       this.user_info[0].subtitle = response.data.email;
-
-      if (response.data.profileimage != "") {
-        this.user_info[0].prependAvatar = await generateMediaURL('users/' + response.data.profileimage);
-      };
+      this.user_info[0].prependAvatar = await generateMediaURL('users/' + response.data.profileimage);
     }
   }
 </script>

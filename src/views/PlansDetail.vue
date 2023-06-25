@@ -113,7 +113,7 @@
               :disabled="block_loading"
               class="my-4 mr-4"
             >
-              <v-icon>
+              <v-icon class="mr-2">
                 mdi-block-helper
               </v-icon>
               {{ isBlocked ? 'DESBLOQUEAR' : 'BLOQUEAR' }}

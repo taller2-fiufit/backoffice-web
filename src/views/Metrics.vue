@@ -8,7 +8,6 @@
       <v-tabs-slider></v-tabs-slider>
       <v-tab value="users">Usuarios</v-tab>
       <v-tab value="plans">Entrenamientos</v-tab>
-      <v-tab value="transactions">Transacciones</v-tab>
     </v-tabs>
 
     <v-divider class="mx-7"></v-divider>
@@ -21,24 +20,6 @@
 
         <v-window-item value="plans">
           <TrainingMetrics />
-        </v-window-item>
-
-        <v-window-item value="transactions">
-          <v-card flat>
-            <v-container>
-              <v-row>
-                <v-col cols="6">
-                  <v-row>
-                    <v-col cols="12" class="my-0 py-0">
-                      <v-card-title>Métricas de Aportes</v-card-title>
-                      <v-space></v-space>
-                      <v-card-text></v-card-text>
-                    </v-col>
-                  </v-row>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-card>
         </v-window-item>
       </v-window>
     </v-card-text>

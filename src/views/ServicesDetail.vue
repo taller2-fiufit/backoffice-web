@@ -2,7 +2,7 @@
   <div v-if="this.service">
     <v-app-bar color="#9ACD32" class="flex-grow-0" app dark>
       <v-card-actions>
-        <v-btn icon @click="$router.back()"><v-icon color="#2b3c4b">mdi-keyboard-backspace</v-icon></v-btn>
+        <v-btn icon @click="goToServicesList()"><v-icon color="#2b3c4b">mdi-keyboard-backspace</v-icon></v-btn>
       </v-card-actions>
       <v-breadcrumbs :items="['Servicios', service.name]">
         <template v-slot:divider>
@@ -136,6 +136,9 @@
           ]
         )
       },
+      goToServicesList() {
+        this.$router.push(`/services`);
+      }
     }
   }
 </script>

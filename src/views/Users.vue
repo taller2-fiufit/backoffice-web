@@ -25,7 +25,7 @@
         loading: true,
         headers: [  
           { text: "#", value: "id", sortable: true},
-          { text: "NOMBRE COMPLETO", value: "user", sortable: true},
+          { text: "NOMBRE COMPLETO", value: "user"},
           { text: "CORREO ELECTRÓNICO", value: "email", sortable: true},
           { text: "DETALLE", value: "operation" }
         ],

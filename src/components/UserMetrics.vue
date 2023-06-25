@@ -1,25 +1,11 @@
 <template>
-  <div class="text-center">
-    <v-dialog
-      v-model="dialog"
-      width="auto"
-      class="dialog"
-    >
-      <v-card>
-        <v-card-text>
-          ACLARACIÓN: por default las Métricas generadas son de la última semana
-        </v-card-text>
-        <v-card-actions>
-          <v-btn color="primary" block @click="dialog = false">Cerrar</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </div>
-  <v-card flat>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+  <v-card flat class="rounded-sm">
     <v-container>
-      <v-card-title id="title" class="text-center pb-10">Métricas Generales</v-card-title>
+      <v-card-title id="title" class="text-center pb-5">Métricas Generales</v-card-title>
       <v-form class="text-center" fast-fail @submit.prevent="handleUserSelectedDates">
-        <span>Elegir Fecha de Inicio y Fin para generar los gráficos a lo largo del tiempo</span>
+        <div>Elegir fecha de inicio y fin para generar los gráficos a lo largo del tiempo.</div>
+        <div class="text-caption text-center mx-5"> Por default, las Métricas generadas son de la última semana. </div>
         <div>
           <ErrorAlert v-if="usersError" :error="usersError" />
         </div>
@@ -27,7 +13,7 @@
         <v-text-field v-model="usersStartDate" name="usersStartDate" type="date" label="Fecha de inicio" required class="dateInput1"></v-text-field>
         <v-text-field v-model="usersEndDate" name="usersEndDate" type="date" label="Fecha de fin" required class="dateInput2"></v-text-field>
         
-        <v-btn type="submit" color="#9ACD32" class="mt-2 pb-20" :disabled="loading">
+        <v-btn type="submit" color="#9ACD32" class="mt-2 mb-7" :disabled="loading">
           <span
             v-show="loading"
             class="my-14 spinner-border spinner-border-sm"
@@ -40,16 +26,16 @@
     </v-container>
   </v-card>
 
-  <v-card flat>
+  <v-card flat class="rounded-sm">
     <v-container>
       <v-row>
-        <v-col cols="6">
+        <v-col cols="6" class="mb-10">
           <v-row>
             <v-col cols="12" class="my-0 py-0">
-              <v-card-title class="pb-5">Métricas de Registro</v-card-title>
+              <v-card-title class="pb-3">Métricas de Registro</v-card-title>
 
               <v-card class="mx-auto">
-                <v-row>
+                <v-row class="my-5">
                   <v-col class="text-center mb-0 pb-0" cols="2">
                     <v-row justify="center">
                       <v-col cols="2">
@@ -59,7 +45,7 @@
                           rounded
                           color="#9ACD32" 
                         >
-                          <v-container fill-height fluid>
+                          <v-container class="mt-5" fill-height fluid>
                             <v-row>
                               <v-col class="text-center">
                                 <v-icon size="45">mdi-account-plus</v-icon>
@@ -72,23 +58,23 @@
                   </v-col>
                   <v-col cols="10" class="mb-0 pb-0 text-center">
                     <v-card-text v-if="this.usersMetrics" class="pt-0">
-                      <div class="overline grey--text" style="font-size: 15px !important;">
+                      <div class="text-overline font-weight-medium" style="font-size: 12px !important;">
                         Utilizando mail y contraseña
                       </div>
-                      <div class="headline font-weight-medium grey--text text-center">
+                      <div class="text-overline font-weight-bold" style="font-size: 15px !important;">
                         {{this.usersMetrics.signinsWithMail}}
                       </div>
                     </v-card-text>
                     <v-card-text v-if="this.usersMetrics" class="pt-0">
-                      <div class="overline grey--text" style="font-size: 15px !important;">
+                      <div class="text-overline font-weight-medium" style="font-size: 12px !important;">
                         Utilizando identidad federada
                       </div>
-                      <div class="headline font-weight-medium grey--text text-center">
+                      <div class="text-overline font-weight-bold" style="font-size: 15px !important;">
                         {{this.usersMetrics.signinsWithFederatedId}}
                       </div>
                     </v-card-text>
                     <v-card-text v-if="this.usersMetrics && (this.usersMetrics.signinsWithMail || this.usersMetrics.signinsWithFederatedId)" class="pt-0">
-                      <div class="overline grey--text" style="font-size: 15px !important;">
+                      <div class="text-overline font-weight-medium" style="font-size: 12px !important;">
                         Mail y Contraseña vs Identidad federada
                       </div>
                       <div>
@@ -101,14 +87,14 @@
             </v-col>
           </v-row>
         </v-col>
-        <v-divider vertical class="my-2 vertical-divider"></v-divider>
+        <v-divider vertical class="my-2 vertical-divider mb-5"></v-divider>
         <v-col cols="6">
           <v-row>
             <v-col cols="12" class="my-0 py-0">
-              <v-card-title class="pb-5">Métricas de Login</v-card-title>
+              <v-card-title class="pb-3">Métricas de Login</v-card-title>
 
               <v-card class="mx-auto">
-                <v-row>
+                <v-row class="my-5">
                   <v-col class="text-center mb-0 pb-0" cols="2">
                     <v-row justify="center">
                       <v-col cols="2">
@@ -118,7 +104,7 @@
                           rounded
                           color="#9ACD32" 
                         >
-                          <v-container fill-height fluid>
+                          <v-container class="mt-5" fill-height fluid>
                             <v-row>
                               <v-col class="text-center">
                                 <v-icon size="45">mdi-login</v-icon>
@@ -131,23 +117,23 @@
                   </v-col>
                   <v-col cols="10" class="mb-0 pb-0 text-center">
                     <v-card-text v-if="this.usersMetrics" class="pt-0">
-                      <div class="overline grey--text" style="font-size: 15px !important;">
+                      <div class="text-overline font-weight-medium" style="font-size: 12px !important;">
                         Utilizando mail y contraseña
                       </div>
-                      <div class="headline font-weight-medium grey--text text-center">
+                      <div class="text-overline font-weight-bold" style="font-size: 15px !important;">
                         {{this.usersMetrics.loginsWithMail}}
                       </div>
                     </v-card-text>
                     <v-card-text v-if="this.usersMetrics" class="pt-0">
-                      <div class="overline grey--text" style="font-size: 15px !important;">
+                      <div class="text-overline font-weight-medium" style="font-size: 12px !important;">
                         Utilizando identidad federada
                       </div>
-                      <div class="headline font-weight-medium grey--text text-center">
+                      <div class="text-overline font-weight-bold" style="font-size: 15px !important;">
                         {{this.usersMetrics.loginsWithFederatedId}}
                       </div>
                     </v-card-text>
                     <v-card-text v-if="this.usersMetrics && (this.usersMetrics.loginsWithMail || this.usersMetrics.loginsWithFederatedId)" class="pt-0">
-                      <div class="overline grey--text" style="font-size: 15px !important;">
+                      <div class="text-overline font-weight-medium" style="font-size: 12px !important;">
                         Mail y Contraseña vs Identidad federada
                       </div>
                       <div>
@@ -161,13 +147,13 @@
           </v-row>
         </v-col>
         <v-divider horizontal class="my-4 horizontal-divider"></v-divider>
-        <v-col cols="6">
-          <v-row>
+        <v-col cols="6" offset="3">
+          <v-row class="mb-5">
             <v-col cols="12" class="my-0 py-0">
-              <v-card-title class="pb-5">Métricas de Usuarios Bloqueados</v-card-title>
+              <v-card-title class="pb-3">Métricas de Usuarios Bloqueados</v-card-title>
               
               <v-card class="mx-auto">
-                <v-row>
+                <v-row class="my-5">
                   <v-col class="text-center mb-0 pb-0" cols="2">
                     <v-row justify="center">
                       <v-col cols="2">
@@ -177,7 +163,7 @@
                           rounded
                           color="#9ACD32" 
                         >
-                          <v-container fill-height fluid>
+                          <v-container class="mt-5" fill-height fluid>
                             <v-row>
                               <v-col class="text-center">
                                 <v-icon size="45">mdi-block-helper</v-icon>
@@ -190,23 +176,23 @@
                   </v-col>
                   <v-col cols="10" class="mb-0 pb-0 text-center">
                     <v-card-text v-if="this.usersMetrics" class="pt-0">
-                      <div class="overline grey--text" style="font-size: 15px !important;">
+                      <div class="text-overline font-weight-medium" style="font-size: 12px !important;">
                         Cantidad de Usuarios
                       </div>
-                      <div class="headline font-weight-medium grey--text text-center">
+                      <div class="text-overline font-weight-bold" style="font-size: 15px !important;">
                         {{parseInt(this.usersMetrics.signinsWithMail) + parseInt(this.usersMetrics.signinsWithFederatedId)}}
                       </div>
                     </v-card-text>
                     <v-card-text v-if="this.usersMetrics" class="pt-0">
-                      <div class="overline grey--text" style="font-size: 15px !important;">
+                      <div class="text-overline font-weight-medium" style="font-size: 12px !important;">
                         Cantidad de Usuarios Bloqueados
                       </div>
-                      <div class="headline font-weight-medium grey--text text-center">
+                      <div class="text-overline font-weight-bold" style="font-size: 15px !important;">
                         {{this.usersMetrics.blockedUsers}}
                       </div>
                     </v-card-text>
                     <v-card-text v-if="this.usersMetrics && (this.usersMetrics.signinsWithMail || this.usersMetrics.signinsWithFederatedId || this.usersMetrics.blockedUsers)" class="pt-0">
-                      <div class="overline grey--text" style="font-size: 15px !important;">
+                      <div class="text-overline font-weight-medium" style="font-size: 12px !important;">
                         Cantidad de Usuarios Bloqueados vs No Bloqueados
                       </div>
                       <div>
@@ -420,6 +406,10 @@
 </script>
 
 <style>
+.rounded-sm {
+  background: #F7F7F7;
+}
+
 .dialog {
   margin-left: 250px;
 }

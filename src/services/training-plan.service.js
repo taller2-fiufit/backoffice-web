@@ -5,7 +5,7 @@ const API_URL=process.env.VUE_APP_TRAINING_API_URL;
 
 class TrainingPlanService {
   getTrainingPlanList(mindiff, maxdiff, type) {
-    const queryParams = "?mindiff=" + mindiff + "&maxdiff=" + maxdiff + "&type=" + type;
+    const queryParams = "?mindiff=" + mindiff + "&maxdiff=" + maxdiff + "&type=" + type + "&blocked=all";
     return axios.get(API_URL + 'trainings' + queryParams, { headers: authHeader() });
   }
 

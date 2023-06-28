@@ -10,43 +10,42 @@
 </v-card>
 </template>
 
-
 <script>
-  import UserService from '../services/user.service';
-  import UsersTable from '../components/UsersTable.vue';
-  import generateMediaURL  from '../services/firebase';
-  export default {
-    name: 'UsersList',
-    components: {
-      UsersTable
-    },
-    data() {
-      return {
-        loading: true,
-        headers: [  
-          { text: "#", value: "id", sortable: true},
-          { text: "NOMBRE COMPLETO", value: "user"},
-          { text: "CORREO ELECTRÓNICO", value: "email", sortable: true},
-          { text: "DETALLE", value: "operation" }
-        ],
-        users: []
+import UserService from '../services/user.service'
+import UsersTable from '../components/UsersTable.vue'
+import generateMediaURL from '../services/firebase'
+export default {
+  name: 'UsersView',
+  components: {
+    UsersTable
+  },
+  data () {
+    return {
+      loading: true,
+      headers: [
+        { text: '#', value: 'id', sortable: true },
+        { text: 'NOMBRE COMPLETO', value: 'user' },
+        { text: 'CORREO ELECTRÓNICO', value: 'email', sortable: true },
+        { text: 'DETALLE', value: 'operation' }
+      ],
+      users: []
+    }
+  },
+  async mounted () {
+    const response = await UserService.getUserList()
+    this.users = response.data
+
+    for (const index in this.users) {
+      if (this.users[index].profileimage !== '') {
+        this.users[index].avator = await generateMediaURL('users/' + this.users[index].profileimage)
+      } else {
+        this.users[index].avator = require('../assets/profile-pic.jpg')
       }
-    },
-    async mounted() {
-      let response = await UserService.getUserList();
-      this.users = response.data;
+    };
 
-      for (var index in this.users) {
-        if (this.users[index].profileimage != "") {
-          this.users[index].avator = await generateMediaURL('users/' + this.users[index].profileimage);
-        } else {
-          this.users[index].avator = require('../assets/profile-pic.jpg');
-        }
-      };
-
-      this.loading = false
-    },
+    this.loading = false
   }
+}
 </script>
 
 <style>

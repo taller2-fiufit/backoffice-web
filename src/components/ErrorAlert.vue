@@ -10,8 +10,8 @@
 </template>
 
 <script>
-  export default {
-    name: 'ErrorAlert',
-    props: ['error']
-  }
+export default {
+  name: 'ErrorAlert',
+  props: ['error']
+}
 </script>

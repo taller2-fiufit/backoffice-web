@@ -2,7 +2,7 @@
   <v-app id="inspire">
 
     <div v-if="currentUser">
-      <Nav />
+      <WebNav />
     </div>
 
     <div v-if="currentUser && showSideBar">
@@ -16,22 +16,22 @@
 </template>
 
 <script>
-  import Nav from './components/Nav.vue'
-  import SideBarMenu from './components/SidebarMenu.vue'
-  
-  export default {
-    name: 'App',
-    components: {
-      Nav,
-      SideBarMenu,
+import WebNav from './components/Nav.vue'
+import SideBarMenu from './components/SidebarMenu.vue'
+
+export default {
+  name: 'App',
+  components: {
+    WebNav,
+    SideBarMenu
+  },
+  computed: {
+    currentUser () {
+      return this.$store.state.auth.user
     },
-    computed: {
-      currentUser() {
-        return this.$store.state.auth.user;
-      },
-      showSideBar(){
-        return this.$store.state.sidebar.sideBarOpen;
-      },
-    },
+    showSideBar () {
+      return this.$store.state.sidebar.sideBarOpen
+    }
   }
+}
 </script>

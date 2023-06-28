@@ -6,12 +6,12 @@
   <v-card class="mx-5 my-5 rounded-sm">
     <v-row class="mt-5">
       <v-col cols="8" class="ml-15 mt-4">
-        <v-textarea v-if="apikey != ''" readonly="true" bg-color="#d1e69d" persistent-placeholder label="Success" :model-value="'The service was created successfully with api-key: ' + apikey" prepend-inner-icon="mdi-check" rows="1" variant="solo"></v-textarea>
+        <v-textarea v-if="apikey != ''" readonly="true" bg-color="#d1e69d" persistent-placeholder label="Success" :model-value="'El servicio se agregó correctamente con la api-key: ' + apikey" prepend-inner-icon="mdi-check" rows="1" variant="solo"></v-textarea>
       </v-col>
       <v-col cols="3" class="ml-3">
         <v-row justify="end">
         <v-dialog
-          
+
           v-model="dialog"
           width="1024"
         >
@@ -81,7 +81,7 @@
                         class="my-14 spinner-border spinner-border-sm"
                       ></span>
                       <span>Registrar servicio</span>
-                    </v-btn> 
+                    </v-btn>
                   </v-form>
               </v-container>
             </v-card-text>
@@ -96,117 +96,116 @@
     </div>
   </v-card>
 </template>
-  
-  
+
 <script>
-  import ServicesService from '../services/services.service';
-  import ServicesTable from '../components/ServicesTable.vue';
-  import ErrorAlert from '../components/ErrorAlert.vue';
-  import useVuelidate from '@vuelidate/core';
-  import { required } from "@vuelidate/validators";
-  export default {
-    name: 'Services',
-    components: {
-      ServicesTable,
-      ErrorAlert
-    },
-    data() {
-      return {
-        headers: [  
-          { text: "#", value: "id", sortable: true},
-          { text: "SERVICIO", value: "service"},
-          { text: "ACCIONES", value: "actions"}
-        ],
-        servicesList: [],
-        loading: true,
-        v$: useVuelidate(),
-        successful: null,
-        apikey: '',
-        name: "",
-        url: "",
-        path: "",
-        blocked: "",
-        register_loading: false,
-        message: "",
-        dialog: false,
-        blocked_filtering: '-'
-      }
-    },
-    async mounted() {
-      let response = await ServicesService.getServiceList(this.blocked_filtering);
-      this.servicesList = response.data;
-      this.loading = false;
+import ServicesService from '../services/services.service'
+import ServicesTable from '../components/ServicesTable.vue'
+import ErrorAlert from '../components/ErrorAlert.vue'
+import useVuelidate from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
+export default {
+  name: 'ServicesView',
+  components: {
+    ServicesTable,
+    ErrorAlert
+  },
+  data () {
+    return {
+      headers: [
+        { text: '#', value: 'id', sortable: true },
+        { text: 'SERVICIO', value: 'service' },
+        { text: 'FUNCIONANDO', value: 'up' },
+        { text: 'ACCIONES', value: 'actions' }
+      ],
+      servicesList: [],
+      loading: true,
+      v$: useVuelidate(),
+      successful: null,
+      apikey: '',
+      name: '',
+      url: '',
+      path: '',
+      blocked: '',
+      register_loading: false,
+      message: '',
+      dialog: false,
+      blocked_filtering: '-'
+    }
+  },
+  async mounted () {
+    const response = await ServicesService.getServiceList(this.blocked_filtering)
+    this.servicesList = response.data
+    console.log(this.servicesList)
+    this.loading = false
+  },
+
+  methods: {
+    async updateBlockFilter (val) {
+      this.loading = true
+      this.blocked_filtering = val
+      const response = await ServicesService.getServiceList(this.blocked_filtering)
+      this.servicesList = response.data
+      this.loading = false
     },
 
-    methods: {
-      async updateBlockFilter(val) {
-        this.loading = true;
-        this.blocked_filtering = val;
-        let response = await ServicesService.getServiceList(this.blocked_filtering);
-        this.servicesList = response.data;
-        this.loading = false;
-      },
+    async deleteService (val) {
+      const index = this.servicesList.map(x => {
+        return x.id
+      }).indexOf(val)
+      this.servicesList.splice(index, 1)
+    },
 
-      async deleteService(val) {
-        var index = this.servicesList.map(x => {
-          return x.id;
-        }).indexOf(val);
-        this.servicesList.splice(index, 1);
-      },
-
-      handleRegister() {
-        this.register_loading = true;
-        this.v$.$validate()
-        if (this.v$.$error) {
-          this.successful = false;
-          this.message = 'Falta completar los siguientes campos:';
-          if (this.name == "") {
-            this.message += "<br>- nombre del servicio"
-          }
-          if (this.url == "") {
-            this.message += "<br>- URL del servicio"
-          }
-          if (this.path == "") {
-            this.message += "<br>- path del servicio"
-          }
-          if (this.blocked == "") {
-            this.message += "<br>- bloqueado"
-          }
-          console.log(this.successful)
-        } else {
-          let service = {
-            name: this.name,
-            url: this.url,
-            path: this.path,
-            blocked: this.blocked == "Si" ? true : false
-          };
-          ServicesService.registerNewService(service).then(
-            (response) => {
-              service.id = response.data.id;
-              this.servicesList.push(service);
-              this.successful = true;
-              this.dialog = false;
-              this.apikey = response.data.apikey;
-            },
-            (error) => {
-              console.log(error);
-              this.successful = false;
-              this.message = error.message;
-            }
-          );
+    handleRegister () {
+      this.register_loading = true
+      this.v$.$validate()
+      if (this.v$.$error) {
+        this.successful = false
+        this.message = 'Falta completar los siguientes campos:'
+        if (this.name === '') {
+          this.message += '<br>- nombre del servicio'
         }
-        this.register_loading = false;
-      },
-    },
-    validations() {
-      return {
-        name: { required },
-        url: { required },
-        path: { required },
-        blocked: { required }
+        if (this.url === '') {
+          this.message += '<br>- URL del servicio'
+        }
+        if (this.path === '') {
+          this.message += '<br>- path del servicio'
+        }
+        if (this.blocked === '') {
+          this.message += '<br>- bloqueado'
+        }
+      } else {
+        const service = {
+          name: this.name,
+          url: this.url,
+          path: this.path,
+          blocked: this.blocked === 'Si'
+        }
+        ServicesService.registerNewService(service).then(
+          (response) => {
+            service.id = response.data.id
+            this.servicesList.push(service)
+            this.successful = true
+            this.dialog = false
+            this.apikey = response.data.apikey
+          },
+          (error) => {
+            this.successful = false
+            this.message = error.message
+          }
+        )
       }
+      this.register_loading = false
+    }
+  },
+  validations () {
+    return {
+      name: { required },
+      url: { required },
+      path: { required },
+      blocked: { required }
     }
   }
+}
 </script>
 
 <style>

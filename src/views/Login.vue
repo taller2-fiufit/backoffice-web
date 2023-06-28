@@ -14,13 +14,13 @@
         alt="kinetix name"
         class="mb-6 pointer"
       ></v-img>
-      
+
       <v-form fast-fail @submit.prevent="handleLogin">
 
         <div>
           <ErrorAlert v-if="error" :error="error" />
         </div>
-  
+
         <v-text-field
           v-model="email"
           name="email"
@@ -29,7 +29,7 @@
           placeholder="email"
           required
         ></v-text-field>
-        
+
         <v-text-field
           v-model="password"
           name="password"
@@ -39,7 +39,7 @@
           required
         ></v-text-field>
         <!--
-        <router-link to="forgot" class="text-body-2 font-weight-regular">¿Olvidaste tu contraseña?</router-link>  
+        <router-link to="forgot" class="text-body-2 font-weight-regular">¿Olvidaste tu contraseña?</router-link>
         -->
         <br />
 
@@ -61,66 +61,66 @@
 
 <script>
 // import axios from 'axios'
-import User from '../models/user';
+import User from '../models/user'
 import ErrorAlert from '../components/ErrorAlert.vue'
-import useVuelidate from '@vuelidate/core';
-import { required } from "@vuelidate/validators";
+import useVuelidate from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
 
 export default {
-  name: "Login",
+  name: 'LoginView',
   components: {
     ErrorAlert
   },
-  data() {
+  data () {
     return {
       v$: useVuelidate(),
       loading: false,
       email: '',
       password: '',
       error: ''
-    };
+    }
   },
   computed: {
-    loggedIn() {
-      return this.$store.state.auth.status.loggedIn;
-    },
+    loggedIn () {
+      return this.$store.state.auth.status.loggedIn
+    }
   },
-  created() {
+  created () {
     if (this.loggedIn) {
-      this.$router.push("/dashboard");
+      this.$router.push('/dashboard')
     }
   },
   methods: {
-    handleLogin() {
-      this.loading = true;
-      let user = new User('', this.email, this.password);
+    handleLogin () {
+      this.loading = true
+      const user = new User('', this.email, this.password)
       this.v$.$validate()
       if (this.v$.$error) {
-        this.error = 'Falta completar los siguientes campos:';
-        if (this.email == "") {
-          this.error += "<br>- correo electrónico"
+        this.error = 'Falta completar los siguientes campos:'
+        if (this.email === '') {
+          this.error += '<br>- correo electrónico'
         }
-        if (this.password == "") {
-          this.error += "<br>- contraseña"
+        if (this.password === '') {
+          this.error += '<br>- contraseña'
         }
       } else {
-        this.$store.dispatch("auth/login", user).then(
+        this.$store.dispatch('auth/login', user).then(
           () => {
-            this.$router.push("/dashboard");
+            this.$router.push('/dashboard')
           },
           (error) => {
-            console.log(error.response.data.message);
-            this.error = error.response.data.message;
+            console.log(error.response.data.message)
+            this.error = error.response.data.message
           }
-        );
+        )
       }
-      this.loading = false;
-    },
+      this.loading = false
+    }
   },
-  validations() {
+  validations () {
     return {
       email: { required },
-      password: { required },
+      password: { required }
     }
   }
 }

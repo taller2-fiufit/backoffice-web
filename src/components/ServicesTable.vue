@@ -1,6 +1,6 @@
 <template>
     <div>
-      <Datatable
+      <DataTable
       :headers="headers"
       :items="items"
       :loading="loading"
@@ -27,6 +27,10 @@
             </v-icon>
             <a target="_blank">{{ name }}</a>
           </div>
+        </template>
+
+        <template #item-up="{ up }">
+          <a target="_blank">{{ up ? 'Si' : 'No' }}</a>
         </template>
 
         <template #header-service="header">
@@ -72,52 +76,48 @@
             </v-btn>
           </div>
         </template>
-      </Datatable>
+      </DataTable>
     </div>
 </template>
-  
-  <script>
-    import ServicesService from '../services/services.service';
-    export default {
-      name: 'Table',
-      props: ['headers', 'items', 'loading'],
-      data() {
-        return {
-          showBlockedFilter: false,
-          blocked_filtering: '-'
+
+<script>
+import ServicesService from '../services/services.service'
+export default {
+  name: 'ServicesTable',
+  props: ['headers', 'items', 'loading'],
+  data () {
+    return {
+      showBlockedFilter: false,
+      blocked_filtering: '-'
+    }
+  },
+  methods: {
+    goToServiceDetails (id) {
+      this.$router.push(`/services/${id}`)
+    },
+    deleteService (id) {
+      ServicesService.deleteService(id).then(
+        () => {
+          this.$emit('delete_service', id)
         }
-        
-      },
-      methods: {
-        goToServiceDetails(id) {
-          this.$router.push(`/services/${id}`);
-        },
-        deleteService(id) {
-          ServicesService.deleteService(id).then(
-            (response) => {
-              this.$emit('delete_service', id)
-            },
-            (error) => {
-              console.log(error)
-            }
-          )
-        }
-      },
-      watch: {
-        blocked_filtering: function(val) {
-          this.showBlockedFilter = false;
-          if (val == "Blocked") {
-            this.$emit('change_block_filter', "true") 
-          } else if (val == "Unblocked") {
-            this.$emit('change_block_filter', "false")
-          } else {
-            this.$emit('change_block_filter', val)
-          }
-        },
+      )
+    }
+  },
+  watch: {
+    blocked_filtering: function (val) {
+      this.showBlockedFilter = false
+      if (val === 'Blocked') {
+        this.$emit('change_block_filter', 'true')
+      } else if (val === 'Unblocked') {
+        this.$emit('change_block_filter', 'false')
+      } else {
+        this.$emit('change_block_filter', val)
       }
     }
-  </script>
-  
+  }
+}
+</script>
+
   <style>
   .customize-table {
     --easy-table-header-font-size: 13px;
@@ -125,7 +125,7 @@
     --easy-table-body-item-padding: 0px 13px 0px 0px;
     --easy-table-body-row-font-size: 15px;
   }
-  
+
   .filter-icon {
     cursor: pointer;
     display: inline-block;
@@ -133,7 +133,7 @@
     height: 15px !important;
     margin-right: 4px;
   }
-  
+
   .filter-menu {
     padding: 40px 30px;
     z-index: 1;
@@ -143,7 +143,7 @@
     background-color: #fff;
     border: 1px solid #e0e0e0;
   }
-  
+
   .filter-menu-select {
     padding: 20px 20px;
     z-index: 1;
@@ -153,16 +153,16 @@
     background-color: #fff;
     border: 1px solid #e0e0e0;
   }
-  
+
   .slider {
     margin-top: 15px;
   }
-  
+
   .slider {
     --slider-tooltip-bg: #9ACD32;
     --slider-connect-bg: #9ACD32;
   }
-  
+
   .select {
     margin: 0px 0px -22px 0px;
   }

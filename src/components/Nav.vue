@@ -7,7 +7,7 @@
         :src="require('@/assets/login-logo.png')"
         alt="kinetix logo"
         class="ml-2 pointer"
-        @click="redirect('Dashboard')"
+        @click="redirect('DashboardView')"
       ></v-img>
 
       <v-img
@@ -15,7 +15,7 @@
         :src="require('@/assets/kinetix-name-white.png')"
         alt="kinetix name"
         class="ml-1 pointer"
-        @click="redirect('Dashboard')"
+        @click="redirect('DashboardView')"
       ></v-img>
 
       <template v-slot:append>
@@ -34,28 +34,26 @@
     </v-app-bar>
 </template>
 
-
-
 <script>
 
-  export default {
-    name: 'Nav',
-    methods: {
-      redirect (routeName) {
-        this.$router.push({ name: routeName })
-      },
-      logOut() {
-        this.$store.dispatch('auth/logout');
-        this.$router.push('/login');
-      },
-      toggleSideBar() {
-        this.$store.dispatch('sidebar/togglesidebar')
-      }
+export default {
+  name: 'WebNav',
+  methods: {
+    redirect (routeName) {
+      this.$router.push({ name: routeName })
     },
-    computed: {
-      currentUser() {
-        return this.$store.state.auth.user;
-      },
+    logOut () {
+      this.$store.dispatch('auth/logout')
+      this.$router.push('/login')
     },
+    toggleSideBar () {
+      this.$store.dispatch('sidebar/togglesidebar')
+    }
+  },
+  computed: {
+    currentUser () {
+      return this.$store.state.auth.user
+    }
   }
+}
 </script>

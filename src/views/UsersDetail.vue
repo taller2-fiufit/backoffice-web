@@ -14,7 +14,7 @@
       <v-sheet :color="isBlocked ? '#FF0000' : '#9ACD32'" height="6"></v-sheet>
       <v-card-item>
         <v-row>
-          <v-col cols="3" class="mt-2 mb-10"> 
+          <v-col cols="3" class="mt-2 mb-10">
             <div class="text-overline">
               Foto de perfil
             </div>
@@ -185,111 +185,98 @@
     </v-row>
   </div>
 </template>
-  
+
 <script>
-  import UserService from '../services/user.service';
-  import UsersTable from '../components/UsersTable.vue';
-  import generateMediaURL  from '../services/firebase';
-  export default {
-    name: 'UsersDetail',
-    components: {
-      UsersTable
-    },
-    data() {
-      return {
-        user: null,
-        loading: true,
-        profile_pic: require('../assets/profile-pic.jpg'),
-        following: null,
-        followers: null,
-        headers: [  
-          { text: "#", value: "id", sortable: true},
-          { text: "USER", value: "user", sortable: true},
-          { text: "DETAIL", value: "operation" }
-        ],
-        markers: [
-          {
-            position: {
-              lat: null, lng: null
-            },
+import UserService from '../services/user.service'
+import UsersTable from '../components/UsersTable.vue'
+import generateMediaURL from '../services/firebase'
+export default {
+  name: 'UsersDetail',
+  components: {
+    UsersTable
+  },
+  data () {
+    return {
+      user: null,
+      loading: true,
+      profile_pic: require('../assets/profile-pic.jpg'),
+      following: null,
+      followers: null,
+      headers: [
+        { text: '#', value: 'id', sortable: true },
+        { text: 'USER', value: 'user', sortable: true },
+        { text: 'DETAIL', value: 'operation' }
+      ],
+      markers: [
+        {
+          position: {
+            lat: null, lng: null
           }
-        ],
-        block_loading: false,
-        tab: null,
-      }
-    },
-    async mounted() {
-      let user_response = await UserService.getUserInfoById(this.$route.params.id);
-      this.user = user_response.data;
-      this.user.isBlocked = false;
-      this.user.balance = 0;
-      this.markers[0].position.lat = parseFloat(this.user.latitude);
-      this.markers[0].position.lng = parseFloat(this.user.longitude);
-      console.log(!(this.user.city || ""));
-      console.log(this.user);
-      if (this.user.profileimage != "") {
-        this.profile_pic = await generateMediaURL('users/' + this.user.profileimage);
-      };
-      
-      let following_response = await UserService.getFollowingListById(this.$route.params.id);
-      this.following = following_response.data;
-      for (var index in this.following) {
-        if (this.following[index].profileimage != "") {
-          console.log(this.following[index].fullname);
-          this.following[index].avator = await generateMediaURL('users/' + this.following[index].profileimage);
-        } else {
-          this.following[index].avator = require('../assets/profile-pic.jpg');
         }
-      };
+      ],
+      block_loading: false,
+      tab: null
+    }
+  },
+  async mounted () {
+    const userResponse = await UserService.getUserInfoById(this.$route.params.id)
+    this.user = userResponse.data
+    this.user.isBlocked = false
+    this.user.balance = 0
+    this.markers[0].position.lat = parseFloat(this.user.latitude)
+    this.markers[0].position.lng = parseFloat(this.user.longitude)
+    console.log(!(this.user.city || ''))
+    console.log(this.user)
+    if (this.user.profileimage !== '') {
+      this.profile_pic = await generateMediaURL('users/' + this.user.profileimage)
+    };
 
-      let followers_response = await UserService.getFollowersListById(this.$route.params.id);
-      this.followers = followers_response.data;
-      for (var index in this.followers) {
-        if (this.followers[index].profileimage != "") {
-          this.followers[index].avator = await generateMediaURL('users/' + this.followers[index].profileimage);
-        } else {
-          this.followers[index].avator = require('../assets/profile-pic.jpg');
-        }
-      };
+    const followingResponse = await UserService.getFollowingListById(this.$route.params.id)
+    this.following = followingResponse.data
+    for (const followingIndex in this.following) {
+      if (this.following[followingIndex].profileimage !== '') {
+        console.log(this.following[followingIndex].fullname)
+        this.following[followingIndex].avator = await generateMediaURL('users/' + this.following[followingIndex].profileimage)
+      } else {
+        this.following[followingIndex].avator = require('../assets/profile-pic.jpg')
+      }
+    };
 
-      this.loading = false;
-    },
-    computed: {
-      isBlocked() {
-        return this.user.blocked
+    const followersResponse = await UserService.getFollowersListById(this.$route.params.id)
+    this.followers = followersResponse.data
+    for (const followersIndex in this.followers) {
+      if (this.followers[followersIndex].profileimage !== '') {
+        this.followers[followersIndex].avator = await generateMediaURL('users/' + this.followers[followersIndex].profileimage)
+      } else {
+        this.followers[followersIndex].avator = require('../assets/profile-pic.jpg')
       }
+    };
+
+    this.loading = false
+  },
+  computed: {
+    isBlocked () {
+      return this.user.blocked
+    }
+  },
+  methods: {
+    async blockUser () {
+      this.block_loading = true
+      const blockResponse = await UserService.blockUser(this.user.id)
+      this.user.blocked = blockResponse.data.blocked
+      this.block_loading = false
     },
-    methods: {
-      blockUser() {
-        this.block_loading = true;
-        UserService.blockUser(this.user.id).then(
-          (response) => {
-            console.log(this.user.blocked)
-            this.user.blocked = response.data.blocked;
-            this.block_loading = false
-          },
-          (_) => [
-            this.block_loading = false
-          ]
-        )
-      },
-      unblockUser() {
-        this.block_loading = true;
-        UserService.unblockUser(this.user.id).then(
-          (response) => {
-            this.user.blocked = response.data.blocked;
-            this.block_loading = false
-          },
-          (_) => [
-            this.block_loading = false
-          ]
-        )
-      },
-      goToUsersList() {
-        this.$router.push(`/users`);
-      }
+    async unblockUser () {
+      this.block_loading = true
+      const unblockResponse = await UserService.unblockUser(this.user.id)
+      this.user.blocked = unblockResponse.data.blocked
+      this.block_loading = false
+    },
+    goToUsersList () {
+      this.$router.push('/users')
     }
   }
+}
 </script>
 
 <style>

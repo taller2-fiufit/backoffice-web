@@ -30,7 +30,7 @@
             <v-chip color="#8AB82D" text-color="white">{{ plan.type }}</v-chip>
           </v-row>
           <v-row v-if="this.plan.blocked" justify="center" class="mt-4">
-            <v-chip color='#FF0000' text-color="white"> BLOCKED </v-chip>
+            <v-chip color='#FF0000' text-color="white"> BLOQUEADO </v-chip>
           </v-row>
           <p class="text-caption text-center mx-5 mt-7"> {{ plan.description }} </p>
           <v-row>
@@ -118,10 +118,10 @@
               </v-icon>
               {{ isBlocked ? 'DESBLOQUEAR' : 'BLOQUEAR' }}
             </v-btn>
-            
+
           </v-row>
           <v-carousel
-            v-if="!loading" 
+            v-if="!loading"
             class="rounded-sm mt-5 mb-5"
             height=450
             delimiter-icon="mdi-run"
@@ -167,70 +167,58 @@
           </v-row>
         </v-card-item>
       </v-card>
-    </v-col> 
+    </v-col>
   </v-row>
   </div>
 </template>
 
 <script>
-  import TrainingPlanService from '../services/training-plan.service';
+import TrainingPlanService from '../services/training-plan.service'
+import generateMediaURL from '../services/firebase'
 
-  export default {
-    name: 'PlansDetail',
-    data() {
-      return {
-        plan: null,
-        media: [],
-        loading: true,
-        block_loading: false,
-      }
-    },
-    async mounted() {
-      let response = await TrainingPlanService.getTrainingPlanInfoById(this.$route.params.id);
-      this.plan = response.data;
-      console.log(this.plan);
+export default {
+  name: 'PlansDetail',
+  data () {
+    return {
+      plan: null,
+      media: [],
+      loading: true,
+      block_loading: false
+    }
+  },
+  async mounted () {
+    const response = await TrainingPlanService.getTrainingPlanInfoById(this.$route.params.id)
+    this.plan = response.data
 
-      for (var index in this.plan.multimedia) {
-        media.push(await generateMediaURL('trainings/' + this.plan.id + '/' + this.plan.multimedia[index]));
-      };
+    for (const index in this.plan.multimedia) {
+      this.media.push(await generateMediaURL('trainings/' + this.plan.id + '/' + this.plan.multimedia[index]))
+    };
 
-      this.loading = false;
+    this.loading = false
+  },
+  computed: {
+    isBlocked () {
+      return this.plan.blocked
+    }
+  },
+  methods: {
+    goToUserDetails (id) {
+      this.$router.push(`/users/${id}`)
     },
-    computed: {
-      isBlocked() {
-        return this.plan.blocked
-      }
+    async blockPlan () {
+      this.block_loading = true
+      const blockResponse = await TrainingPlanService.blockPlan(this.plan.id)
+      this.plan.blocked = blockResponse.data.blocked
+      this.block_loading = false
     },
-    methods: {
-      goToUserDetails(id) {
-        this.$router.push(`/users/${id}`);
-      },
-      blockPlan() {
-        this.block_loading = true;
-        TrainingPlanService.blockPlan(this.plan.id).then(
-          (response) => {
-            this.plan.blocked = response.data.blocked;
-            this.block_loading = false
-          },
-          (_) => [
-            this.block_loading = false
-          ]
-        )
-      },
-      unblockPlan() {
-        this.block_loading = true;
-        TrainingPlanService.unblockPlan(this.plan.id).then(
-          (response) => {
-            this.plan.blocked = response.data.blocked;
-            this.block_loading = false
-          },
-          (_) => [
-            this.block_loading = false
-          ]
-        )
-      },
+    async unblockPlan () {
+      this.block_loading = true
+      const unblockResponse = await TrainingPlanService.unblockPlan(this.plan.id)
+      this.plan.blocked = unblockResponse.data.blocked
+      this.block_loading = false
     }
   }
+}
 </script>
 
 <style>

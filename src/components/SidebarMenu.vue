@@ -39,33 +39,33 @@
 </template>
 
 <script>
-  import UserService from '../services/user.service';
-  import generateMediaURL  from '../services/firebase';
-  export default {
-    name: 'SidebarMenu',
-    data: () => ({ 
-      drawer: null,
-      user_info: [{
-        prependAvatar: require('../assets/profile-pic.jpg'),
-        title: '',
-        subtitle: '',
-      }],
-      items: [
-        { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/' },
-        { title: 'Usuarios', icon: 'mdi-account-group', route: '/users' },
-        { title: 'Planes', icon: 'mdi-dumbbell', route: '/plans' },
-        { title: 'Servicios', icon: 'mdi-wrench-cog', route: '/services' },
-        { title: 'Métricas', icon: 'mdi-poll', route: '/metrics' },
-        { title: 'Registro de nuevos admins', icon: 'mdi-account-tie', route: '/register'}
-      ],
-      fullname: '',
-      email: ''
-    }),
-    async mounted() {
-      let response = await UserService.getCurrentUserInfo()
-      this.user_info[0].title = response.data.fullname;
-      this.user_info[0].subtitle = response.data.email;
-      this.user_info[0].prependAvatar = await generateMediaURL('users/' + response.data.profileimage);
-    }
+import UserService from '../services/user.service'
+import generateMediaURL from '../services/firebase'
+export default {
+  name: 'SidebarMenu',
+  data: () => ({
+    drawer: null,
+    user_info: [{
+      prependAvatar: require('../assets/profile-pic.jpg'),
+      title: '',
+      subtitle: ''
+    }],
+    items: [
+      { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/' },
+      { title: 'Usuarios', icon: 'mdi-account-group', route: '/users' },
+      { title: 'Planes', icon: 'mdi-dumbbell', route: '/plans' },
+      { title: 'Servicios', icon: 'mdi-wrench-cog', route: '/services' },
+      { title: 'Métricas', icon: 'mdi-poll', route: '/metrics' },
+      { title: 'Registro de nuevos admins', icon: 'mdi-account-tie', route: '/register' }
+    ],
+    fullname: '',
+    email: ''
+  }),
+  async mounted () {
+    const response = await UserService.getCurrentUserInfo()
+    this.user_info[0].title = response.data.fullname
+    this.user_info[0].subtitle = response.data.email
+    this.user_info[0].prependAvatar = await generateMediaURL('users/' + response.data.profileimage)
   }
+}
 </script>

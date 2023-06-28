@@ -1,44 +1,43 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Dashboard from './views/Dashboard.vue'
-import Register from './views/Register.vue'
-import Login from './views/Login.vue'
+import DashboardView from './views/Dashboard.vue'
+import RegisterView from './views/Register.vue'
+import LoginView from './views/Login.vue'
 
 const routes = [
   {
     path: '/',
-    //name: 'Login',
-    component: Login,
+    component: LoginView,
     meta: {
       requiresAuth: false
     }
   },
   {
-    path: "/dashboard",
-    name: 'Dashboard',
-    component: Dashboard,
+    path: '/dashboard',
+    name: 'DashboardView',
+    component: DashboardView,
     meta: {
       requiresAuth: true
     }
   },
   {
     path: '/register',
-    name: 'Register',
-    component: Register,
+    name: 'RegisterView',
+    component: RegisterView,
     meta: {
       requiresAuth: true
     }
   },
   {
     path: '/login',
-    name: 'Login',
-    component: Login,
+    name: 'LoginView',
+    component: LoginView,
     meta: {
       requiresAuth: false
     }
   },
   {
     path: '/users',
-    name: 'Users',
+    name: 'UsersView',
     component: () => import('./views/Users.vue'),
     meta: {
       requiresAuth: true
@@ -54,7 +53,7 @@ const routes = [
   },
   {
     path: '/plans',
-    name: 'Plans',
+    name: 'PlansView',
     component: () => import('./views/Plans.vue'),
     meta: {
       requiresAuth: true
@@ -70,7 +69,7 @@ const routes = [
   },
   {
     path: '/services',
-    name: 'Services',
+    name: 'ServicesView',
     component: () => import('./views/Services.vue'),
     meta: {
       requiresAuth: true
@@ -86,12 +85,12 @@ const routes = [
   },
   {
     path: '/metrics',
-    name: 'Metrics',
+    name: 'MetricsView',
     component: () => import('./views/Metrics.vue'),
     meta: {
       requiresAuth: true
     }
-  },
+  }
 ]
 
 const router = createRouter({
@@ -101,7 +100,7 @@ const router = createRouter({
 
 router.beforeEach((to, _, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (localStorage.getItem("user") === null) {
+    if (localStorage.getItem('user') === null) {
       next({ name: 'Login' })
     } else {
       next()

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Datatable
+    <DataTable
     :headers="headers"
     :items="items"
     border-cell
@@ -8,15 +8,15 @@
     table-class-name="customize-table"
     header-text-direction="center"
     body-text-direction="center">
-    </Datatable>
+    </DataTable>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'TrainingMetricsUsersTable',
-    props: ['headers', 'items'],
-  }
+export default {
+  name: 'TrainingMetricsUsersTable',
+  props: ['headers', 'items']
+}
 </script>
 
 <style>

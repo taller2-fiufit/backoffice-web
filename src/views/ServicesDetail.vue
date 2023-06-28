@@ -45,10 +45,10 @@
             </div>
           </v-row>
           <v-row v-if="this.service.blocked" justify="center" class="mt-4">
-            <v-chip color='#FF0000' text-color="white"> BLOCKED </v-chip>
+            <v-chip color='#FF0000' text-color="white"> BLOQUEADO </v-chip>
           </v-row>
           <v-row>
-            <v-col cols="2" class="ml-4">
+            <v-col cols="3" class="ml-4">
               <v-text-field
                 :value="service.id"
                 label="ID"
@@ -71,8 +71,19 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col class="ml-4">
+            <v-col cols="3" class="ml-4">
               <v-text-field
+                :value="service.up ? 'Si' : 'No'"
+                label="Funcionando"
+                prepend-icon="mdi-arrow-up-bold-outline"
+                readonly
+                variant="underlined"
+                persistent-placeholder
+              ></v-text-field>
+            </v-col>
+            <v-col>
+              <v-text-field
+                class="ml-4"
                 :value="service.url"
                 label="URL"
                 prepend-icon="mdi-alphabetical-variant"
@@ -90,57 +101,46 @@
 </template>
 
 <script>
-  import ServicesService from '../services/services.service';
+import ServicesService from '../services/services.service'
 
-  export default {
-    name: 'ServicesDetail',
-    data() {
-      return {
-        service: null,
-        loading: true,
-        block_loading: false,
-      }
+export default {
+  name: 'ServicesDetail',
+  data () {
+    return {
+      service: null,
+      loading: true,
+      block_loading: false
+    }
+  },
+  async mounted () {
+    const response = await ServicesService.getServiceById(this.$route.params.id)
+    this.service = response.data
+    console.log(response.data)
+    this.loading = false
+  },
+  computed: {
+    isBlocked () {
+      return this.service.blocked
+    }
+  },
+  methods: {
+    async blockService () {
+      this.block_loading = true
+      const blockResponse = await ServicesService.blockService(this.service.id)
+      this.service.blocked = blockResponse.data.blocked
+      this.block_loading = false
     },
-    async mounted() {
-      let response = await ServicesService.getServiceById(this.$route.params.id);
-      this.service = response.data;
-      this.loading = false;
+    async unblockService () {
+      this.block_loading = true
+      const unblockResponse = await ServicesService.unblockService(this.service.id)
+      this.service.blocked = unblockResponse.data.blocked
+      this.block_loading = false
     },
-    computed: {
-      isBlocked() {
-        return this.service.blocked
-      }
-    },
-    methods: {
-      blockService() {
-        this.block_loading = true;
-        ServicesService.blockService(this.service.id).then(
-          (response) => {
-            this.service.blocked = response.data.blocked;
-            this.block_loading = false
-          },
-          (_) => [
-            this.block_loading = false
-          ]
-        )
-      },
-      unblockService() {
-        this.block_loading = true;
-        ServicesService.unblockService(this.service.id).then(
-          (response) => {
-            this.service.blocked = response.data.blocked;
-            this.block_loading = false
-          },
-          (_) => [
-            this.block_loading = false
-          ]
-        )
-      },
-      goToServicesList() {
-        this.$router.push(`/services`);
-      }
+    goToServicesList () {
+      this.$router.push('/services')
     }
   }
+}
 </script>
 
 <style>

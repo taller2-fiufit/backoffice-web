@@ -8,10 +8,10 @@
   </v-alert>
   <br />
 </template>
-  
+
 <script>
-  export default {
-    name: 'SuccessAlert',
-    props: ['message']
-  }
+export default {
+  name: 'SuccessAlert',
+  props: ['message']
+}
 </script>

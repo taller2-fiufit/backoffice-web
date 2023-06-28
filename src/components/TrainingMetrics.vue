@@ -4,11 +4,11 @@
     <v-container>
       <v-card-title id="title" class="text-center pb-5">Métricas Generales</v-card-title>
       <v-form class="text-center" fast-fail @submit.prevent="handleTrainingSelectedDates">
-        <div style="font-size: 20px !important;">Elegir fecha de inicio y fin para generar los gráficos a lo largo del tiempo.</div>
+        <div>Elegir fecha de inicio y fin para generar los gráficos a lo largo del tiempo.</div>
         <div class="text-caption text-center mx-5"> Por default, las métricas generadas son de la última semana. </div>
-        <div>
+        <v-container style="max-width: 600px; position: relative;" class="mt-5 mb-2 d-flex pa-0">
           <ErrorAlert v-if="trainingsError" :error="trainingsError" />
-        </div>
+        </v-container>
 
         <v-text-field v-model="trainingsStartDate" name="trainingsStartDate" type="date" label="Fecha de inicio" required class="dateInput1"></v-text-field>
         <v-text-field v-model="trainingsEndDate" name="trainingsEndDate" type="date" label="Fecha de fin" required class="dateInput2"></v-text-field>
@@ -19,7 +19,7 @@
             class="my-14 spinner-border spinner-border-sm"
           ></span>
           <span>Generar gráficos</span>
-        </v-btn> 
+        </v-btn>
 
         <v-divider horizontal class="my-4 horizontal-divider"></v-divider>
       </v-form>
@@ -83,7 +83,7 @@
           <v-row>
             <v-col cols="12" class="my-0 py-0">
               <v-card-title class="pb-5">Métricas de Entrenamientos por Tipo</v-card-title>
-              
+
               <v-card class="mx-auto">
                 <v-row class="my-5">
                   <v-col class="text-center mb-0 pb-5" cols="2">
@@ -93,7 +93,7 @@
                           height="80"
                           width="80"
                           rounded
-                          color="#9ACD32" 
+                          color="#9ACD32"
                         >
                           <v-container fill-height fluid>
                             <v-row>
@@ -107,7 +107,7 @@
                     </v-row>
                   </v-col>
                   <v-col cols="10" class="mb-0 pb-0 text-center">
-                    <v-card-text v-if="this.trainingPlansMetrics" class="pt-0">
+                    <v-card-text v-if="this.trainingPlansMetrics">
                       <div v-if="this.trainingPlansMetrics.length">
                         <div class="text-overline font-weight-medium" style="font-size: 12px !important;">
                           Cantidad de Entrenamientos por Tipo
@@ -120,7 +120,7 @@
                         <div class="text-overline font-weight-medium" style="font-size: 12px !important;">
                           Cantidad de Entrenamientos por Tipo
                         </div>
-                        <div class="headline font-weight-medium grey--text text-center">
+                        <div class="text-overline font-weight-bold" style="font-size: 15px !important;">
                           0
                         </div>
                       </div>
@@ -136,7 +136,7 @@
           <v-row>
             <v-col cols="12" class="my-0 py-0">
               <v-card-title class="pb-5">Métricas de Entrenamientos por Dificultad</v-card-title>
-              
+
               <v-card class="mx-auto">
                 <v-row class="my-5">
                   <v-col class="text-center mb-0 pb-5" cols="2">
@@ -146,7 +146,7 @@
                           height="80"
                           width="80"
                           rounded
-                          color="#9ACD32" 
+                          color="#9ACD32"
                         >
                           <v-container fill-height fluid>
                             <v-row>
@@ -160,7 +160,7 @@
                     </v-row>
                   </v-col>
                   <v-col cols="10" class="mb-0 pb-0 text-center">
-                    <v-card-text v-if="this.trainingPlansMetrics" class="pt-0">
+                    <v-card-text v-if="this.trainingPlansMetrics">
                       <div v-if="this.trainingPlansMetrics.length">
                         <div class="text-overline font-weight-medium" style="font-size: 12px !important;">
                           Cantidad de Entrenamientos por Dificultad
@@ -173,7 +173,7 @@
                         <div class="text-overline font-weight-medium" style="font-size: 12px !important;">
                           Cantidad de Entrenamientos por Dificultad
                         </div>
-                        <div v-if="!this.trainingPlansMetrics.length" class="headline font-weight-medium grey--text text-center">
+                        <div v-if="!this.trainingPlansMetrics.length" class="text-overline font-weight-bold" style="font-size: 15px !important;">
                           0
                         </div>
                       </div>
@@ -240,257 +240,251 @@
 </template>
 
 <script>
-  import MetricsService from '../services/metrics.service';
-  import ErrorAlert from '../components/ErrorAlert.vue'
-  import TrainingMetricsUsersTable from '../components/TrainingMetricsUsersTable.vue'
-  import useVuelidate from '@vuelidate/core';
-  import { required } from "@vuelidate/validators";
-  import { BarChart, DoughnutChart, useBarChart } from 'vue-chart-3';
-  import { Chart, registerables } from 'chart.js';
-  import { computed, ref } from "vue";
+import MetricsService from '../services/metrics.service'
+import ErrorAlert from '../components/ErrorAlert.vue'
+import TrainingMetricsUsersTable from '../components/TrainingMetricsUsersTable.vue'
+import useVuelidate from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
+import { BarChart, DoughnutChart, useBarChart } from 'vue-chart-3'
+import { Chart, registerables } from 'chart.js'
+import { computed, ref } from 'vue'
 
-  Chart.register(...registerables);
+Chart.register(...registerables)
 
-  export default {
-    name: 'Metrics',
-    components: {
-      ErrorAlert,
-      BarChart,
-      DoughnutChart,
-      TrainingMetricsUsersTable
+export default {
+  name: 'TrainingMetrics',
+  components: {
+    ErrorAlert,
+    BarChart,
+    DoughnutChart,
+    TrainingMetricsUsersTable
+  },
+  data () {
+    return {
+      tab: null,
+      dialog: true,
+      // Selected dates
+      v$: useVuelidate(),
+      loading: false,
+      trainingsStartDate: '',
+      trainingsEndDate: '',
+      trainingsError: '',
+      // Metrics
+      trainingPlansMetrics: null,
+      // Training Charts
+      typeOfTrainingsDoughnutChartProps: null,
+      difficultyOfTrainingsBarChartProps: null,
+      // Training Plans Created by Users Table
+      headers: [
+        { text: 'ID DE USUARIO', value: 'id', sortable: true },
+        { text: 'CANTIDAD', value: 'trainings', sortable: true },
+        { text: 'DIFICULTAD PROMEDIO', value: 'averageDifficulty', sortable: true },
+        { text: 'TIPOS', value: 'types', sortable: false }
+      ],
+      trainingMetricsUsersTableData: []
+    }
+  },
+  created () {
+    const today = new Date()
+
+    // startDate
+    const lastWeek = new Date(today.getTime() - (7 * 24 * 60 * 60 * 1000))
+    const startDate = this.formatDate(lastWeek)
+
+    // endDate
+    const tomorrow = new Date(today)
+    tomorrow.setDate(today.getDate() + 1)
+    const endDate = this.formatDate(tomorrow)
+
+    MetricsService.getTrainingPlansMetricsByDate(startDate, endDate).then(
+      (response) => {
+        this.trainingPlansMetrics = response.data
+        this.createTrainingGraphsMetrics()
+      }
+    )
+  },
+  methods: {
+    // Format date
+    formatDate (date) {
+      const year = date.getFullYear()
+      let month = date.getMonth() + 1
+      let day = date.getDate()
+
+      // Format the date as yyyy-mm-dd
+      if (month < 10) {
+        month = '0' + month
+      }
+      if (day < 10) {
+        day = '0' + day
+      }
+      const formattedDate = year + '-' + month + '-' + day
+      return formattedDate
     },
-    data() {
-      return {
-        tab: null,
-        dialog: true,
-        // Selected dates
-        v$: useVuelidate(),
-        loading: false,
-        trainingsStartDate: '',
-        trainingsEndDate: '',
-        trainingsError: '',
-        // Metrics
-        trainingPlansMetrics: null,
-        // Training Charts
-        typeOfTrainingsDoughnutChartProps: null,
-        difficultyOfTrainingsBarChartProps: null,
-        // Training Plans Created by Users Table
-        headers: [  
-          { text: "ID DE USUARIO", value: "id", sortable: true},
-          { text: "CANTIDAD", value: "trainings", sortable: true},
-          { text: "DIFICULTAD PROMEDIO", value: "averageDifficulty", sortable: true},
-          { text: "TIPOS", value: "types", sortable: false}
-        ],
-        trainingMetricsUsersTableData: [],
-      };
-    },
-    created() {
-      const today = new Date();
-
-      // startDate
-      const lastWeek = new Date(today.getTime() - (7 * 24 * 60 * 60 * 1000));
-      const startDate = this.formatDate(lastWeek);
-
-      // endDate
-      const tomorrow = new Date(today);
-      tomorrow.setDate(today.getDate() + 1);
-      const endDate = this.formatDate(tomorrow);
-
-      MetricsService.getTrainingPlansMetricsByDate(startDate, endDate).then(
-        (response) => {
-          this.trainingPlansMetrics = response.data;
-
-          this.createTrainingGraphsMetrics()
-        },
-        (error) => {
+    // Training Selected Dates
+    handleTrainingSelectedDates () {
+      this.loading = true
+      this.v$.$validate()
+      if (this.v$.$error) {
+        this.trainingsError = 'Falta completar los siguientes campos:'
+        if (this.trainingsStartDate === '') {
+          this.trainingsError += '<br>- Fecha de inicio'
         }
-      );
-    },
-    methods: {
-      // Format date
-      formatDate(date) {
-        let year = date.getFullYear();
-        let month = date.getMonth() + 1;
-        let day = date.getDate();
+        if (this.trainingsEndDate === '') {
+          this.trainingsError += '<br>- Fecha de fin'
+        }
+        this.loading = false
+        return
+      }
 
-        // Format the date as yyyy-mm-dd
-        if (month < 10) {
-          month = '0' + month;
-        }
-        if (day < 10) {
-          day = '0' + day;
-        }
-        let formattedDate = year + '-' + month + '-' + day;
-        return formattedDate;
-      },
-      // Training Selected Dates
-      handleTrainingSelectedDates() {
-        this.loading = true;
-        this.v$.$validate()
-        if (this.v$.$error) {
-          this.trainingsError = 'Falta completar los siguientes campos:';
-          if (this.trainingsStartDate == "") {
-            this.trainingsError += "<br>- Fecha de inicio"
+      const startDate = new Date(this.trainingsStartDate)
+      const endDate = new Date(this.trainingsEndDate)
+      if (startDate > endDate) {
+        this.trainingsError = 'La fecha de fin no puede ser luego de la fecha de inicio'
+        this.loading = false
+        return
+      }
+
+      const actualDate = new Date()
+      const tomorrow = new Date(actualDate)
+      tomorrow.setDate(tomorrow.getDate() + 1)
+      if (startDate > actualDate || endDate > tomorrow) {
+        this.trainingsError = 'Las fechas seleccionadas no pueden ser mayores al día actual'
+      } else {
+        MetricsService.getTrainingPlansMetricsByDate(this.trainingsStartDate, this.trainingsEndDate).then(
+          (response) => {
+            this.trainingsError = null
+            this.trainingPlansMetrics = response.data
+            this.createTrainingGraphsMetrics()
           }
-          if (this.trainingsEndDate == "") {
-            this.trainingsError += "<br>- Fecha de fin"
-          }
-          this.loading = false;
-          return
-        } 
-        
-        const startDate = new Date(this.trainingsStartDate);
-        const endDate = new Date(this.trainingsEndDate);
-        if (startDate > endDate) {
-          this.trainingsError = 'La fecha de fin no puede ser luego de la fecha de inicio';
-          this.loading = false;
-          return
-        }
-
-        const actualDate = new Date();
-        const tomorrow = new Date(actualDate)
-        tomorrow.setDate(tomorrow.getDate() + 1)
-        if (startDate > actualDate || endDate > tomorrow) {
-          this.trainingsError = 'Las fechas seleccionadas no pueden ser mayores al día actual';
+        )
+      }
+      this.loading = false
+    },
+    // Training Graphs
+    createTrainingGraphsMetrics () {
+      this.createTypeOfTrainingsDoughnutChart()
+      this.createTrainingsDifficultyBarChart()
+      this.createTrainingMetricsUsersTable()
+    },
+    createTypeOfTrainingsDoughnutChart () {
+      const trainingsType = new Map()
+      for (const training of this.trainingPlansMetrics) {
+        const type = training.attrs.type
+        if (trainingsType.has(type)) {
+          trainingsType.set(type, trainingsType.get(type) + 1)
         } else {
-          MetricsService.getTrainingPlansMetricsByDate(this.trainingsStartDate, this.trainingsEndDate).then(
-            (response) => {
-              this.trainingsError = null;
-              this.trainingPlansMetrics = response.data;
-              this.createTrainingGraphsMetrics()
-            },
-            (error) => {
-            }
-          );
+          trainingsType.set(type, 1)
         }
-        this.loading = false;
-      },
-      // Training Graphs
-      createTrainingGraphsMetrics() {
-        this.createTypeOfTrainingsDoughnutChart();
-        this.createTrainingsDifficultyBarChart();
-        this.createTrainingMetricsUsersTable();
-      },
-      createTypeOfTrainingsDoughnutChart() {
-        const trainingsType = new Map();
-        for (const training of this.trainingPlansMetrics) {
-          const type = training.attrs.type;
-          if (trainingsType.has(type)) {
-            trainingsType.set(type, trainingsType.get(type) + 1);
-          } else {
-            trainingsType.set(type, 1)
-          }
-        }
-
-        let labels = [];
-        let amount = [];
-        trainingsType.forEach((value, key) => {
-          labels.push(key);
-          amount.push(value)
-        });
-
-        const data = ref(amount);
-
-        const chartData = computed(() => ({
-          labels: labels,
-          datasets: [
-            {
-              data: data.value,
-              backgroundColor: ["#9ACD32", "#2b3c4b", "#E2E2E2"]
-            },
-          ],
-        }));
-
-        const { barChartProps, barChartRef } = useBarChart({ chartData });
-
-        this.typeOfTrainingsDoughnutChartProps = barChartProps;
-      },
-      createTrainingsDifficultyBarChart() {
-        const trainingsDifficulty = new Map();
-        for (const training of this.trainingPlansMetrics) {
-          const difficulty = training.attrs.difficulty;
-          if (trainingsDifficulty.has(difficulty)) {
-            trainingsDifficulty.set(difficulty, trainingsDifficulty.get(difficulty) + 1);
-          } else {
-            trainingsDifficulty.set(difficulty, 1);
-          }
-        }
-
-        let labels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
-        let amount = [0,0,0,0,0,0,0,0,0,0];
-        trainingsDifficulty.forEach((value, key) => {
-          amount[key-1] = value;
-        });
-
-        const data = ref(amount);
-
-
-        const chartData = computed(() => ({
-          labels: labels,
-          datasets: [
-            {
-              label: [""],
-              data: data.value,
-              backgroundColor: ["#9ACD32"]
-            },
-          ],
-        }));
-
-        const { barChartProps, barChartRef } = useBarChart({ chartData });
-
-        this.difficultyOfTrainingsBarChartProps = barChartProps;
-      },
-      createTrainingMetricsUsersTable() {
-        const usersTrainingGroupById = new Map();
-        for (const training of this.trainingPlansMetrics) {
-          const userId = training.attrs.author;
-          const difficulty = training.attrs.difficulty;
-          const type = training.attrs.type;
-
-          if (usersTrainingGroupById.has(userId)) {
-            const userTrainingsQuantity = usersTrainingGroupById.get(userId)["quantity"];
-            const difficulties = usersTrainingGroupById.get(userId)["difficulties"];
-            const types = usersTrainingGroupById.get(userId)["types"];
-            types.add(type);
-            usersTrainingGroupById.set(userId, {
-              quantity: userTrainingsQuantity + 1,
-              difficulties: difficulties + difficulty,
-              types: types
-            });
-          } else {
-            const types = new Set()
-            types.add(type);
-            usersTrainingGroupById.set(userId, {
-              quantity: 1,
-              difficulties: difficulty,
-              types: types
-            })
-          }
-        }
-
-        const usersData = [];
-        usersTrainingGroupById.forEach((value, key) => {
-          const typesSet = value["types"];
-          const typesArray = Array.from(typesSet);
-          const typesString = typesArray.join(', ')
-          usersData.push({
-            id: key,
-            trainings: value["quantity"],
-            averageDifficulty: value["difficulties"] / value["quantity"],
-            types: typesString
-          })
-        });
-
-        this.trainingMetricsUsersTableData = usersData;
       }
+
+      const labels = []
+      const amount = []
+      trainingsType.forEach((value, key) => {
+        labels.push(key)
+        amount.push(value)
+      })
+
+      const data = ref(amount)
+
+      const chartData = computed(() => ({
+        labels: labels,
+        datasets: [
+          {
+            data: data.value,
+            backgroundColor: ['#9ACD32', '#2b3c4b', '#E2E2E2']
+          }
+        ]
+      }))
+
+      const { barChartProps } = useBarChart({ chartData })
+
+      this.typeOfTrainingsDoughnutChartProps = barChartProps
     },
-    validations() {
-      return {
-        trainingsStartDate: { required },
-        trainingsEndDate: { required },
+    createTrainingsDifficultyBarChart () {
+      const trainingsDifficulty = new Map()
+      for (const training of this.trainingPlansMetrics) {
+        const difficulty = training.attrs.difficulty
+        if (trainingsDifficulty.has(difficulty)) {
+          trainingsDifficulty.set(difficulty, trainingsDifficulty.get(difficulty) + 1)
+        } else {
+          trainingsDifficulty.set(difficulty, 1)
+        }
       }
+
+      const labels = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+      const amount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      trainingsDifficulty.forEach((value, key) => {
+        amount[key - 1] = value
+      })
+
+      const data = ref(amount)
+
+      const chartData = computed(() => ({
+        labels: labels,
+        datasets: [
+          {
+            label: [''],
+            data: data.value,
+            backgroundColor: ['#9ACD32']
+          }
+        ]
+      }))
+
+      const { barChartProps } = useBarChart({ chartData })
+
+      this.difficultyOfTrainingsBarChartProps = barChartProps
+    },
+    createTrainingMetricsUsersTable () {
+      const usersTrainingGroupById = new Map()
+      for (const training of this.trainingPlansMetrics) {
+        const userId = training.attrs.author
+        const difficulty = training.attrs.difficulty
+        const type = training.attrs.type
+
+        if (usersTrainingGroupById.has(userId)) {
+          const userTrainingsQuantity = usersTrainingGroupById.get(userId).quantity
+          const difficulties = usersTrainingGroupById.get(userId).difficulties
+          const types = usersTrainingGroupById.get(userId).types
+          types.add(type)
+          usersTrainingGroupById.set(userId, {
+            quantity: userTrainingsQuantity + 1,
+            difficulties: difficulties + difficulty,
+            types: types
+          })
+        } else {
+          const types = new Set()
+          types.add(type)
+          usersTrainingGroupById.set(userId, {
+            quantity: 1,
+            difficulties: difficulty,
+            types: types
+          })
+        }
+      }
+
+      const usersData = []
+      usersTrainingGroupById.forEach((value, key) => {
+        const typesSet = value.types
+        const typesArray = Array.from(typesSet)
+        const typesString = typesArray.join(', ')
+        usersData.push({
+          id: key,
+          trainings: value.quantity,
+          averageDifficulty: value.difficulties / value.quantity,
+          types: typesString
+        })
+      })
+
+      this.trainingMetricsUsersTableData = usersData
+    }
+  },
+  validations () {
+    return {
+      trainingsStartDate: { required },
+      trainingsEndDate: { required }
     }
   }
+}
 </script>
 
 <style>

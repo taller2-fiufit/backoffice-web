@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Datatable
+    <DataTable
     :headers="headers"
     :items="items"
     :loading="loading"
@@ -16,14 +16,14 @@
           style="width: 60px; height: 60px"
         />
       </template>
-    
+
       <template #item-user="{ fullname, avator }">
         <div class="user-wrapper">
           <img class="avator" :src="avator" alt="" />
           <a target="_blank">{{ fullname }}</a>
         </div>
       </template>
-    
+
       <template #item-operation="item">
         <div class="operation-wrapper">
           <v-btn
@@ -39,22 +39,22 @@
           </v-btn>
         </div>
       </template>
-    </Datatable>
+    </DataTable>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'Table',
-    props: ['headers', 'items', 'loading'],
-    methods: {
-      goToUserDetails(id) {
-        this.$router
-          .push(`/users/${id}`)
-          .then(() => { this.$router.go() })
-      }
+export default {
+  name: 'UsersTable',
+  props: ['headers', 'items', 'loading'],
+  methods: {
+    goToUserDetails (id) {
+      this.$router
+        .push(`/users/${id}`)
+        .then(() => { this.$router.go() })
     }
   }
+}
 </script>
 
 <style>

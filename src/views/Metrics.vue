@@ -28,21 +28,19 @@
 </template>
 
 <script>
-  import ErrorAlert from '../components/ErrorAlert.vue'
-  import UserMetrics from '../components/UserMetrics.vue'
-  import TrainingMetrics from '../components/TrainingMetrics.vue'
-  
-  export default {
-    name: 'Metrics',
-    components: {
-      ErrorAlert,
-      UserMetrics,
-      TrainingMetrics
-    },
-    data() {
-      return {
-        tab: null
-      };
+import UserMetrics from '../components/UserMetrics.vue'
+import TrainingMetrics from '../components/TrainingMetrics.vue'
+
+export default {
+  name: 'MetricsView',
+  components: {
+    UserMetrics,
+    TrainingMetrics
+  },
+  data () {
+    return {
+      tab: null
     }
   }
+}
 </script>

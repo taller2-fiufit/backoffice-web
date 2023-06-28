@@ -22,61 +22,48 @@
 </template>
 
 <script>
-  import UserService from '../services/user.service';
-  import TrainingPlanService from '../services/training-plan.service';
-  import ServicesService from '../services/services.service';
-  import DashboardCounter from '../components/DashboardCounter.vue'
+import UserService from '../services/user.service'
+import TrainingPlanService from '../services/training-plan.service'
+import ServicesService from '../services/services.service'
+import DashboardCounter from '../components/DashboardCounter.vue'
 
-  export default {
-    name: 'User',
-    components: {
-      DashboardCounter,
-    },
-    data () {
-      return {
-        fullname: '',
-        itemsPerPage: 5,
-        totalUsersStats: 0,
-        totalPlansStats: 0,
-        totalServicesStats: 0
-      }
-    },
-    mounted() {
-      UserService.getCurrentUserInfo().then(
-        response => {
-          this.fullname = response.data.fullname;
-        },
-        error => {
-
-        },
-      )
-      UserService.getUserCount().then(
-        response => {
-          console.log(response);
-          this.totalUsersStats = response.data.count;
-        },
-        error => {
-          this.totalUsersStats = 0;
-        },
-      )
-      TrainingPlanService.getTrainingPlanCount().then(
-        response => {
-          this.totalPlansStats = response.data.count;
-        },
-        error => {
-          this.totalPlansStats = 0;
-        },
-      )
-      ServicesService.getServiceCount().then(
-        response => {
-          this.totalServicesStats = response.data.count;
-        },
-        error => {
-          this.totalServicesStats = 0;
-        },
-      )
+export default {
+  name: 'DashboardView',
+  components: {
+    DashboardCounter
+  },
+  data () {
+    return {
+      fullname: '',
+      itemsPerPage: 5,
+      totalUsersStats: 0,
+      totalPlansStats: 0,
+      totalServicesStats: 0
     }
+  },
+  mounted () {
+    UserService.getCurrentUserInfo().then(
+      response => {
+        this.fullname = response.data.fullname
+      }
+    )
+    UserService.getUserCount().then(
+      response => {
+        this.totalUsersStats = response.data.count
+      }
+    )
+    TrainingPlanService.getTrainingPlanCount().then(
+      response => {
+        this.totalPlansStats = response.data.count
+      }
+    )
+    ServicesService.getServiceCount().then(
+      response => {
+        this.totalServicesStats = response.data.count
+      }
+    )
   }
+}
 </script>
 
 <style>

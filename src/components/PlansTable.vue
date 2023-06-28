@@ -1,6 +1,6 @@
 <template>
     <div>
-      <Datatable
+      <DataTable
       :headers="headers"
       :items="items"
       :loading="loading"
@@ -64,49 +64,48 @@
             </v-btn>
           </div>
         </template>
-      </Datatable>
+      </DataTable>
     </div>
 </template>
-  
+
 <script>
 import Slider from '@vueform/slider'
-import { all } from 'axios';
-  export default {
-    name: 'Table',
-    components: {
-      Slider
+export default {
+  name: 'PlansTable',
+  components: {
+    Slider
+  },
+  data () {
+    return {
+      showDifficultyFilter: false,
+      showTypeFilter: false,
+      difficulty_filtering: [0, 10],
+      type_filtering: 'all'
+    }
+  },
+  props: ['headers', 'items', 'loading'],
+  methods: {
+    goToPlanDetails (id) {
+      console.log(id)
+      this.$router.push(`/plans/${id}`)
     },
-    data() {
-      return {
-        showDifficultyFilter: false,
-        showTypeFilter: false,
-        difficulty_filtering: [0, 10],
-        type_filtering: "all",
-      }
+    changeDifficultyFiltering () {
+      this.$emit('change_diff_filter', this.difficulty_filtering)
+    }
+  },
+  watch: {
+    difficulty_filtering: function (val) {
+      this.showDifficultyFilter = false // para pensar
+      this.$emit('change_diff_filter', val)
     },
-    props: ['headers', 'items', 'loading'],
-    methods: {
-      goToPlanDetails(id) {
-        console.log(id);
-        this.$router.push(`/plans/${id}`);
-      },
-      changeDifficultyFiltering() {
-        this.$emit('change_diff_filter', this.difficulty_filtering)
-      }
-    },
-    watch: {
-      difficulty_filtering: function(val) {
-        this.showDifficultyFilter = false; // para pensar
-        this.$emit('change_diff_filter', val)
-      },
-      type_filtering: function(val) {
-        this.showTypeFilter = false; // para pensar
-        this.$emit('change_type_filter', val)
-      }
+    type_filtering: function (val) {
+      this.showTypeFilter = false // para pensar
+      this.$emit('change_type_filter', val)
     }
   }
+}
 </script>
-  
+
 <style>
 .customize-table {
   --easy-table-header-font-size: 13px;

@@ -25,7 +25,7 @@ app.use(router)
 app.use(store)
 app.use(VueGoogleMaps, {
   load: {
-    key: 'AIzaSyAssFjab4k-XUhfaa6sDKuG_joeqmRe4rA'
+    key: process.env.VUE_APP_MAPS_API_KEY
   }
 })
 app.mount('#app')

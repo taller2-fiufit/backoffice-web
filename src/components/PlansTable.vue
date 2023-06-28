@@ -5,7 +5,7 @@
       :items="items"
       :loading="loading"
       border-cell
-      empty-message="No hay planes registrados."
+      :empty-message="error ? 'El servicio de planes de entrenamiento se encuentra bloqueado o caído.' : 'No hay planes registrados con dichos filtros.'"
       table-class-name="customize-table"
       header-text-direction="center"
       body-text-direction="center">
@@ -83,7 +83,7 @@ export default {
       type_filtering: 'all'
     }
   },
-  props: ['headers', 'items', 'loading'],
+  props: ['headers', 'items', 'loading', 'error'],
   methods: {
     goToPlanDetails (id) {
       console.log(id)

@@ -1,6 +1,7 @@
 <template>
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-  <v-card class="rounded-sm" flat>
+  <div v-if="axiosError" class="text-button text-center mx-5 my-5"> ATENCIÓN: el servicio de métricas de entrenamientos se encuentra bloqueado o caído. </div>
+  <v-card v-if="!axiosError" class="rounded-sm" flat>
     <v-container>
       <v-card-title id="title" class="text-center pb-5">Métricas Generales</v-card-title>
       <v-form class="text-center" fast-fail @submit.prevent="handleTrainingSelectedDates">
@@ -26,7 +27,7 @@
     </v-container>
   </v-card>
 
-  <v-card class="rounded-sm" flat>
+  <v-card v-if="!axiosError" class="rounded-sm" flat>
     <v-container>
       <v-row>
         <v-col cols="6" offset="3">
@@ -75,8 +76,8 @@
       </v-row>
     </v-container>
   </v-card>
-  <v-divider horizontal class="my-4 mx-3 horizontal-divider"></v-divider>
-  <v-card class="rounded-sm mb-10" flat>
+  <v-divider v-if="!axiosError" horizontal class="my-4 mx-3 horizontal-divider"></v-divider>
+  <v-card v-if="!axiosError" class="rounded-sm mb-10" flat>
     <v-container>
       <v-row>
         <v-col cols="6">
@@ -187,8 +188,8 @@
       </v-row>
     </v-container>
   </v-card>
-  <v-divider horizontal class="my-4 mx-3 horizontal-divider"></v-divider>
-  <v-card class="rounded-sm" flat>
+  <v-divider v-if="!axiosError" horizontal class="my-4 mx-3 horizontal-divider"></v-divider>
+  <v-card v-if="!axiosError" class="rounded-sm" flat>
     <v-container>
       <v-row>
         <v-col cols="12">
@@ -266,6 +267,7 @@ export default {
       // Selected dates
       v$: useVuelidate(),
       loading: false,
+      axiosError: false,
       trainingsStartDate: '',
       trainingsEndDate: '',
       trainingsError: '',
@@ -300,6 +302,9 @@ export default {
       (response) => {
         this.trainingPlansMetrics = response.data
         this.createTrainingGraphsMetrics()
+      },
+      () => {
+        this.axiosError = true
       }
     )
   },

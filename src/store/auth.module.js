@@ -1,4 +1,5 @@
 import AuthService from '../services/auth.service'
+import VueJwtDecode from 'vue-jwt-decode'
 
 const user = JSON.parse(localStorage.getItem('user'))
 const initialState = user
@@ -12,6 +13,10 @@ export const auth = {
     login ({ commit }, user) {
       return AuthService.login(user).then(
         user => {
+          if (!VueJwtDecode.decode(user.access_token).admin) {
+            AuthService.logout()
+            return Promise.reject(Error())
+          }
           commit('loginSuccess', user)
           return Promise.resolve(user)
         },

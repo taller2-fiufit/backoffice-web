@@ -1,6 +1,7 @@
 <template>
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-  <v-card flat class="rounded-sm">
+  <div v-if="axiosError" class="text-button text-center mx-5 my-5"> ATENCIÓN: el servicio de métricas de entrenamientos se encuentra bloqueado o caído. </div>
+  <v-card v-if="!axiosError" flat class="rounded-sm">
     <v-container>
       <v-card-title id="title" class="text-center pb-5">Métricas Generales</v-card-title>
       <v-form class="text-center" fast-fail @submit.prevent="handleUserSelectedDates">
@@ -26,7 +27,7 @@
     </v-container>
   </v-card>
 
-  <v-card flat class="rounded-sm">
+  <v-card v-if="!axiosError" flat class="rounded-sm">
     <v-container>
       <v-row>
         <v-col cols="6" class="mb-10">
@@ -233,6 +234,7 @@ export default {
       dialog: true,
       v$: useVuelidate(),
       loading: false,
+      axiosError: false,
       usersStartDate: '',
       usersEndDate: '',
       usersError: '',
@@ -258,6 +260,9 @@ export default {
       (response) => {
         this.usersMetrics = response.data
         this.createUserGraphsMetrics()
+      },
+      () => {
+        this.axiosError = true
       }
     )
   },
@@ -309,7 +314,6 @@ export default {
           (response) => {
             this.usersError = null
             this.usersMetrics = response.data
-
             this.createUserGraphsMetrics()
           }
         )

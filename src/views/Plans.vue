@@ -9,6 +9,7 @@
         :headers="headers"
         :items="trainingPlans"
         :loading="loading"
+        :error="error"
         @change_diff_filter="updateDiffFilter"
         @change_type_filter="updateTypeFilter"
         />
@@ -36,14 +37,22 @@ export default {
       trainingPlans: [],
       difficulty_filtering: [0, 10],
       type_filtering: 'all',
-      loading: true
+      loading: true,
+      error: false
     }
   },
   methods: {
     async updateList () {
-      const response = await TrainingPlanService.getTrainingPlanList(this.difficulty_filtering[0], this.difficulty_filtering[1] + 1, this.type_filtering) // agregar query params
-      this.trainingPlans = response.data
-      this.loading = false
+      TrainingPlanService.getTrainingPlanList(this.difficulty_filtering[0], this.difficulty_filtering[1] + 1, this.type_filtering).then(
+        (response) => {
+          this.trainingPlans = response.data
+          this.loading = false
+        },
+        () => {
+          this.error = true
+          this.loading = false
+        }
+      )
     },
 
     async updateDiffFilter (val) {

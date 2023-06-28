@@ -5,7 +5,7 @@
       :items="items"
       :loading="loading"
       border-cell
-      empty-message="No hay servicios creados."
+      :empty-message= "error ? 'Ocurrió un error con el gateway.' : 'No hay servicios registrados con dichos filtros.'"
       table-class-name="customize-table"
       header-text-direction="center"
       body-text-direction="center">
@@ -84,7 +84,7 @@
 import ServicesService from '../services/services.service'
 export default {
   name: 'ServicesTable',
-  props: ['headers', 'items', 'loading'],
+  props: ['headers', 'items', 'loading', 'error'],
   data () {
     return {
       showBlockedFilter: false,

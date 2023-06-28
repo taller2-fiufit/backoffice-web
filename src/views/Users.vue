@@ -5,7 +5,7 @@
 
   <v-card class="mx-5 my-5 rounded-sm">
     <div id="table-div" class="mx-auto">
-      <UsersTable v-if="users" :headers="headers" :items="users" :loading="loading"/>
+      <UsersTable v-if="users" :headers="headers" :items="users" :loading="loading" :error="error"/>
     </div>
 </v-card>
 </template>
@@ -32,8 +32,12 @@ export default {
     }
   },
   async mounted () {
-    const response = await UserService.getUserList()
-    this.users = response.data
+    try {
+      const response = await UserService.getUserList()
+      this.users = response.data
+    } catch {
+      this.error = true
+    }
 
     for (const index in this.users) {
       if (this.users[index].profileimage !== '') {

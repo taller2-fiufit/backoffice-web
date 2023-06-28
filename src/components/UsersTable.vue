@@ -5,7 +5,7 @@
     :items="items"
     :loading="loading"
     border-cell
-    empty-message="No hay usuarios registrados."
+    :empty-message="error ? 'El servicio de usuarios se encuentra bloqueado o caído.' : 'No hay usuarios registrados con dichos filtros.'"
     table-class-name="customize-table"
     header-text-direction="center"
     body-text-direction="center">
@@ -46,7 +46,7 @@
 <script>
 export default {
   name: 'UsersTable',
-  props: ['headers', 'items', 'loading'],
+  props: ['headers', 'items', 'loading', 'error'],
   methods: {
     goToUserDetails (id) {
       this.$router

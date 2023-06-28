@@ -156,6 +156,9 @@
           <div class="text-overline mb-6">
             Metas
           </div>
+          <v-row class="mx-1" v-if="plan.goals.length === 0" :key="index">
+            <div class="text-caption text-center mb-5"> Actualmente este plan de entrenamiento no posee metas disponibles. </div>
+          </v-row>
           <v-row class="mx-10 mb-1" v-for="(goal, index) in plan.goals" :key="index">
             <div class="font-weight-bold">
               <v-icon end icon="mdi-pin-outline" class="goalicon"></v-icon>

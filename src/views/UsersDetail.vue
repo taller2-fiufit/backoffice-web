@@ -204,8 +204,8 @@ export default {
       followers: null,
       headers: [
         { text: '#', value: 'id', sortable: true },
-        { text: 'USER', value: 'user', sortable: true },
-        { text: 'DETAIL', value: 'operation' }
+        { text: 'NOMBRE COMPLETO', value: 'user', sortable: true },
+        { text: 'DETALLE', value: 'operation' }
       ],
       markers: [
         {

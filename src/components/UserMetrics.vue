@@ -206,6 +206,49 @@
             </v-col>
           </v-row>
         </v-col>
+        <v-divider horizontal class="my-4 horizontal-divider"></v-divider>
+        <v-col cols="6" offset="3">
+          <v-row class="mb-5">
+            <v-col cols="12" class="my-0 py-0">
+              <v-card-title class="pb-3">Métricas de restablecimiento de contraseña</v-card-title>
+
+              <v-card class="mx-auto">
+                <v-row class="my-5">
+                  <v-col class="text-center mb-0 pb-0" cols="2">
+                    <v-row justify="center">
+                      <v-col cols="2">
+                        <v-sheet
+                          height="80"
+                          width="80"
+                          rounded
+                          color="#9ACD32"
+                        >
+                          <v-container class="mt-5" fill-height fluid>
+                            <v-row>
+                              <v-col class="text-center">
+                                <v-icon size="45">mdi-lock-reset</v-icon>
+                              </v-col>
+                            </v-row>
+                          </v-container>
+                        </v-sheet>
+                      </v-col>
+                    </v-row>
+                  </v-col>
+                  <v-col cols="10" class="mb-0 pb-0 text-center">
+                    <v-card-text v-if="this.usersMetrics" class="mt-3 mb-4">
+                      <div class="text-overline font-weight-medium" style="font-size: 12px !important;">
+                        Cantidad de restablecimientos de contraseña
+                      </div>
+                      <div class="text-overline font-weight-bold" style="font-size: 15px !important;">
+                        {{this.usersMetrics.passwordReseted}}
+                      </div>
+                    </v-card-text>
+                  </v-col>
+                </v-row>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-col>
       </v-row>
     </v-container>
   </v-card>
@@ -259,6 +302,7 @@ export default {
     MetricsService.getUsersMetricsByDate(startDate, endDate).then(
       (response) => {
         this.usersMetrics = response.data
+        console.log(this.usersMetrics)
         this.createUserGraphsMetrics()
       },
       () => {

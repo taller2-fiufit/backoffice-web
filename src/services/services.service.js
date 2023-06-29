@@ -8,8 +8,8 @@ class ServicesService {
     return axios.post(API_URL + 'services', service, { headers: authHeader() })
   }
 
-  getServiceList (blocked) {
-    const queryParams = blocked === '-' ? '' : '?blocked=' + blocked
+  getServiceList (blocked, up) {
+    const queryParams = '?offset=0' + (blocked === '-' ? '' : '&blocked=' + blocked) + (up === '-' ? '' : '&up=' + up)
     return axios.get(API_URL + 'services' + queryParams, { headers: authHeader() })
   }
 

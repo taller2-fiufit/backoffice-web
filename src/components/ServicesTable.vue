@@ -33,6 +33,22 @@
           <a target="_blank">{{ up ? 'Si' : 'No' }}</a>
         </template>
 
+        <template #header-up="header">
+          <div class="filter-column">
+            <img :src="require('../assets/filter.png')" class="filter-icon" @click.stop="showUpFilter=!showUpFilter">
+            {{ header.text }}
+            <div class="filter-menu" v-if="showUpFilter">
+              <v-select
+                variant="outlined"
+                class="select"
+                v-model="up_filtering"
+                :items="['-', 'Si', 'No']"
+              >
+              </v-select>
+            </div>
+          </div>
+        </template>
+
         <template #header-service="header">
           <div class="filter-column">
             <img :src="require('../assets/filter.png')" class="filter-icon" @click.stop="showBlockedFilter=!showBlockedFilter">
@@ -42,7 +58,7 @@
                 variant="outlined"
                 class="select"
                 v-model="blocked_filtering"
-                :items="['-', 'Blocked', 'Unblocked']"
+                :items="['-', 'Bloqueado', 'Desbloqueado']"
               >
               </v-select>
             </div>
@@ -88,7 +104,9 @@ export default {
   data () {
     return {
       showBlockedFilter: false,
-      blocked_filtering: '-'
+      showUpFilter: false,
+      blocked_filtering: '-',
+      up_filtering: '-'
     }
   },
   methods: {
@@ -106,12 +124,23 @@ export default {
   watch: {
     blocked_filtering: function (val) {
       this.showBlockedFilter = false
-      if (val === 'Blocked') {
+      if (val === 'Bloqueado') {
         this.$emit('change_block_filter', 'true')
-      } else if (val === 'Unblocked') {
+      } else if (val === 'Desbloqueado') {
         this.$emit('change_block_filter', 'false')
       } else {
         this.$emit('change_block_filter', val)
+      }
+    },
+
+    up_filtering: function (val) {
+      this.showUpFilter = false
+      if (val === 'Si') {
+        this.$emit('change_up_filter', 'true')
+      } else if (val === 'No') {
+        this.$emit('change_up_filter', 'false')
+      } else {
+        this.$emit('change_up_filter', val)
       }
     }
   }

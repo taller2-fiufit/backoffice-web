@@ -92,7 +92,7 @@
     </v-row>
 
     <div id="table-div" class="pl-15">
-      <ServicesTable v-if="servicesList" :headers="headers" :items="servicesList" :loading="loading" :error="error" @change_block_filter="updateBlockFilter" @delete_service="deleteService"/>
+      <ServicesTable v-if="servicesList" :headers="headers" :items="servicesList" :loading="loading" :error="error" @change_block_filter="updateBlockFilter" @change_up_filter="updateUpFilter" @delete_service="deleteService"/>
     </div>
   </v-card>
 </template>
@@ -130,11 +130,12 @@ export default {
       message: '',
       dialog: false,
       error: false,
-      blocked_filtering: '-'
+      blocked_filtering: '-',
+      up_filtering: '-'
     }
   },
   async mounted () {
-    ServicesService.getServiceList(this.blocked_filtering).then(
+    ServicesService.getServiceList(this.blocked_filtering, this.up_filtering).then(
       (response) => {
         this.servicesList = response.data
         this.loading = false
@@ -150,7 +151,15 @@ export default {
     async updateBlockFilter (val) {
       this.loading = true
       this.blocked_filtering = val
-      const response = await ServicesService.getServiceList(this.blocked_filtering)
+      const response = await ServicesService.getServiceList(this.blocked_filtering, this.up_filtering)
+      this.servicesList = response.data
+      this.loading = false
+    },
+
+    async updateUpFilter (val) {
+      this.loading = true
+      this.up_filtering = val
+      const response = await ServicesService.getServiceList(this.blocked_filtering, this.up_filtering)
       this.servicesList = response.data
       this.loading = false
     },

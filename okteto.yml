@@ -15,7 +15,8 @@ build:
 # More info: https://www.okteto.com/docs/reference/manifest/#deploy
 deploy:
   - okteto build -t okteto.dev/backoffice
-  - kubectl create secret generic "secrets" --from-literal="VUE_APP_MAPS_API_KEY"="${VUE_APP_MAPS_API_KEY}" 
+  - kubectl delete secret "secrets" || true
+  - kubectl create secret generic "secrets" --from-literal="VUE_APP_MAPS_API_KEY"="${VUE_APP_MAPS_API_KEY}"
   - kubectl apply -f k8s
   - kubectl rollout restart deployment backoffice-deployment
 # The dependencies section defines other git repositories to be deployed as part of your development environment

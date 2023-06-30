@@ -30,8 +30,6 @@ spec:
                 secretKeyRef:
                   name: secrets
                   key: VUE_APP_MAPS_API_KEY
-            - name: VUE_APP_API_URL
-              value: "https://gateway-megaredhand.cloud.okteto.net/"
 
 ---
 apiVersion: v1

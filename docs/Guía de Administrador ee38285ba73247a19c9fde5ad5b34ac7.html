@@ -1,0 +1,747 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Guía de Administrador</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="ee38285b-a732-47a1-9c9f-de5ad5b34ac7" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">📕</span></div><h1 class="page-title">Guía de Administrador</h1><p class="page-description"></p></header><div class="page-body"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="f433a92b-9555-4e20-8a0e-ccbec4450389"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><strong>Guía de usuario del Backoffice: </strong>se detallan las principales secciones y funcionalidades que el sistema ofrece.</div></figure><p id="47b6f343-490d-4318-8e6b-a3da727d3a36" class="">
+</p><p id="8fa25704-bf6b-47ae-8f4a-1055ec349b11" class=""><strong>Kinetix</strong> es una plataforma digital la cual permite a los usuarios realizar un seguimiento de sus entrenamientos y actividad física, establecer y realizar un seguimiento de los objetivos de fitness y ver su progreso a lo largo del tiempo. El espíritu de esta plataforma es poder brindar una conexión entre los usuarios y los entrenadores, para poder así lograr sus objetivos.</p><p id="00dd2d7b-2078-44a6-85f1-3169cdea27fc" class="">
+</p><p id="b47c16d6-0284-4d44-87e4-690827281166" class="">Este es el <strong>backoffice web de la app Kinetix</strong>, el cual será utilizado por los <strong>administradores</strong>. En esta guía se desarrolla una guía para facilitar su utilización. Para ello, se mostrará un recorrido por las distintas funcionalidades que el backoffice ofrece, con una explicación de las mismas.</p><p id="14e51aec-2b40-4bcc-906c-5d8f384657d4" class="">
+</p><div id="85da91cf-c277-47ec-9f2c-37a54435fee7" class="column-list"><div id="6402148c-2e9e-4655-a79e-24a84d5cb3dd" style="width:62.5%" class="column"><figure id="67598f9d-514e-4f08-91f4-074b222515a7" class="image"><a href="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled.png"><img style="width:582px" src="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled.png"/></a></figure><p id="636c01d9-15d8-48b8-bd51-acbf49f32ec2" class="">
+</p></div><div id="7365e8af-7a30-4e5d-92c4-be8f1a68d65e" style="width:37.49999999999999%" class="column"><p id="b9d4695e-d9d8-4e8f-be89-9b2c684f66cb" class=""><strong>Contenidos</strong></p><nav id="2c4b23e2-6ae5-4711-b568-2d8aa24346e4" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#526317d2-4c1c-47e5-98b5-a558a6bad13e">Organización General</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#2bead1bf-c53b-4414-86a4-e88dcee1650a">Dashboard</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8ff803b5-7ab3-4767-a50f-622f6ef074aa">Usuarios</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0d35c185-7905-4e1b-aa9e-4f905ad6f453"><span style="border-bottom:0.05em solid">Listado de Usuarios</span></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2f2781f5-1432-44a2-a264-d815d34bd478"><span style="border-bottom:0.05em solid">Detalle de Usuarios</span></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ad8081b5-cb39-46cb-9ba7-4248f4b8839d"><mark class="highlight-teal"><strong>(1) </strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#335b5db3-e2a9-43f9-b153-4ef1dff06177"><mark class="highlight-teal"><strong>(2) </strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#659bb127-d591-408b-b398-0390b46a8135"><mark class="highlight-teal"><strong>(3) </strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9e7502b2-1b9d-4993-8c81-71793ce53a44"><mark class="highlight-teal"><strong>(4) </strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b74ba023-b708-404a-ae8e-d8fade5af643">Planes</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#47a3e7ab-7448-4de3-9aae-ccf83be3d90c"><span style="border-bottom:0.05em solid">Listado de Planes</span></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#036b4bd5-74fe-472a-a018-ea8cb0cce2d9"><span style="border-bottom:0.05em solid">Detalle de Planes</span></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ac7032cd-2716-4e5d-85fd-c6eb3fb6955e"><mark class="highlight-teal"><strong>(1)</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0624aaea-cd09-4d38-a353-74548c43ec6f"><mark class="highlight-teal"><strong>(2) </strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#34adf66e-3f9c-4e57-84b1-99075741d8f5"><mark class="highlight-teal"><strong>(3) </strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#141b23b4-e62c-4999-82ae-b77f993a999b">Servicios</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0d56bc5f-e639-4cd2-9b02-97c2a944679c"><span style="border-bottom:0.05em solid">Listado de Servicios</span></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6d4f00fe-c7b5-42d3-b93b-688db70b5622"><span style="border-bottom:0.05em solid">Detalle de Servicio</span></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1a661f71-dc32-4d0e-925d-31fb5b17bdb0">Métricas</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c0fa54d9-8f69-4883-a5af-b99af22af7b8"><span style="border-bottom:0.05em solid">Métricas de Usuario</span></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0d1bb4fa-c7ff-4f67-984f-8a18890b7ec5"><span style="border-bottom:0.05em solid">Métricas de Entrenamiento</span></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e7f767ef-9743-48e0-bd84-759fd4298f46">Registro de nuevos administradores</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c750e7e2-fe1a-4832-96e0-34e3d2d6640d">Login de administradores</a></div></nav><p id="ae3ccfa8-1f2b-40f6-9e7e-0d27f3e02d32" class="">
+</p></div></div><h1 id="526317d2-4c1c-47e5-98b5-a558a6bad13e" class="">Organización General</h1><p id="5650c3a0-8bc5-4269-aec0-37c63adf2cd8" class="">
+</p><p id="ddc74ab8-acc1-40f9-bf30-758342aef0bb" class="">El backoffice web está compuesto por distintas secciones pero todas tienen en común que comparten la misma toolbar y el sidebar-menu en la navegación lateral.</p><p id="4167bd26-3860-4911-87b1-f8b80e991e3c" class="">
+</p><figure id="1a0dacd6-c9f1-49e7-ae03-c6787168ed32" class="image"><a href="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled%201.png"><img style="width:1902px" src="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled%201.png"/></a></figure><p id="6e87c954-6d07-490c-8d28-a910ce8020fc" class="">Por un lado, la <strong>toolbar</strong> tiene dos botones:</p><ol type="1" id="9c09527b-9175-4b8b-add0-4f0fd353c43c" class="numbered-list" start="1"><li>Oculta o muestra la navegación lateral dependiendo el caso.</li></ol><ol type="1" id="740a17ba-8c0f-4bfd-a649-a8fa99d37d52" class="numbered-list" start="2"><li>Deslogguea al administrador y lo redirecciona al login para que se loggue otro administrador.</li></ol><p id="99d83fa5-ba79-4561-bba7-7d9dedd38565" class="">
+</p><div id="6a6db69e-906c-4544-bbdb-58aa7031f45b" class="column-list"><div id="549f350c-8765-4cc2-be9d-9828caf19f44" style="width:31.25%" class="column"><figure id="2618b3b6-dd20-40da-bce9-3be183d37057" class="image"><a href="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled%202.png"><img style="width:255px" src="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled%202.png"/></a></figure><p id="27ff06ef-3153-4cd0-88ef-d22cafb3d1db" class="">
+</p></div><div id="2b5a6d34-519d-4cdd-a916-853c4da0e5c2" style="width:68.75%" class="column"><p id="f54fd9d1-7114-4eef-8e9d-89f02860c956" class="">
+</p><p id="8b83235a-f85d-458f-b127-0352275faea7" class="">
+</p><p id="7e04fe29-1684-416b-b99e-3daab73ea2ea" class=""><span style="border-bottom:0.05em solid">Navegación lateral</span></p><p id="9d05cc25-c9fa-4872-af60-ef56a7e9702e" class="">Por otro lado, la <strong>navegación lateral </strong>muestra cuál es el administrador conectado actualmente. Además, lista todas las secciones disponibles que ofrece el backoffice web. Estas son:</p><ul id="3f2ba296-30af-484f-b5d1-de52e114479e" class="bulleted-list"><li style="list-style-type:disc">Dashboard</li></ul><ul id="01bbe160-87c0-4ec6-a77b-55df21777612" class="bulleted-list"><li style="list-style-type:disc">Usuarios</li></ul><ul id="4100e691-2310-4393-a8e5-2507f5fb8310" class="bulleted-list"><li style="list-style-type:disc">Planes</li></ul><ul id="902334fc-51a8-400c-a004-2d3560edb9de" class="bulleted-list"><li style="list-style-type:disc">Servicios</li></ul><ul id="4577360c-e26e-4b79-b696-6d4e62b122ef" class="bulleted-list"><li style="list-style-type:disc">Métricas</li></ul><ul id="9b82362a-8997-4f84-ae58-2c8280712bf2" class="bulleted-list"><li style="list-style-type:disc">Registro de nuevos admins</li></ul><p id="c69ab5ed-57c6-4996-9c3e-4353b2757003" class="">
+</p></div></div><p id="26232863-f117-42f9-add2-af7bf8150f91" class="">En orden de cómo se muestran, desarrollaremos cada una explicando su funcionalidad, comenzando por el dashboard.</p><h1 id="2bead1bf-c53b-4414-86a4-e88dcee1650a" class="">Dashboard</h1><p id="33847d41-4879-42d9-add7-2887b6d6e209" class="">La página principal del sitio es un dashboard donde la idea es, básicamente, que el administrador conozca el <strong>estado actual de la aplicación</strong>. Para ello, se observan algunas <em>métricas generales</em> para mostrar el funcionamiento de la aplicación y el administrador tenga contexto de cómo la misma se está desarrollando.
+Por ejemplo, alguna de estas métricas son la cantidad de usuarios, planes y servicios en la aplicación.</p><figure id="4282609c-ab8b-4565-9184-7fe0bc5dbd11" class="image"><a href="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Dashboard.jpeg"><img style="width:1600px" src="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Dashboard.jpeg"/></a></figure><h1 id="8ff803b5-7ab3-4767-a50f-622f6ef074aa" class="">Usuarios</h1><p id="711ca0a7-5a9a-4159-87f5-2d7998b59db7" class="">
+</p><p id="43ff604c-4b7e-4ed8-9203-3795ff58ad4d" class="">Como administrador del sistema, se debe poder <strong>gestionar los usuarios</strong> que están registrados en el mismo para administrar su uso.</p><h3 id="0d35c185-7905-4e1b-aa9e-4f905ad6f453" class=""><span style="border-bottom:0.05em solid">Listado de Usuarios</span></h3><p id="027de96e-6bd2-4575-a950-456a9d920acb" class="">
+</p><p id="2e6b7969-0821-43ee-829e-9d9c0df2725b" class="">En esta sección se listan todos los usuarios del sistema. Por cada uno de ellos, se muestra:</p><ul id="908b4382-04c4-4585-8b8a-d1a9fb342a6a" class="bulleted-list"><li style="list-style-type:disc">ID</li></ul><ul id="0194dd70-a8a3-486b-8a9d-aa5db1c3499e" class="bulleted-list"><li style="list-style-type:disc">Su nombre completo</li></ul><ul id="150ff635-7d53-48ed-a194-900b14932ebc" class="bulleted-list"><li style="list-style-type:disc">Correo electrónico</li></ul><ul id="56f36dbc-5b00-43ce-bf1a-1d7bc35e8947" class="bulleted-list"><li style="list-style-type:disc">Botón para acceder al detalle del usuario</li></ul><p id="73756cc9-715d-4337-ac6c-98f149052bce" class="">Además, se ofrece la posibilidad de ordenar la tabla por ID y por correo electrónico.</p><p id="a0229a97-9efb-4224-96d7-d8c4b18028a2" class="">En el pie de la tabla, se encuentran los<strong> botones de paginado</strong> para poder modificar la cantidad de usuarios que se muestran en la tabla por página con las flechas correspondientes para navegar hacia adelante o atrás las distintas páginas de la tabla.</p><p id="0ecf8560-54b5-49d6-b557-7c8ced68c22d" class="">Finalmente, en la columna de Detalles de la tabla se muestra un botón para poder acceder a la <em>vista detallada del usuario</em> correspondiente.</p><p id="a2036b1c-e803-41bd-8912-0132c2dd7a2f" class="">
+</p><figure id="69b6157f-9bf6-4632-9190-0a9c7753ee3b" class="image"><a href="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Listado_Usuarios.jpeg"><img style="width:1600px" src="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Listado_Usuarios.jpeg"/></a></figure><p id="3299a072-333a-4d32-9331-37a3d811bfc1" class="">
+</p><h3 id="2f2781f5-1432-44a2-a264-d815d34bd478" class=""><span style="border-bottom:0.05em solid">Detalle de Usuarios</span></h3><p id="919ccdda-4b05-4d77-a499-242571461910" class="">
+</p><p id="d2654bc3-331d-41b9-bd7e-dff146526f9e" class="">Si bien en la tabla se listaban los usuarios creados en la aplicación, se mostraba solamente la información básica respecto al mismo. Tocando el botón de la columna de detalle, lleva a esta vista detallada del usuario seleccionado. La idea es que el administrador del sistema pueda  visualizar el perfil de un usuario del sistema para verificar sus datos.</p><p id="10f8fb38-1ba2-497f-8b6d-c7a18b0276a1" class="">
+</p><figure id="f2c2ddd6-479b-42f3-bc7f-3bf4a1cfedbd" class="image"><a href="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Detalle_Usuario.jpeg"><img style="width:1600px" src="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Detalle_Usuario.jpeg"/></a></figure><p id="c8b254bd-bc0d-404e-9549-645a1748b0b2" class="">
+</p><p id="52be5a64-648f-479d-9d19-b6d6a1c88dab" class="">La sección de detalle se puede dividir en <strong>4 secciones principales</strong>.</p><div id="e06f5169-82bd-4230-b783-eef9cf53fa8c" class="column-list"><div id="f2ca23d4-8a9b-4617-a9a2-dc99c8364809" style="width:50%" class="column"><figure id="021afe4d-f9f7-453a-a9e7-10c8c1c46724" class="image" style="text-align:left"><a href="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled%203.png"><img style="width:416px" src="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled%203.png"/></a></figure></div><div id="ec9d4aa2-48c7-4e05-b697-1c5d67acac75" style="width:50%" class="column"><p id="601b379f-9263-48d1-ad2b-6a05bad91c15" class="">
+</p><p id="57e141be-c4b1-47d4-a185-84cfeb8cc186" class="">
+</p><h3 id="ad8081b5-cb39-46cb-9ba7-4248f4b8839d" class=""><mark class="highlight-teal"><strong>(1) </strong></mark></h3><p id="1833d2f6-c86b-41b0-9f6d-966538138897" class="">Por un lado, la<strong> primer sección </strong>tiene que ver con datos del usuario respecto a la aplicación. Por ejemplo, se muestra la foto de perfil y la descripción que el usuario tiene en la misma. Además, se muestra el país y la ciudad donde el mismo se encuentro.</p><p id="876922b5-1090-4d09-929c-cfa1d73ef9ce" class="">
+</p><p id="ffcfac03-c8ac-4c49-9dfe-d6cce8571af4" class="">
+</p></div></div><h3 id="335b5db3-e2a9-43f9-b153-4ef1dff06177" class=""><mark class="highlight-teal"><strong>(2) </strong></mark></h3><p id="5e2b5950-be73-495b-a1c3-57ce4951f1a0" class="">La <strong>segunda sección</strong> tiene que ver con información general del usuario. Al igual que en la tabla, se muestra el ID, el nombre completo y el correo electrónico. Pero, además, se agrega información como la fecha de registro.
+Una funcionalidad importante que se ofrece en esta sección es que se le brinda la posibilidad al administrador de <mark class="highlight-red"><strong>bloquear al usuario</strong></mark>. Esto se hace mediante el botón rojo de &quot;bloquear&quot;. En caso que el usuario este bloqueado, el botón cambiará a ser desbloquear. Además, la barra horizontal verde pasará a ser roja indicando que el mismo se encuentra bloqueado.
+De esta forma, el administrador puede bloquear y desbloquear un usuario del sistema para controlar su ingreso a la plataforma.</p><figure id="c217087a-d104-417f-882e-54c740845f82" class="image"><a href="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled%204.png"><img style="width:1230px" src="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled%204.png"/></a></figure><div id="05a8c7a1-3dc3-448d-8e53-018f59f71336" class="column-list"><div id="38fd5b61-40b3-4a47-b13b-ca9307ca5f4c" style="width:50%" class="column"><p id="0e44c362-9bff-48f4-b31a-69b671646a55" class="">
+</p><h3 id="659bb127-d591-408b-b398-0390b46a8135" class=""><mark class="highlight-teal"><strong>(3) </strong></mark></h3><p id="d954c1b8-bbac-44cf-966f-06adaf173375" class="">La<strong> tercer sección</strong> es un mapa indicando la ubicación del usuario.</p><p id="6458b76a-bdef-47ac-9d1d-76826898cb5a" class="">
+</p><h3 id="9e7502b2-1b9d-4993-8c81-71793ce53a44" class=""><mark class="highlight-teal"><strong>(4) </strong></mark></h3></div><div id="7e615aae-d240-4cbc-8edf-382801ed32fe" style="width:50%" class="column"><figure id="9e40fc88-8c96-470b-99a7-0dc3a5aa8c43" class="image"><a href="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled%205.png"><img style="width:806px" src="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled%205.png"/></a></figure></div></div><p id="a40e7f9a-b16d-4348-a301-ed3efc015b62" class="">Por último, la <strong>cuarta sección</strong> es una tabla de seguidos-seguidores. En este ejemplo, podemos observar que el usuario Lionel Andŕes Messi sigue al usuario Julían Alvarez.
+Esta tabla muestra dos listado de usuarios: los que el usuario sigue (<em>seguidos</em>) y qué usuarios siguen al usuario (<em>seguidores</em>). Pero, para ambos casos, se muestran los mismos datos:</p><ul id="7547268d-cd2f-4ea0-8ed2-4d5fc12384fd" class="bulleted-list"><li style="list-style-type:disc">ID de usuario</li></ul><ul id="d2b51f22-8ccb-46d0-a963-fb205f499871" class="bulleted-list"><li style="list-style-type:disc">Nombre del usuario con su foto de perfil</li></ul><ul id="725fa508-f2ed-4853-8f78-3187955d5f46" class="bulleted-list"><li style="list-style-type:disc">Botón que redirige al detalle del usuario. Es decir, este botón redirige a esta misma página pero para el usuario correspondiente.<figure id="cbea81bc-9cc7-4f31-a7d7-1645a6a85691" class="image"><a href="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled%206.png"><img style="width:812px" src="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled%206.png"/></a></figure></li></ul><h1 id="b74ba023-b708-404a-ae8e-d8fade5af643" class="">Planes</h1><p id="fe4c44ad-3b66-48df-bfbf-9204f2a78e6b" class="">
+</p><p id="a0db991c-eaed-42c3-820d-cf0c8ed824a6" class="">Como administrador del sistema, se debe poder <strong>gestionar los entrenamientos </strong>que se encuentran en el mismo para administrar su uso.</p><p id="bb3bf6e1-dbf4-48b8-9eb5-1a2c1d0a001e" class="">
+</p><h3 id="47a3e7ab-7448-4de3-9aae-ccf83be3d90c" class=""><span style="border-bottom:0.05em solid">Listado de Planes</span></h3><p id="2d57bffd-ca8b-4364-8606-cda4d4a6ef54" class="">
+</p><p id="3a422459-8b72-47cf-b1b4-3ada0001b603" class="">Al igual que en el caso de Usuarios, en esta sección se listan todos los planes del sistema. Por cada uno de ellos, se muestra:</p><ul id="11e12715-70bb-49c7-9d31-9f0c59f0f4ee" class="bulleted-list"><li style="list-style-type:disc">El ID del plan</li></ul><ul id="264093b5-8ce1-43f2-93ef-8661c00f749e" class="bulleted-list"><li style="list-style-type:disc">Título</li></ul><ul id="e5b33738-1d6b-4f24-ba40-c507cd69f207" class="bulleted-list"><li style="list-style-type:disc">Tipo</li></ul><ul id="c38f1e05-2580-48d4-81e4-590ad7d5754f" class="bulleted-list"><li style="list-style-type:disc">Dificultad</li></ul><ul id="d0be7568-60d1-44cf-9c20-5dd493f2c0f4" class="bulleted-list"><li style="list-style-type:disc">Botón para acceder al detalle del usuario</li></ul><p id="9e59cf65-5538-4655-8310-2155a7f85243" class="">Además, se ofrece la posibilidad de ordenar la tabla por ID y por dificultad.</p><p id="fa6864e7-1c1a-4f81-835a-069e976624b1" class="">Respecto al <strong>filtrado</strong>, se pueden filtrar los entrenamientos por tipo y dificultad.</p><p id="0d6f7c58-22b9-4b56-afd5-35e7066060d1" class="">En el pie de la tabla, se encuentran los <strong>botones de paginado</strong> para poder modificar la cantidad de usuarios que se muestran en la tabla por página con las flechas correspondientes para navegar hacia adelante o atrás las distintas páginas de la tabla.</p><p id="7eca1ba0-beea-4379-afca-bf08a91a136f" class="">Finalmente, en la columna de Detalles de la tabla se muestra un botón para poder acceder a la <em>vista detallada del plan</em> correspondiente. De esta forma, el administrador puede listar todas los planes de entrenamiento que se encuentren en el sistema para acceder a ellos.</p><p id="90196118-c257-40e9-9a6d-cb86d67fd520" class="">
+</p><figure id="d715e09a-37d8-4866-9ff1-4ba236e65639" class="image"><a href="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Listado_Planes.jpeg"><img style="width:1600px" src="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Listado_Planes.jpeg"/></a></figure><p id="76e14385-2c37-4387-b5a4-1e8693bb4d78" class="">
+</p><h3 id="036b4bd5-74fe-472a-a018-ea8cb0cce2d9" class=""><span style="border-bottom:0.05em solid">Detalle de Planes</span></h3><p id="75c5fbaa-c677-4371-847d-05a11d2a232f" class="">
+</p><p id="c5749b9f-1b6a-4943-881c-745183f60382" class="">Si bien en la tabla se listaban los planes creados en la aplicación, se mostraba solamente la información básica respecto a los mismos. Tocando el botón de la columna de detalle, lleva a esta vista detallada del plan seleccionado. De esta forma, el administrador del sistema puede  visualizar un plan de entrenamiento para verificar su contenido.</p><p id="634f2b5a-95ac-4e54-aa79-82a91a7a0ac6" class="">
+</p><figure id="0611aa92-ac96-4105-87bd-368ed93ba424" class="image"><a href="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Detalle_Plan.jpeg"><img style="width:1600px" src="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Detalle_Plan.jpeg"/></a></figure><p id="aa92a1b1-0d36-4b57-a81a-69046c72d938" class="">
+</p><p id="49b721fb-0cd0-4dd7-ac11-d584cd5c4843" class="">La sección de detalle se puede dividir en<strong> 3 secciones principales</strong></p><h3 id="ac7032cd-2716-4e5d-85fd-c6eb3fb6955e" class=""><mark class="highlight-teal"><strong>(1)</strong></mark></h3><div id="a02c9ad8-3e92-4c47-8291-7d0eb8bf6986" class="column-list"><div id="c9adf78e-7c3f-4e2c-b024-d3ecc7b57889" style="width:56.25%" class="column"><figure id="1d7b134a-30af-4a7d-8459-5932e3457546" class="image"><a href="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled%207.png"><img style="width:822px" src="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled%207.png"/></a></figure><p id="15c94e37-c21d-4576-9859-e880a40f966e" class="">
+</p></div><div id="fc7fc772-4684-44a8-b65c-463befcba0ad" style="width:43.75%" class="column"><p id="f6b673e5-4780-4c23-8d53-4c27c4362f6e" class="">Por un lado, la <strong>primer sección</strong> tiene que ver con la información general del plan. Para empezar, se muestra, en orden de listado, el título, tipo y descripción. Luego de estos tres atributos, se listan otros elementos como el ID, fecha de registro, el ID del autor y la dificultad.
+Otra funcionalidad que se agrega en la información es poder acceder al detalle del usuario que creó el plan (el autor) mediante el botón verde con el ícono de usuario.</p></div></div><h3 id="0624aaea-cd09-4d38-a353-74548c43ec6f" class=""><mark class="highlight-teal"><strong>(2) </strong></mark></h3><p id="e70716ab-3ab3-42ec-9e0c-ae02f2a2cb06" class="">La <strong>segunda sección</strong> es el contenido multimedia. Hay un carousel donde seleccionando las flechas se puede ir desplazando por cada foto.
+Una funcionalidad importante que se ofrece en esta sección es que se le brinda la posibilidad al administrador de<mark class="highlight-red"><strong> bloquear el plan</strong></mark>. Esto se hace mediante el botón rojo de &quot;bloquear&quot;. En caso que el plan este bloqueado, el botón cambiará a ser desbloquear. Además, la barra horizontal verde pasará a ser roja indicando que el mismo se encuentra bloqueado.
+De esta manera, el administrador del sistema puede bloquear un plan de entrenamiento que se encuentren en el sistema para que no puedan acceder al mismo.</p><figure id="1cffaa75-8790-4091-9e61-70234225c9cb" class="image"><a href="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled%208.png"><img style="width:827px" src="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled%208.png"/></a></figure><h3 id="34adf66e-3f9c-4e57-84b1-99075741d8f5" class=""><mark class="highlight-teal"><strong>(3) </strong></mark></h3><p id="abc7c9ef-3f2f-4691-878e-4703dfb6db30" class="">La <strong>tercer sección </strong>muestra las metas que tiene el plan.</p><figure id="7cd60564-6d2f-43a3-80bf-4bc9e3503492" class="image"><a href="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled%209.png"><img style="width:800px" src="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled%209.png"/></a></figure><h1 id="141b23b4-e62c-4999-82ae-b77f993a999b" class="">Servicios</h1><p id="11a462bc-2a85-4c3f-9ad5-b64f5233392b" class="">
+</p><p id="875070b6-7b61-45f4-bceb-4543db726958" class="">Esta sección es útil para que el administrador del sistema pueda <strong>gestionar los servicios </strong>que se encuentran en el mismo para administrar su uso.</p><p id="617193bb-e322-4074-b9c0-3195d4241c3c" class="">
+</p><h3 id="0d56bc5f-e639-4cd2-9b02-97c2a944679c" class=""><span style="border-bottom:0.05em solid">Listado de Servicios</span></h3><p id="76ebd7ef-2f7b-4715-949a-98f58b3d0f72" class="">
+</p><p id="6187c09a-d4f9-43d6-b82c-e3472a951182" class="">Esta sección también es un listado pero, como bien sugiere el nombre, de servicios.
+Por cada uno de ellos, se muestra:</p><ul id="542daa77-41e2-4c08-8807-fb611c453992" class="bulleted-list"><li style="list-style-type:disc">El ID del servicio</li></ul><ul id="6e22edeb-33f1-437a-ad13-f4f78c5facbe" class="bulleted-list"><li style="list-style-type:disc">Nombre del servicio</li></ul><ul id="29180213-d2d4-4a3b-b47a-dce734ab54b8" class="bulleted-list"><li style="list-style-type:disc">Si esta funcionando o no</li></ul><ul id="02c4447b-864e-4b4d-adc8-50dde389d647" class="bulleted-list"><li style="list-style-type:disc">Acciones</li></ul><p id="b1ed6dc8-679e-43c0-86e8-08789844b73f" class="">Además, se ofrece la posibilidad de ordenar la tabla por ID y por correo electrónico.
+Respecto al<strong> filtrado</strong>, se pueden filtrar los servicios bloqueados y no bloqueados.</p><p id="d96e4290-3234-4cdb-baf5-3b0149796123" class="">En el pie de la tabla, se encuentran los <strong>botones de paginado</strong> para poder modificar la cantidad de usuarios que se muestran en la tabla por página con las flechas correspondientes para navegar hacia adelante o atrás las distintas páginas de la tabla.</p><p id="3f54e440-790a-49c3-ba3f-a184c6e5791b" class="">De esta forma, el administrador del sistema puede listar todos los servicios que se encuentren dentro del sistema para controlar su uso.</p><p id="cae7c449-ac4c-43fe-a115-fd96a717a7ae" class="">Finalmente, en la columna de Acciones de la tabla se muestran dos botones. Por un lado, el primer botón (el ojo) redirige al detalle del servicio y el segundo botón (el tacho), como bien indica su ícono, permite eliminar el servicio.</p><p id="e0918971-91b5-493f-8a00-8f8defe16e26" class="">
+</p><p id="275bda5b-e4ff-4f08-a5eb-b032e59516f1" class=""><span style="border-bottom:0.05em solid">Alta de un Servicio</span></p><p id="3df9eb94-b07d-4f86-97a3-8806a4401123" class="">Adicionalmente al listado, existe un botón de <strong>&quot;Registrar nuevo servicio&quot;</strong>. Dado que existen requisitos de seguridad que solicitan tener un mecanismo para verificar la autenticidad de los servicios internos de la plataforma, el administrador del sistema puede dar de alta un nuevo servicio para que pueda acceder a los distintos servicios del sistema.</p><p id="9f3f7285-9cb0-466c-990b-a678c093f7b6" class="">
+</p><figure id="668f2c76-7811-4299-80f3-ae76c0dbe79d" class="image"><a href="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Listado_Servicios.jpeg"><img style="width:1600px" src="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Listado_Servicios.jpeg"/></a></figure><p id="9b2fcab2-997c-4508-a76d-7fcad35f4585" class="">
+</p><h3 id="6d4f00fe-c7b5-42d3-b93b-688db70b5622" class=""><span style="border-bottom:0.05em solid">Detalle de Servicio</span></h3><p id="9b6c17f4-093a-4ff3-ae72-1108476f71d3" class="">
+</p><p id="eba5a994-7051-4a73-b675-670d9be68b03" class="">Si bien en la tabla se listaban los servicios, se mostraba solamente la información básica respecto a los mismos. Tocando el botón de detalle de la columna de acciones, lleva a esta vista detallada del servicio seleccionado. En esta vista, el administrador<strong> visuliza la información de un servicio</strong> que se encuentre en el sistema para verificar que sea válida.</p><p id="6db8b669-f08c-4c33-a8dd-bd4d2656c4c7" class="">Lo primero que se ve, en tamaño más grande y negrita, es el nombre del servicio. Luego, se lista otra información del servicio como el ID y si está funcionado o no, que ya se mostraba en el listado. Adicionalmente, se muestra el path y la URL.
+Una funcionalidad importante que se ofrece en esta sección es que se le brinda la posibilidad al administrador de <mark class="highlight-red"><strong>bloquear el servicio</strong></mark>. Esto se hace mediante el botón rojo de &quot;bloquear&quot;. En caso que el servicio este bloqueado, el botón cambiará a ser desbloquear. Además, la barra horizontal verde pasará a ser roja indicando que el mismo se encuentra bloqueado.
+De esta manera, el administrador del sistema puede bloquear un nuevo servicio para que no pueda acceder a los distintos servicios del sistema.</p><p id="90a11fe3-ea21-44df-86f3-2342d66c09ca" class="">
+</p><figure id="64d113ac-20a5-49ad-80b4-3f9826f5d89f" class="image"><a href="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Detalle_Servicios.jpeg"><img style="width:1600px" src="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Detalle_Servicios.jpeg"/></a></figure><h1 id="1a661f71-dc32-4d0e-925d-31fb5b17bdb0" class="">Métricas</h1><p id="f8180eb4-a1e5-4f19-98c9-2d9d8a0d650d" class="">
+</p><p id="0b6f8eef-fe31-4326-82cb-8c55ad5ba3fe" class="">La idea de la sección de Métricas es poder, como administrador del sistema, <strong>visualizar métricas e información de la plataforma </strong>para evaluar el estado del negocio.</p><p id="70fbeb98-815c-4ad2-a5e2-c8c2110e1da5" class="">Estas métricas están divididas en dos: las <em>métricas de usuario</em> y las <em>métricas de entrenamientos</em>.</p><p id="23f2286b-1b41-4adc-bd0d-78fbe2cd004b" class="">
+</p><h3 id="c0fa54d9-8f69-4883-a5af-b99af22af7b8" class=""><span style="border-bottom:0.05em solid">Métricas de Usuario</span></h3><p id="19802ac5-5d7f-422d-ac55-eb1d4f155e46" class="">
+</p><p id="20871340-6351-41e3-bff5-41729c6ddbcd" class="">En esta sección se visualizan las métricas de usuarios para medir el uso de la plataforma y sus servicios.</p><p id="82bc5c01-fcb8-40ce-b97b-9e03985582b2" class="">Por default, las métricas generadas son de la última semana. Pero, lo primero que se muestra en el sitio son dos calendarios para elegir fecha de inicio y fin para generar los gráficos de las métricas correspondientes al tiempo ingresado. En caso que se ingrese, cambiarán las métricas default por la de las fechas ingresadas. Esto es útil para que el administrador pueda visualizar la información correspondiente a la fecha que le interese.</p><figure id="8cc8841d-1fb5-40b2-bff5-6e7e3dd1ebeb" class="image"><a href="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled%2010.png"><img style="width:1902px" src="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled%2010.png"/></a></figure><figure id="80008a90-394f-47b9-854b-cdfb4ce85906" class="image"><a href="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled%2011.png"><img style="width:1594px" src="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled%2011.png"/></a></figure><p id="b357285b-32bf-4711-af33-33245da5c32d" class="">
+</p><figure id="630cf8bf-b2b6-4521-a506-b8593895cccc" class="image"><a href="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled%2012.png"><img style="width:831px" src="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled%2012.png"/></a></figure><figure id="8880fa37-7ee4-46dc-9e36-2aba2a20fbe6" class="image"><a href="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled%2013.png"><img style="width:860px" src="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled%2013.png"/></a></figure><p id="21aa61c3-b8c6-477b-8956-f206c0f74b55" class="">Hay<strong> 4 secciones</strong> que corresponden a diferentes métricas.</p><p id="e2804471-5dcd-4039-ba52-aead552e02fa" class="">
+<mark class="highlight-teal">(1) </mark>Primero, las métricas de registro que corresponden a:</p><ul id="0c5657a7-5e15-4d00-bc08-a7d56902350d" class="bulleted-list"><li style="list-style-type:disc">Nuevos usuarios utilizando mail y contraseña</li></ul><ul id="53b69484-5c0b-4ec6-9378-cff1177bf91f" class="bulleted-list"><li style="list-style-type:disc">Nuevos usuarios utilizando identidad federada</li></ul><hr id="b1943b4e-609e-4369-9400-5d2fdce95cc1"/><p id="a2ef2c79-629d-4201-973a-9e0c0cbbc1f8" class=""><mark class="highlight-teal">(2)</mark> Segundo, las métricas de login que corresponden a:</p><ul id="214fb287-b125-4cab-a44d-bba0ed90c117" class="bulleted-list"><li style="list-style-type:disc">Login de usuarios utilizando mail y contraseña</li></ul><ul id="c75a91cb-d4dd-4d1b-a420-b08151d2d30e" class="bulleted-list"><li style="list-style-type:disc">Login de usuarios utilizando identidad federada</li></ul><hr id="98a6f281-afbb-4247-9bee-607efbbc6287"/><p id="74901114-5516-482b-8f35-5a4d5b1289fe" class=""><mark class="highlight-teal">(3)</mark> Tercero, las métricas de usuarios bloqueados:</p><ul id="ab344493-2133-4978-ba32-223fe0b6a63b" class="bulleted-list"><li style="list-style-type:disc">Cantidad de usuarios vs cantidad de usuarios bloqueados</li></ul><hr id="b4fd2123-8574-4e94-b97e-bacbf880424f"/><p id="90f54be0-9d05-490e-bed8-b5d867c1fccf" class="">(4) Por último, las métricas de restablecimiento de contraseña:</p><ul id="ee20990f-29bf-46e1-bcae-35e3ac7b5891" class="bulleted-list"><li style="list-style-type:disc">Cantidad de restablecimientos de contraseña</li></ul><p id="f271b4df-5928-44fd-b642-25b98d5fcfa0" class="">
+</p><h3 id="0d1bb4fa-c7ff-4f67-984f-8a18890b7ec5" class=""><span style="border-bottom:0.05em solid">Métricas de Entrenamiento</span></h3><p id="c237b819-6330-4872-9a42-094e1a96c691" class="">
+</p><p id="6c005c9a-354b-4a8b-9448-6a86e6bd22a9" class="">En esta sección, se visualizan las métricas de entrenamientos que, al igual que las de usuario, se utilizan para medir el uso de la plataforma y sus servicios.</p><p id="715422a5-22e9-4a41-9347-0813feb24088" class="">
+</p><figure id="081f29fa-c973-4898-bdfd-75c68cb17e19" class="image"><a href="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled%2014.png"><img style="width:1899px" src="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled%2014.png"/></a></figure><figure id="38152795-42f7-44dd-9e71-945e01173256" class="image"><a href="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled%2015.png"><img style="width:1611px" src="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled%2015.png"/></a></figure><p id="b9e22445-229e-48be-8d47-5fee59379599" class="">
+</p><p id="5d3fb14d-29ca-4b9f-aba9-020484ee8b74" class="">Hay <strong>4 secciones</strong> que corresponden a diferentes métricas.</p><p id="81fd7038-1180-4828-8c34-e41902509b40" class="">
+</p><hr id="43608d13-1b29-4bc8-8b1a-a6179e560b26"/><div id="90bb4f9f-2d90-40d7-9bcb-010c81627c78" class="column-list"><div id="7e24f6f4-030d-4a81-bd2f-ef3407429b99" style="width:50%" class="column"><p id="ef7202e9-2186-4818-bfb8-1a3c9558a636" class=""><mark class="highlight-teal">(1)</mark> Primero, las métricas de nuevos entrenamientos, es decir, la cantidad de entrenamientos creados.</p></div><div id="4e9e136f-a078-462c-83f7-d2954eccd268" style="width:50%" class="column"><p id="96e7302f-d9ae-449c-9cbc-03eb35059c65" class=""><mark class="highlight-teal">(2) </mark>Segundo, las métricas de cantidad de entrenamientos por tipo.</p></div></div><hr id="0ab4640e-14fc-459e-8f78-bcc1a3d2ddc3"/><div id="6c1cfb1c-9049-431d-a452-dab2aa8867da" class="column-list"><div id="564e06bc-3747-4cd9-8267-8b8cef4fd8a1" style="width:50%" class="column"><p id="0c76bc6d-095f-478f-959a-e8752ccce439" class=""><mark class="highlight-teal">
+(3) </mark>También, métricas de cantidad de entrenamientos por dificultad.</p></div><div id="e5959bb3-a8d3-4b62-8ba3-ac8aa1bd4e1a" style="width:50%" class="column"><p id="0385db06-7791-49b5-bb1e-f0e8ee69e075" class=""><mark class="highlight-teal">(4) </mark>Por último, métricas de entrenamientos por usuario. Para visualizarlas, esto consiste de una tabla donde se muestra la cantidad de entrenamientos creados por usuario. Es decir, por cada ID de usuario se muestra la cantidad de entrenamientos que el mismo creó junto con su dificultad promedio y los tipos de entrenamiento.</p></div></div><hr id="a0f8284b-99d8-40aa-888c-6d39600ced8c"/><h1 id="e7f767ef-9743-48e0-bd84-759fd4298f46" class="">Registro de nuevos administradores</h1><p id="53356a8a-76f0-4e7e-8cb3-61872a4eaeab" class="">
+</p><p id="45521cba-c9b7-4f49-8b45-daefee99c268" class="">En esta última sección, el administrador puede <strong>dar de alta a otros administradores </strong>en la plataforma para acceder a las funcionalidades del sistema.
+Si falta uno o más campos obligatorios, el sistema indicará los campos faltantes y/o erróneos y no permitirá el ingreso al sistema.</p><p id="6fa17726-28d1-4fb8-9e98-89bdd6cd4d51" class="">Para <em>registrar un nuevo administrador</em>, se debe ingresar:</p><ul id="03f9a2a0-9036-4d6b-902e-cff744b6055a" class="bulleted-list"><li style="list-style-type:disc">Nombre completo</li></ul><ul id="85620622-b47c-41ee-9a40-169ae72945d4" class="bulleted-list"><li style="list-style-type:disc">Correo electrónico</li></ul><ul id="e7c7c45f-bd78-4134-9fa8-675420f25bbe" class="bulleted-list"><li style="list-style-type:disc">Contraseña</li></ul><p id="0530169c-bc33-408b-ad9e-41f31d3a6f8a" class="">
+</p><figure id="926588ca-0c99-4e65-96c2-65f08bf9866a" class="image"><a href="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Registro_Admins.jpeg"><img style="width:1600px" src="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Registro_Admins.jpeg"/></a></figure><h1 id="c750e7e2-fe1a-4832-96e0-34e3d2d6640d" class="">Login de administradores</h1><div id="d3cb2f42-89f4-4396-9472-8c152e0da568" class="column-list"><div id="78a14bad-d7b9-4750-b7d4-7e876064a11c" style="width:50%" class="column"><figure id="954719f1-5c2a-411e-8bcb-ec5427d0997b" class="image"><a href="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled%2016.png"><img style="width:482px" src="Gui%CC%81a%20de%20Administrador%20ee38285ba73247a19c9fde5ad5b34ac7/Untitled%2016.png"/></a></figure></div><div id="e424ea3f-eef8-4c36-a672-510eff5bdc23" style="width:50%" class="column"><p id="86046b95-5af4-4deb-907f-4e4a54e5b252" class="">
+</p><p id="277ceebb-eed9-441d-b653-a6724f48eb68" class="">
+</p><p id="749773e4-9caf-44a1-94a5-58c6d7579879" class="">
+</p><p id="d25aed0f-5a4d-4be3-93be-3d2917e4e96c" class="">Si bien esto no es una sección, para poder hacer uso del backoffice web debe haber un administrador logueado. Con este formulario de login, el administrador puede<strong> ingresar con su cuenta en la plataforma</strong> para acceder a las funcionalidades del sistema.</p><p id="ff56be0a-e582-4ca5-95f4-a3eaa3dfa069" class="">
+</p></div></div></div></article></body></html>
